@@ -5,7 +5,7 @@ import * as Yup from 'yup'
 const LoginForm = () => {
   const formValues = []
   const loginSchema = Yup.object().shape({
-    email: Yup.string().max(255, 'Too long').required('Required'),
+    email: Yup.string().email('Must be a valid email').max(255, 'Too long').required('Required'),
     password: Yup.string().min(6, 'Password must have at least 6 caracters').max(255, 'Too long').required('Required'),
   })
 
