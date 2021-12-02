@@ -4,7 +4,7 @@
   "private": true,
   "engines": {
     "npm": "please-use-npm",
-    "node": ">=0.14"
+    "node": ">=14"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.1.0",
