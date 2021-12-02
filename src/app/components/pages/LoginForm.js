@@ -15,7 +15,6 @@ import {
 
 const LoginForm = () => {
   const formValues = []
-  console.log(formValues)
   const loginSchema = Yup.object().shape({
     email: Yup.string().email('Must be a valid email').max(255, 'Too long').required('Required'),
     password: Yup.string()
