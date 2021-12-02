@@ -15,7 +15,6 @@ import {
 
 const LoginForm = () => {
   const formValues = []
-  console.log(formValues)
   const loginSchema = Yup.object().shape({
     email: Yup.string().email('Must be a valid email').max(255, 'Too long').required('Required'),
     password: Yup.string()
@@ -44,11 +43,7 @@ const LoginForm = () => {
           values, errors, touched, handleChange, handleBlur, handleSubmit,
         }) => (
           <form onSubmit={handleSubmit}>
-            <Flex
-              minH="100vh"
-              align="center"
-              justify="center"
-            >
+            <Flex minH="100vh" align="center" justify="center">
               <Stack spacing={8} mx="auto" maxW="lg" py={12} px={6}>
                 <Stack align="center">
                   <Heading fontSize="4xl">Sign in to your account</Heading>
