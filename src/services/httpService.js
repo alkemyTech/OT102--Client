@@ -5,6 +5,7 @@ const token = window.localStorage.getItem('x-access-token')
 
 const httpService = axios.create({
   baseURL: apiUrl,
+  timeout: 1000,
   headers: { 'x-access-token': token },
 })
 
@@ -18,9 +19,9 @@ httpService.interceptors.response.use(
     && error.response.status < 500
 
     if (!expectedError) {
-      // console.error('An unexpected error ocurred', error)
+      // console.log('interceptor-error:', error.response.data)
+      return Promise.reject(new Error('Unexpected Error Ocurred'))
     }
-    // console.log('interceptor-error:', error.response.data)
     return Promise.reject(error.response.data)
   },
 )
