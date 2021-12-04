@@ -1,10 +1,15 @@
 import React from 'react'
+import Slider from './Slider'
+import WelcomeText from './WelcomeText'
+import NewsHome from './NewsHome'
 
 const Home = () =>
   (
-    <div>
-      <h1>Hola Home</h1>
-    </div>
+    <>
+      <Slider />
+      <WelcomeText />
+      <NewsHome />
+    </>
   )
 
 export default Home
