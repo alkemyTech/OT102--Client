@@ -4,7 +4,10 @@ const membersEndpoint = '/members'
 
 /**
  * Accepts an object to send it to members endpoint
- * @param {object} member { "name": {string}, "image": {string} }
+ * @async
+ * @param {object} member
+ * @param {string} member.name
+ * @param {string} member.image
  * @return Promise {object} the created member
  */
 export function addMember(member) {
@@ -12,8 +15,9 @@ export function addMember(member) {
 }
 
 /**
- * Accepts an id number to delete one member from members endpoint
- * @param {number} id
+ * Accepts an id to delete one member from members endpoint
+ * @async
+ * @param {int} id
  * @return Promise {object} the deleted member
  */
 export function delMember(id) {
@@ -21,8 +25,9 @@ export function delMember(id) {
 }
 
 /**
- * Accepts an id number to retrieve one member from members endpoint
- * @param {number} id
+ * Accepts an id to retrieve one member from members endpoint
+ * @async
+ * @param {int} id
  * @return Promise {object} the requested member
  */
 export function getMemberById(id) {
@@ -30,10 +35,23 @@ export function getMemberById(id) {
 }
 
 /**
- * Retrieves all members from members endpoint
- *
+ * Retrieves an array with all members from members endpoint
+ * @async
  * @return Promise {object} all the requested members
  */
 export function getAllMembers() {
   return httpService.get(membersEndpoint)
+}
+
+/**
+ * Accepts an object to send it to members endpoint
+ * @async
+ * @param {object} id
+ * @param {object} member
+ * @param {string} member.name
+ * @param {string} member.image
+ * @return Promise {object} the created member
+ */
+export function updateMember(id, member) {
+  return httpService.put(`${membersEndpoint}/${id}`, member)
 }

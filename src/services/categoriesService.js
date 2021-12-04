@@ -4,7 +4,10 @@ const categoriesEndpoint = '/categories'
 
 /**
  * Accepts an object to send it to categories endpoint
- * @param {object} category { "name": {string}, "description":{string} }
+ * @async
+ * @param {object} category
+ * @param {string} category.name
+ * @param {string} category.description
  * @return Promise {object} the created category
  */
 export function addCategory(category) {
@@ -12,8 +15,9 @@ export function addCategory(category) {
 }
 
 /**
- * Accepts an id number to delete one category from categories endpoint
- * @param {number} id
+ * Accepts an id to delete one category from categories endpoint
+ * @async
+ * @param {int} id
  * @return Promise {object} the deleted category
  */
 export function delCategory(id) {
@@ -21,8 +25,9 @@ export function delCategory(id) {
 }
 
 /**
- * Accepts an id number to retrieve one category from categories endpoint
- * @param {number} id
+ * Accepts an id  to retrieve one category from categories endpoint
+ * @async
+ * @param {int} id
  * @return Promise {object} the requested category
  */
 export function getCategoryById(id) {
@@ -30,10 +35,23 @@ export function getCategoryById(id) {
 }
 
 /**
- * Retrieves all categories from categories endpoint
- *
+ * Retrieves an array with all the categories from categories endpoint
+ * @async
  * @return Promise {object} all the requested categories
  */
 export function getAllCategories() {
   return httpService.get(categoriesEndpoint)
+}
+
+/**
+ * Accepts an object to send it to categories endpoint
+ * @async
+ * @param {int} id
+ * @param {object} category
+ * @param {string} category.name
+ * @param {string} category.description
+ * @return Promise {object} the created category
+ */
+export function updateCategory(id, category) {
+  return httpService.put(`${categoriesEndpoint}/${id}`, category)
 }

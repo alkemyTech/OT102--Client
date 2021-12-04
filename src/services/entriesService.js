@@ -1,41 +1,63 @@
 import httpService from './httpService'
 
-const membersEndpoint = '/members'
+const entriesEndpoint = '/news'
 
 /**
- * Accepts an object to send it to members endpoint
- * @param {object} member
- * { "name": {string}, "content": {string}, "image": {string}, "categoryId": {number},
- * "type": {string} }
- * @return Promise {object} the created member
+ * Accepts an object to send it to entries endpoint
+ * @async
+ * @param {object} entry
+ * @param {string} entry.name
+ * @param {string} entry.content
+ * @param {string} entry.image
+ * @param {string} entry.type
+ * @param {int} entry.categoryId
+ * @return Promise {object} the created entrie
  */
-export function addMember(member) {
-  return httpService.post(membersEndpoint, member)
+export function addEntry(entry) {
+  return httpService.post(entriesEndpoint, entry)
 }
 
 /**
- * Accepts an id number to delete one member from members endpoint
- * @param {number} id
- * @return Promise {object} the deleted member
+ * Accepts an id to delete one entry from entries endpoint
+ * @async
+ * @param {int} id
+ * @return Promise {object} the deleted entry
  */
-export function delMember(id) {
-  return httpService.delete(`${membersEndpoint}/${id}`)
+export function delEntry(id) {
+  return httpService.delete(`${entriesEndpoint}/${id}`)
 }
 
 /**
- * Accepts an id number to retrieve one member from members endpoint
- * @param {number} id
- * @return Promise {object} the requested member
+ * Accepts an id to retrieve one entry from entries endpoint
+ * @async
+ * @param {int} id
+ * @return Promise {object} the requested entry
  */
-export function getMemberById(id) {
-  return httpService.get(`${membersEndpoint}/${id}`)
+export function getEntryById(id) {
+  return httpService.get(`${entriesEndpoint}/${id}`)
 }
 
 /**
- * Retrieves all members from members endpoint
- *
- * @return Promise {object} all the requested members
+ * Retrieves an array with all entries from entries endpoint
+ * @async
+ * @return Promise {object} all the requested entries
  */
-export function getAllMembers() {
-  return httpService.get(membersEndpoint)
+export function getAllEntries() {
+  return httpService.get(entriesEndpoint)
+}
+
+/**
+ * Accepts an object to send it to entries endpoint
+ * @async
+ * @param {int} id
+ * @param {object} entry
+ * @param {string} entry.name
+ * @param {string} entry.content
+ * @param {string} entry.image
+ * @param {string} entry.type
+ * @param {int} entry.categoryId
+ * @return Promise {object} the created entry
+ */
+export function updateEntry(id, entry) {
+  return httpService.put(`${entriesEndpoint}/${id}`, entry)
 }
