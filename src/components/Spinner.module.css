@@ -1,0 +1,16 @@
+.spinner {
+  display: flex;
+}
+
+/* https://gravitydept.com/blog/keyframe-animations-in-css-modules */
+@keyframes :global(spinner) {
+  0% {
+    transform: scale(100%);
+  }
+  50% {
+    transform: scale(0%);
+  }
+  100% {
+    transform: scale(100%);
+  }
+}
