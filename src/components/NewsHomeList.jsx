@@ -7,9 +7,12 @@ export default function SimpleThreeColumns() {
     <Box p={4}>
       <SimpleGrid columns={{ base: 1, md: 4 }} spacing={6}>
         <NewsHomeCard />
-        <NewsHomeCard />
-        <NewsHomeCard />
-        <NewsHomeCard />
+
+        {/* {
+         this.state.news.map((news,index) => {
+          return <NewsHomeCard  {...news} key={index}  />
+         })
+        } */}
       </SimpleGrid>
     </Box>
   );
