@@ -1,4 +1,6 @@
 import React from 'react'
+import { NAV_ITEMS } from "./navPublic";
+
 import {
   Box,
   Flex,
@@ -55,7 +57,6 @@ export default function WithSubnavigation() {
           objectFit="cover"
         />
 
-
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             <DesktopNav />
           </Flex>
@@ -68,37 +69,31 @@ export default function WithSubnavigation() {
           spacing={2}>
              <Button
             display={{ base: 'none', md: 'inline-flex' }}
-            fontSize={'sm'}
             fontWeight={600}
-            color={'black'}
-            bg={'#EC4C4C'}
+            bg={'brand.rouge'}
             href={'#'}
             _hover={{
-              bg: '#D8D8D8',
+              bg: 'brand.gray1',
             }}>
             Dona!
           </Button>
           <Button
             display={{ base: '1', md: 'inline-flex' }}
-            fontSize={'sm'}
             fontWeight={400}
-            color={'black'}
-            bg={'#D8D8D8'}
+            bg={'brand.gray1'}
             href={'#'}
             _hover={{
-              bg: '#8DCAFF',
+              bg: 'brand.cyan',
             }}>
             Login
           </Button>
           <Button
             display={{ base: '1', md: 'inline-flex' }}
-            fontSize={'sm'}
             fontWeight={400}
-            color={'black'}
-            bg={'#D8D8D8'}
+            bg={'brand.gray1'}
             href={'#'}
             _hover={{
-              bg: '#F8FC74',
+              bg: 'brand.yellow',
             }}>
             Registracion
           </Button>
@@ -114,8 +109,8 @@ export default function WithSubnavigation() {
 
 const DesktopNav = () => {
   const linkColor = useColorModeValue('gray.600', 'gray.200');
-  const linkHoverColor = useColorModeValue('gray.800', 'white');
-
+  const linkHoverColor = useColorModeValue('brand.blue', 'white');
+  
   return (
     <Stack direction={'row'} spacing={0}>
       {NAV_ITEMS.map((navItem) => (
@@ -157,7 +152,7 @@ const MobileNav = () => {
   );
 };
 
-const MobileNavItem = ({ label, href }= NavItem ) => {
+const MobileNavItem = ({ label, href }= NAV_ITEMS ) => {
   const { isOpen, onToggle } = useDisclosure();
 
   return (
@@ -165,7 +160,7 @@ const MobileNavItem = ({ label, href }= NavItem ) => {
       <Flex
         py={2}
         as={Link}
-        href={href ?? '#'}
+        href={href}
         justify={'space-between'}
         align={'center'}
         _hover={{
@@ -194,31 +189,3 @@ const MobileNavItem = ({ label, href }= NavItem ) => {
     </Stack>
   );
 };
-
-interface NavItem {
-  label: string;
-  href?: string;
-}
-
-const NAV_ITEMS = [
-  {
-    label: 'Nosotros',
-    href: '#',
-  },
-  {
-    label: 'Actividades',
-    href: '#',
-  },
-  {
-    label: 'Novedades',
-    href: '/news',
-  },
-  {
-    label: 'Testimonios',
-    href: '#',
-  },
-  {
-    label: 'Contacto',
-    href: '#',
-  },
-];
