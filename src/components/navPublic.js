@@ -1,4 +1,5 @@
-const NAV_ITEMS = [
+// eslint-disable-next-line import/prefer-default-export
+export const NAV_ITEMS = [
   {
     label: 'Nosotros',
     href: '#',
@@ -20,5 +21,3 @@ const NAV_ITEMS = [
     href: '#',
   },
 ]
-
-export default NAV_ITEMS
