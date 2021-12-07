@@ -1,4 +1,3 @@
-
 export const NAV_ITEMS = [
   {
     label: 'Nosotros',
@@ -17,8 +16,7 @@ export const NAV_ITEMS = [
     href: '#',
   },
   {
-    label: 'Contacto',
+    label: 'Contactos',
     href: '#',
   },
 ];
-    
