@@ -21,11 +21,7 @@ export const { setUserData, destroyUserData } = authSlice.actions
 /**
  * Accepts an object to set the new state of user
  * @async
- * @param {object} token
- * @param {string} token.token
  * @param {object} user
- * @param {string} user.firstName
- * @param {string} user.lastName
  * @param {string} user.email
  * @param {string} user.password
  * @return Promise {object} the logged user and set the new state with only body data.
