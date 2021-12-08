@@ -28,12 +28,11 @@ export const { setUserData, destroyUserData } = authSlice.actions
  */
 export const setUserDataAsync = (userData) => async (dispatch) => {
   const response = await userLogin(userData)
-  dispatch(setUserData(response.data.body))
+  dispatch(setUserData(response.data.body.user))
 }
 
 /**
  * Function to get the user logged data in the state
- * @param {string} token
  * @param {object} user
  * @param {string} user.firstName
  * @param {string} user.lastName
