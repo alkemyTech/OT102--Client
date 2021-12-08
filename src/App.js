@@ -5,6 +5,7 @@ import About from './pages/About'
 import Activities from './pages/Activities'
 import ActivityDetail from './pages/ActivityDetail'
 import Contact from './pages/Contact'
+import Dashboard from './pages/Dashboard'
 import Donate from './pages/Donate'
 import Home from './pages/Home'
 import Layout from './pages/Layout'
@@ -44,9 +45,18 @@ const App = () => (
         <Route path="register" element={<Register />} />
 
         <Route path="backoffice" element={<PrivateRoute />}>
+          <Route index path="" element={<Dashboard />} />
+          <Route path="home" element={<Dashboard />} />
           <Route path="users">
             <Route index element={<Users />} />
             <Route path=":id" element={<UserProfile />} />
+          </Route>
+          <Route path="news">
+            <Route index element={<News />} />
+            {/* <Route path=":id" element={<NewsDetail />} /> */}
+          </Route>
+          <Route path="news">
+            <Route index element={<News />} />
           </Route>
         </Route>
 
