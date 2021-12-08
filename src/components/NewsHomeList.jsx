@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Box, SimpleGrid } from '@chakra-ui/react';
+import React, { useState, useEffect } from 'react'
+import { Box, SimpleGrid } from '@chakra-ui/react'
 import { getAllEntries } from '../services/entriesService'
-import NewsHomeCard from './NewsHomeCard';
+import NewsHomeCard from './NewsHomeCard'
 
 const ListNews = () => {
   const [newss, setNews] = useState([])

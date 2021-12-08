@@ -11,4 +11,4 @@ const NewsHome = () =>
 
   )
 
-export default NewsHome
+export default NewsHome;
