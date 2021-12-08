@@ -1,10 +1,11 @@
 import axios from 'axios'
-import { apiUrl } from '../config.json'
 
 const token = window.localStorage.getItem('x-access-token')
 
 const httpService = axios.create({
-  baseURL: apiUrl,
+  baseURL: process.env.NODE_ENV === 'development'
+    ? process.env.REACT_APP_BASE_URL_LOCAL
+    : process.env.REACT_APP_BASE_URL_PRODUCTION,
   timeout: 1000,
   headers: { 'x-access-token': token },
 })

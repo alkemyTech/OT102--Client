@@ -1,7 +1,7 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 import Footer from '../components/Footer'
-import WithSubnavigation from '../components/Header'
+import WithSubnavigation from '../components/header/Header'
 
 export default function Layout() {
   return (
