@@ -4,14 +4,14 @@ import { userLogin } from '../../services/authService'
 export const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    userData: {},
+    userData: null,
   },
   reducers: {
     setUserData: (state, action) => {
       state.userData = action.payload
     },
     destroyUserData: (state) => {
-      state.userData = {}
+      state.userData = null
     },
   },
 })
@@ -38,7 +38,7 @@ export const setUserDataAsync = (userData) => async (dispatch) => {
  * @param {string} user.lastName
  * @param {string} user.email
  * @param {string} user.password
- * @return An {object} of the logged user state
+ * @return An {object} of the logged user state. It can be used on useSelect() function as parameter
  */
 export const selectUserData = (state) => state.auth.userData
 
