@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { ChakraProvider } from '@chakra-ui/react'
+import { Provider } from 'react-redux'
+import store from './app/store'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
 import theme from './themes'
@@ -9,9 +11,11 @@ import '@fontsource/atma/400.css'
 
 ReactDOM.render(
   <ChakraProvider theme={theme}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <Provider store={store}>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </Provider>
   </ChakraProvider>,
   document.getElementById('root'),
 )
