@@ -1,11 +1,9 @@
-import { ChakraProvider } from '@chakra-ui/react'
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import Header from './components/header/Header'
 import Home from './components/Home'
 import News from './components/News'
-import ContactComponent from './pages/contact/ContactComponent'
 
 const App = () => (
   <BrowserRouter>
@@ -15,9 +13,6 @@ const App = () => (
       <Route path="/home" element={<Home />} />
       <Route path="/news" element={<News />} />
     </Routes>
-    <ChakraProvider>
-      <ContactComponent />
-    </ChakraProvider>
   </BrowserRouter>
 )
 
