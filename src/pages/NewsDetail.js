@@ -5,7 +5,7 @@ export default function NewsDetail() {
   const params = useParams()
   return (
     <>
-      <h1>NewsDetail</h1>
+      <h1>NewsDetail page</h1>
       <h2>
         news:
         {params.id}

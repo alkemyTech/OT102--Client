@@ -5,7 +5,7 @@ export default function TestimonialsDetail() {
   const params = useParams()
   return (
     <>
-      <h1>Testimonial Detail</h1>
+      <h1>Testimonial Detail page</h1>
       <h2>
         Testimonial id:
         {params.id}
