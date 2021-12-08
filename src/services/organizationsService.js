@@ -33,7 +33,7 @@ export function delOrganization(id) {
  * @return Promise {object} the requested organization
  */
 export function getOrganizationById(id) {
-  return httpService.get(`${organizationsEndpoint}/${id}`)
+  return httpService.get(`${organizationsEndpoint}/${id}/public`)
 }
 
 /**
