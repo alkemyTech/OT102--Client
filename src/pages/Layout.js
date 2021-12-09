@@ -1,4 +1,4 @@
-import { HStack, Stack } from '@chakra-ui/react'
+import { Box, Stack } from '@chakra-ui/react'
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 import Footer from '../components/Footer'
@@ -8,9 +8,9 @@ export default function Layout() {
   return (
     <Stack name="layout-stack" minHeight="100vh">
       <WithSubnavigation />
-      <HStack name="layout-oulet" flexGrow={1}>
+      <Box name="layout-oulet" flexGrow={1} style={{ margin: 0 }}>
         <Outlet />
-      </HStack>
+      </Box>
       <Footer />
     </Stack>
   )
