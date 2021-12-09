@@ -20,7 +20,7 @@ export function getUserData() {
  * @returns Promise {object} represents the logged in user
  */
 export function userLogin(user) {
-  return httpService.post(authEndpoint, user)
+  return httpService.post(`${authEndpoint}/login`, user)
 }
 
 /**
