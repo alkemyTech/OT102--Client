@@ -1,7 +1,6 @@
 import {
   Box,
   Center,
-  HStack,
   Stack,
   useColorModeValue,
   VStack,
