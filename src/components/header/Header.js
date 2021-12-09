@@ -31,7 +31,7 @@ export const NAV_ITEMS = [
   },
   {
     label: 'Novedades',
-    href: 'novedades',
+    href: 'news',
   },
   {
     label: 'Testimonios',
