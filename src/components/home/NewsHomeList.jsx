@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, SimpleGrid } from '@chakra-ui/react';
-import { getAllEntries } from '../services/entriesService'
-import NewsHomeCard from './NewsHomeCard';
+import { getAllEntries } from '../../services/entriesService'
+import NewsHomeCard from '../news/NewsHomeCard';
 
 const ListNews = () => {
   const [newss, setNews] = useState([])
@@ -9,8 +9,8 @@ const ListNews = () => {
   useEffect(() => {
     getAllEntries().then((entries) => {
       setNews(entries.data.body)
-      // console.log(entries.data.body)
-    })
+      // eslint-disable-next-line no-console
+    }).catch((error) => console.log(error))
   }, [])
 
   return (

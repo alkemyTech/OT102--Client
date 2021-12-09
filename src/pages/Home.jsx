@@ -1,7 +1,7 @@
 import React from 'react'
 // import Slider from './Slider'
-import WelcomeText from './WelcomeText'
-import NewsHome from './NewsHome'
+import WelcomeText from '../components/home/WelcomeText'
+import NewsHome from '../components/home/NewsHome'
 
 const Home = () =>
   (

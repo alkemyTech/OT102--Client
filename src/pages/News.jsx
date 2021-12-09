@@ -6,7 +6,7 @@ import {
   SimpleGrid,
 } from '@chakra-ui/react';
 import { getAllEntries } from '../services/entriesService'
-import NewsHomeCard from './NewsHomeCard';
+import NewsHomeCard from '../components/news/NewsHomeCard';
 
 const ListNews = () => {
   const [newss, setNews] = useState([])

@@ -1,22 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types'
 import { Container, Text } from '@chakra-ui/react'
-import { getOrganizationById } from '../services/organizationsService'
+import { getOrganizationById } from '../../services/organizationsService'
 
-const WelcomeText = ({
-  welcomeText, ...props
-}) => {
+const WelcomeText = () => {
   const [ong, setOng] = useState([])
 
   useEffect(() => {
     getOrganizationById(1).then((organization) => {
       setOng(organization.data.body)
-      // console.log(organization.data.body)
-    })
+      // eslint-disable-next-line no-console
+    }).catch((error) => console.log(error))
   }, [])
 
   return (
-    <Container maxW="container.lg" {...props}>
+    <Container maxW="container.lg">
       <Text
         fontSize={{ base: 'lg', md: '2xl' }}
         textAlign="left"
@@ -28,9 +25,5 @@ const WelcomeText = ({
     </Container>
   )
 }
-
-WelcomeText.propTypes = {
-  welcomeText: PropTypes.string.isRequired,
-};
 
 export default WelcomeText;
