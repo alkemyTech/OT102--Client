@@ -21,6 +21,7 @@ const ListContacts = () => {
         const response = await getAllContacts()
         setContacts(response.data.body)
       } catch (error) {
+        // agregar  alert mas adelante
         // eslint-disable-next-line no-console
         console.log(error)
       }
