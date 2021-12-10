@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react'
 import {
   Box,
   Table,
@@ -10,16 +9,24 @@ import {
   Td,
   Text,
 } from '@chakra-ui/react'
-import { getContacts } from '../../app/slices/contacts'
 import Spinner from '../../components/Spinner'
+import { getAllContacts } from '../../services/contactsService'
 
 const ListContacts = () => {
-  const contacts = useSelector((state) => state.contacts.list)
-  const dispatch = useDispatch()
+  const [contacts, setContacts] = useState([])
 
   useEffect(() => {
-    dispatch(getContacts())
-  }, [dispatch])
+    const getContacts = async () => {
+      try {
+        const response = await getAllContacts()
+        setContacts(response.data.body)
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log(error)
+      }
+    }
+    getContacts()
+  }, [])
 
   return (
     <Box
