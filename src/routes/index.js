@@ -40,10 +40,9 @@ const AppRoutes = () => (
 
       <Route path="login" element={<LoginForm />} />
       <Route path="register" element={<Register />} />
-
-      {AuthRoutes()}
       <Route path="*" element={<NotFound />} />
     </Route>
+    {AuthRoutes()}
   </Routes>
 )
 
