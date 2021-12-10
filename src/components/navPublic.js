@@ -20,4 +20,4 @@ export const NAV_ITEMS = [
     label: 'Contactos',
     href: '#',
   },
-];
+]
