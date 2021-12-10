@@ -5,13 +5,12 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
   Tr,
   Th,
   Td,
   Text,
 } from '@chakra-ui/react'
-import { getContacts } from '../../features/contacts/contactsSlice'
+import { getContacts } from '../../app/slices/contacts'
 import Spinner from '../../components/Spinner'
 
 const ListContacts = () => {
@@ -29,63 +28,46 @@ const ListContacts = () => {
       justifyContent="center"
       alignItems="center"
       p="5px"
-      fontFamily="Atma"
       flexDirection="column"
       textAlign="center"
     >
-      <Text fontSize="2xl" mb="10px">Contacts</Text>
+      <Text fontSize="2xl" mb="30px">Contactos</Text>
       {contacts.length > 0 ? (
         <Table size="sm" textAlign="center">
           <Thead bg="brand.cyan">
             <Tr>
-              <Th textAlign="center" fontFamily="Atma">
-                name
+              <Th textAlign="center">
+                nombre
               </Th>
-              <Th textAlign="center" fontFamily="Atma">
-                phone
+              <Th textAlign="center">
+                telefono
               </Th>
-              <Th textAlign="center" fontFamily="Atma">
+              <Th textAlign="center">
                 email
               </Th>
-              <Th textAlign="center" fontFamily="Atma">
-                message
+              <Th textAlign="center">
+                mensaje
               </Th>
             </Tr>
           </Thead>
           <Tbody>
             {contacts.map((item) => (
               <Tr key={item.id}>
-                <Td textAlign="center" fontSize="sm">
+                <Td textAlign="center">
                   {item.name}
                 </Td>
-                <Td textAlign="center" fontSize="sm">
+                <Td textAlign="center">
                   {item.phone}
                 </Td>
-                <Td textAlign="center" fontSize="sm">
+                <Td textAlign="center">
                   {item.email}
                 </Td>
-                <Td textAlign="center" fontSize="sm">
+                <Td textAlign="center">
                   {item.message}
                 </Td>
               </Tr>
             ))}
           </Tbody>
-          <Tfoot bg="brand.cyan">
-            <Tr>
-              <Th textAlign="center" fontFamily="Atma">
-                name
-              </Th>
-              <Th textAlign="center" fontFamily="Atma">
-                phone
-              </Th>
-              <Th textAlign="center" fontFamily="Atma">
-                email
-              </Th>
-              <Th textAlign="center" fontFamily="Atma">
-                message
-              </Th>
-            </Tr>
-          </Tfoot>
         </Table>
       ) : (
         <Spinner />
