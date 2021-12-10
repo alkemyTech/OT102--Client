@@ -36,6 +36,7 @@ const ListNews = () => {
     (
       <div>
         Error al cargar las novedades!
+        <Spinner />
       </div>
     )
 
