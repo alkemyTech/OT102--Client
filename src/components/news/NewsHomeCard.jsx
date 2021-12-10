@@ -1,5 +1,4 @@
 import React from 'react'
-// import { useNavigate } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {
   Box,
@@ -11,7 +10,6 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react'
 
-// const navigate = useNavigate()
 const SocialProfileWithImage = ({
   id,
   image,
