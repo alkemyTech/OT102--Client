@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import {
@@ -14,10 +14,19 @@ import {
   InputGroup,
 } from '@chakra-ui/react'
 import { MdPhone, MdEmail, MdLocationOn } from 'react-icons/md'
-
+import { addContact } from '../../services/contactsService'
 import FormikControl from './FormikControl'
+import Alert from '../../components/alert/Alert'
 
 const ContactComponent = () => {
+  const [alertProps, setAlertprops] = useState({
+    show: false,
+    title: '',
+    message: '',
+    icon: '',
+    onConfirm: () => {},
+  })
+
   const validationSchema = Yup.object({
     name: Yup.string().required('⚠ Este dato es obligatorio'),
     email: Yup.string()
@@ -32,134 +41,169 @@ const ContactComponent = () => {
     message: '',
   }
 
-  const handleSubmit = (values) => {
+  const handleSubmit = async (values, onSubmitProps) => {
     const contactData = {
       name: values.name,
       email: values.email,
       message: values.message,
     }
+    try {
+      const contact = await addContact(contactData)
+
+      if (contact) {
+        const successAlertProps = {
+          show: true,
+          title: 'Mensaje enviado!',
+          message: 'Gracias por contactarnos, le responderemos a la brevedad',
+          icon: 'success',
+          onConfirm: () => {},
+        }
+        setAlertprops(successAlertProps)
+        onSubmitProps.resetForm()
+      }
+    } catch (error) {
+      const errorAlertProps = {
+        show: true,
+        title: 'Ooops, algo ha fallado!',
+        message: error.message,
+        icon: 'error',
+        onConfirm: () => {},
+      }
+      setAlertprops(errorAlertProps)
+    }
   }
 
   return (
-    <Container bg="#efefef" maxW="full" mt={0} centerContent overflow="hidden">
-      <Flex>
-        <Box
-          bg="#8DCAFF"
-          color="black"
-          borderRadius="lg"
-          m={{ sm: 4, md: 16, lg: 10 }}
-          p={{ sm: 5, md: 5, lg: 16 }}
-        >
-          <Box p={4}>
-            <Wrap>
-              <WrapItem>
-                <Box>
-                  <Heading>Contáctanos</Heading>
-                  <Text mt={{ sm: 3, md: 3, lg: 5 }} color="gray.500" w="80%">
-                    Completa el formulario y nuestro equipo se pondrá en
-                    contacto a la brevedad!
-                  </Text>
-                  <Box py={{ base: 5, sm: 5, md: 8, lg: 20 }}>
-                    <VStack pl={10} spacing={4} alignItems="flex-start">
-                      <Button
-                        size="lg"
-                        height="48px"
-                        width="250px"
-                        variant="ghost"
-                        color="#DCE2FF"
-                        _hover={{ border: '2px solid #f8fc74' }}
-                        leftIcon={<MdPhone color="#EC4C4C" size="20px" />}
-                      >
-                        +54-91155555
-                      </Button>
-                      <Button
-                        size="lg"
-                        height="48px"
-                        width="250px"
-                        variant="ghost"
-                        color="#DCE2FF"
-                        _hover={{ border: '2px solid #1C6FEB' }}
-                        leftIcon={<MdEmail color="#f8fc74" size="20px" />}
-                      >
-                        contacto@somosmas.com
-                      </Button>
-                      <Button
-                        size="lg"
-                        height="48px"
-                        width="250px"
-                        variant="ghost"
-                        color="#DCE2FF"
-                        _hover={{ border: '2px solid #EC4C4C' }}
-                        leftIcon={<MdLocationOn color="#1970F1" size="20px" />}
-                      >
-                        Buenos Aires, Argentina
-                      </Button>
-                    </VStack>
+    <>
+      <Alert {...alertProps} />
+      <Container
+        bg="#efefef"
+        maxW="full"
+        mt={0}
+        centerContent
+        overflow="hidden"
+      >
+        <Flex>
+          <Box
+            bg="#8DCAFF"
+            color="black"
+            borderRadius="lg"
+            m={{ sm: 4, md: 16, lg: 10 }}
+            p={{ sm: 5, md: 5, lg: 16 }}
+          >
+            <Box p={4}>
+              <Wrap>
+                <WrapItem>
+                  <Box>
+                    <Heading>Contáctanos</Heading>
+                    <Text mt={{ sm: 3, md: 3, lg: 5 }} color="gray.500" w="80%">
+                      Completa el formulario y nuestro equipo se pondrá en
+                      contacto a la brevedad!
+                    </Text>
+                    <Box py={{ base: 5, sm: 5, md: 8, lg: 20 }}>
+                      <VStack pl={10} spacing={4} alignItems="flex-start">
+                        <Button
+                          size="lg"
+                          height="48px"
+                          width="250px"
+                          variant="ghost"
+                          color="#DCE2FF"
+                          _hover={{ border: '2px solid #f8fc74' }}
+                          leftIcon={<MdPhone color="#EC4C4C" size="20px" />}
+                        >
+                          +54-91155555
+                        </Button>
+                        <Button
+                          size="lg"
+                          height="48px"
+                          width="250px"
+                          variant="ghost"
+                          color="#DCE2FF"
+                          _hover={{ border: '2px solid #1C6FEB' }}
+                          leftIcon={<MdEmail color="#f8fc74" size="20px" />}
+                        >
+                          contacto@somosmas.com
+                        </Button>
+                        <Button
+                          size="lg"
+                          height="48px"
+                          width="250px"
+                          variant="ghost"
+                          color="#DCE2FF"
+                          _hover={{ border: '2px solid #EC4C4C' }}
+                          leftIcon={
+                            <MdLocationOn color="#1970F1" size="20px" />
+                          }
+                        >
+                          Buenos Aires, Argentina
+                        </Button>
+                      </VStack>
+                    </Box>
                   </Box>
-                </Box>
-              </WrapItem>
-              <WrapItem>
-                <Formik
-                  initialValues={initialValues}
-                  validationSchema={validationSchema}
-                  onSubmit={handleSubmit}
-                >
-                  <Form>
-                    <Box
-                      bg="white"
-                      borderRadius="lg"
-                      p={{ sm: 16, md: 20, lg: 30 }}
-                    >
-                      <Box m={8} color="#0B0E3F">
-                        <VStack m={10} spacing={5}>
-                          <InputGroup borderColor="#E0E1E7">
+                </WrapItem>
+                <WrapItem>
+                  <Formik
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={handleSubmit}
+                  >
+                    <Form>
+                      <Box
+                        bg="white"
+                        borderRadius="lg"
+                        p={{ sm: 16, md: 20, lg: 30 }}
+                      >
+                        <Box m={8} color="#0B0E3F">
+                          <VStack m={10} spacing={5}>
+                            <InputGroup borderColor="#E0E1E7">
+                              <FormikControl
+                                control="chakraInput"
+                                type="text"
+                                label="Nombre"
+                                name="name"
+                                id="name"
+                              />
+                            </InputGroup>
+
                             <FormikControl
                               control="chakraInput"
-                              type="text"
-                              label="Nombre"
-                              name="name"
-                              id="name"
+                              type="email"
+                              label="Email"
+                              name="email"
+                              id="email"
                             />
-                          </InputGroup>
 
-                          <FormikControl
-                            control="chakraInput"
-                            type="email"
-                            label="Email"
-                            name="email"
-                            id="email"
-                          />
+                            <FormikControl
+                              control="chakraTextarea"
+                              type="text"
+                              label="Mensaje"
+                              name="message"
+                              id="message"
+                              placeholder="Escribe tu mensaje"
+                            />
 
-                          <FormikControl
-                            control="chakraTextarea"
-                            type="text"
-                            label="Mensaje"
-                            name="message"
-                            id="message"
-                            placeholder="Escribe tu mensaje"
-                          />
-
-                          <Button
-                            type="submit"
-                            variant="solid"
-                            bg="#0D74FF"
-                            color="white"
-                            _hover={{}}
-                            w="100%"
-                          >
-                            Enviar Mensaje
-                          </Button>
-                        </VStack>
+                            <Button
+                              type="submit"
+                              variant="solid"
+                              bg="#0D74FF"
+                              color="white"
+                              _hover={{}}
+                              w="100%"
+                            >
+                              Enviar Mensaje
+                            </Button>
+                          </VStack>
+                        </Box>
                       </Box>
-                    </Box>
-                  </Form>
-                </Formik>
-              </WrapItem>
-            </Wrap>
+                    </Form>
+                  </Formik>
+                </WrapItem>
+              </Wrap>
+            </Box>
           </Box>
-        </Box>
-      </Flex>
-    </Container>
+        </Flex>
+      </Container>
+    </>
   )
 }
 

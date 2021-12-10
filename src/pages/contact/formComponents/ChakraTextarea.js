@@ -11,7 +11,7 @@ import {
 function ChakraTextarea(props) {
   const { label, name, ...rest } = props
   return (
-    <Field as="textarea" name={name}>
+    <Field name={name}>
       {({ field, form }) => (
         <FormControl isInvalid={form.errors[name] && form.touched[name]}>
           <FormLabel htmlFor={name}>{label}</FormLabel>
