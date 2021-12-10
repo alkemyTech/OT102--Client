@@ -6,16 +6,14 @@ import store from './app/store'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
 import theme from './themes'
-// eslint-disable-next-line
-import '@fontsource/atma/400.css'
 
 ReactDOM.render(
   <ChakraProvider theme={theme}>
-    <Provider store={store}>
-      <React.StrictMode>
+    <React.StrictMode>
+      <Provider store={store}>
         <App />
-      </React.StrictMode>
-    </Provider>
+      </Provider>
+    </React.StrictMode>
   </ChakraProvider>,
   document.getElementById('root'),
 )
