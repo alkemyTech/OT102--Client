@@ -5,36 +5,35 @@ import * as Yup from 'yup'
 import {
   Flex, Box, FormControl, FormLabel, Input, Stack, Button, Heading,
 } from '@chakra-ui/react'
-import { getCategoryById } from '../../services/categoriesService'
-// addCategory, updateCategory
+import { addCategory, getCategoryById, updateCategory } from '../../services/categoriesService'
 
 const EditCategoryForm = () => {
-  const id = 1
+  const id = null
   const [categoryData, setCategoryData] = useState({
     textButton: 'Crear',
     name: '',
     description: '',
   })
-  const [action] = useState(
-    id ? 'PUT' : 'POST',
-  )
+
   const registerSchema = Yup.object().shape({
     categoryName: Yup.string().required('Nombre es Obligatorio'),
   })
 
-  const loadDataById = async () => {
+  const loadData = async () => {
     await getCategoryById(id)
       .then((response) => response.data.body)
-      .then((result) => setCategoryData({
-        textButton: 'Editar',
-        name: result.name,
-        description: result.description,
-      }))
+      .then((result) =>
+        setCategoryData({
+          textButton: 'Editar',
+          name: result.name,
+          description: result.description,
+        }))
+      .catch((error) => error)
   }
 
   useEffect(() => {
     if (id) {
-      loadDataById()
+      loadData()
     }
   }, [])
 
@@ -47,13 +46,18 @@ const EditCategoryForm = () => {
           description: categoryData.description,
         }}
         validationSchema={registerSchema}
-        onSubmit={(values, { setSubmitting }) => {
-          action({
-            categoryName: values.categoryName,
-            description: values.description,
-          })
-
-          setSubmitting(false)
+        onSubmit={(values) => {
+          if (id) {
+            updateCategory(id, {
+              name: values.categoryName,
+              description: values.description,
+            })
+          } else {
+            addCategory({
+              name: values.categoryName,
+              description: values.description,
+            })
+          }
         }}
       >
         {({
