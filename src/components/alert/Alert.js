@@ -11,21 +11,30 @@ Cancel button (cancelbtn) boolean.
 if needed you can send as prop true and a cancel button will be displayed.
 onConfirm and onCancel are functions to be executed if user clicks on Accept or Cancel buttons */
 const Alert = ({
-  show, title, message, icon, cancelbtn, onConfirm, onCancel,
+  show,
+  title,
+  message,
+  icon,
+  cancelbtn,
+  onConfirm,
+  onCancel,
 }) => {
-  useEffect(async () => {
+  const showAlert = async () =>
+    swal.fire({
+      position: 'center',
+      padding: '1rem 2rem',
+      confirmButtonColor: '#8DCAFF',
+      cancelButtonColor: '#EC4C4C',
+      title: `${title}`,
+      text: `${message}`,
+      icon: `${icon}`,
+      showCancelButton: cancelbtn,
+      allowOutsideClick: !cancelbtn, // If cancel button is displayed, do not allow outside click.
+      backdrop: !cancelbtn,
+    })
+  useEffect(() => {
     if (show) {
-      const result = await swal.fire({
-        position: 'center',
-        padding: '1rem 2rem',
-        confirmButtonColor: '#8DCAFF',
-        cancelButtonColor: '#EC4C4C',
-        title: `${title}`,
-        text: `${message}`,
-        icon: `${icon}`,
-        showCancelButton: cancelbtn,
-        allowOutsideClick: !cancelbtn, // If cancel button is displayed, do not allow outside click.
-      })
+      const result = showAlert()
       if (result.isConfirmed) {
         onConfirm()
       }
@@ -33,7 +42,7 @@ const Alert = ({
         onCancel()
       }
     }
-  }, [show])
+  }, [show, showAlert, onConfirm, onCancel])
   return <></>
 }
 

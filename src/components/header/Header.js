@@ -13,6 +13,8 @@ import {
 } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 
+import useUser from '../../hooks/useUser'
+
 import DesktopNav from './DesktopNav'
 import MobileNav from './MobileNav'
 
@@ -31,20 +33,21 @@ export const NAV_ITEMS = [
   },
   {
     label: 'Novedades',
-    href: 'news',
+    href: 'novedades',
   },
   {
     label: 'Testimonios',
     href: 'testimonios',
   },
   {
-    label: 'Contactos',
+    label: 'Contacto',
     href: 'contacto',
   },
 ]
 
 export default function WithSubnavigation() {
   const navigate = useNavigate()
+  const { isLogged } = useUser()
   const { isOpen, onToggle } = useDisclosure()
 
   return (
@@ -86,7 +89,7 @@ export default function WithSubnavigation() {
           />
 
           <Flex display={{ base: 'none', md: 'flex' }}>
-            <DesktopNav navItems={NAV_ITEMS} />
+            <DesktopNav isLogged={isLogged} navItems={NAV_ITEMS} />
           </Flex>
         </Flex>
 
@@ -135,7 +138,11 @@ export default function WithSubnavigation() {
       </Flex>
 
       <Collapse in={isOpen} animateOpacity>
-        <MobileNav onToggle={onToggle} navItems={NAV_ITEMS} />
+        <MobileNav
+          isLogged={isLogged}
+          onToggle={onToggle}
+          navItems={NAV_ITEMS}
+        />
       </Collapse>
     </Box>
   )

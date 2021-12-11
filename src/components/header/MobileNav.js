@@ -3,7 +3,7 @@ import { Stack, useColorModeValue } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 import MobileNavItem from './MobileNavItem'
 
-const MobileNav = ({ navItems, onToggle }) => (
+const MobileNav = ({ navItems, onToggle, isLogged }) => (
   <Stack
     bg={useColorModeValue('white', 'gray.800')}
     p={2}
@@ -12,6 +12,7 @@ const MobileNav = ({ navItems, onToggle }) => (
     {navItems.map((navItem) => (
       <MobileNavItem key={navItem.label} {...navItem} onToggle={onToggle} />
     ))}
+    {isLogged ? <MobileNavItem href="backoffice" label="Backoffice" /> : null}
   </Stack>
 )
 
@@ -23,6 +24,11 @@ MobileNav.propTypes = {
     }),
   ).isRequired,
   onToggle: PropTypes.func.isRequired,
+  isLogged: PropTypes.bool,
+}
+
+MobileNav.defaultProps = {
+  isLogged: false,
 }
 
 export default MobileNav

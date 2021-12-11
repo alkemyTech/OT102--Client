@@ -1,12 +1,13 @@
+import React from 'react'
+import { Link as ReactRouterLink, Outlet } from 'react-router-dom'
 import {
   Box,
   Center,
   Stack,
   useColorModeValue,
   VStack,
+  Link,
 } from '@chakra-ui/react'
-import React from 'react'
-import { Outlet } from 'react-router-dom'
 
 export default function Dashboard() {
   return (
@@ -21,6 +22,15 @@ export default function Dashboard() {
         <Box>mi perfil</Box>
         <Box>mis opciones</Box>
         <Box>mis opciones</Box>
+        <Link
+          as={ReactRouterLink}
+          to="users"
+          fontWeight={500}
+          fontFamily="Atma"
+          color={useColorModeValue('gray.600', 'gray.200')}
+        >
+          Users
+        </Link>
       </VStack>
 
       <Center name="dashboard-oulet" flexGrow={1}>
