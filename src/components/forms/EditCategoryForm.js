@@ -6,29 +6,49 @@ import {
   Flex, Box, FormControl, FormLabel, Input, Stack, Button, Heading,
 } from '@chakra-ui/react'
 import { addCategory, getCategoryById, updateCategory } from '../../services/categoriesService'
+import Alert from '../alert/Alert'
 
 const EditCategoryForm = () => {
-  const id = null
+  const id = 1
+  const [alertProps, setAlertprops] = useState({
+    show: false,
+    title: '',
+    message: '',
+    icon: '',
+    onConfirm: () => {},
+  })
+
   const [categoryData, setCategoryData] = useState({
     textButton: 'Crear',
     name: '',
     description: '',
   })
 
-  const registerSchema = Yup.object().shape({
-    categoryName: Yup.string().required('Nombre es Obligatorio'),
+  const categorySchema = Yup.object().shape({
+    categoryName: Yup.string().required('Nombre es obligatorio').min(3, 'El nombre debe tener mas de dos caracteres').max(255, 'Demasiado largo!'),
+    description: Yup.string().required('La descripción es obligatoria').min(3, 'La descripción debe tener mas de dos caracteres'),
   })
 
   const loadData = async () => {
-    await getCategoryById(id)
-      .then((response) => response.data.body)
-      .then((result) =>
-        setCategoryData({
-          textButton: 'Editar',
-          name: result.name,
-          description: result.description,
-        }))
-      .catch((error) => error)
+    try {
+      const loadedCategory = await getCategoryById(id)
+      setCategoryData({
+        textButton: 'Editar',
+        name: loadedCategory.data.body.name,
+        description: loadedCategory.data.body.description,
+      })
+    } catch (error) {
+      // no me acuerdo cual era el errorhandler que estabamos utiizando para esto,
+      // asi que le deje el alert como para que muestre algo
+      const errorAlertProps = {
+        show: true,
+        title: 'Ooops, algo ha fallado!',
+        message: error.message,
+        icon: 'error',
+        onConfirm: () => {},
+      }
+      setAlertprops(errorAlertProps)
+    }
   }
 
   useEffect(() => {
@@ -37,28 +57,77 @@ const EditCategoryForm = () => {
     }
   }, [])
 
+  const handleUpdateSubmit = async (values, onSubmitProps) => {
+    try {
+      const updatedCategory = await updateCategory(id, {
+        name: values.categoryName,
+        description: values.description,
+      })
+
+      if (updatedCategory) {
+        const successAlertProps = {
+          show: true,
+          title: 'Categoria actualizada con éxito',
+          message: '',
+          icon: 'success',
+          onConfirm: () => {},
+        }
+        setAlertprops(successAlertProps)
+        onSubmitProps.resetForm()
+      }
+    } catch (error) {
+      const errorAlertProps = {
+        show: true,
+        title: 'Ooops, algo ha fallado!',
+        message: error.message,
+        icon: 'error',
+        onConfirm: () => {},
+      }
+      setAlertprops(errorAlertProps)
+    }
+  }
+
+  const handleAddSubmit = async (values, onSubmitProps) => {
+    try {
+      const addedCategory = await addCategory({
+        name: values.categoryName,
+        description: values.description,
+      })
+
+      if (addedCategory) {
+        const successAlertProps = {
+          show: true,
+          title: 'Categoria registrada éxito',
+          message: '',
+          icon: 'success',
+          onConfirm: () => {},
+        }
+        setAlertprops(successAlertProps)
+        onSubmitProps.resetForm()
+      }
+    } catch (error) {
+      const errorAlertProps = {
+        show: true,
+        title: 'Ooops, algo ha fallado!',
+        message: error.message,
+        icon: 'error',
+        onConfirm: () => {},
+      }
+      setAlertprops(errorAlertProps)
+    }
+  }
+
   return (
     <>
+      <Alert {...alertProps} />
       <Formik
         enableReinitialize
         initialValues={{
           categoryName: categoryData.name,
           description: categoryData.description,
         }}
-        validationSchema={registerSchema}
-        onSubmit={(values) => {
-          if (id) {
-            updateCategory(id, {
-              name: values.categoryName,
-              description: values.description,
-            })
-          } else {
-            addCategory({
-              name: values.categoryName,
-              description: values.description,
-            })
-          }
-        }}
+        validationSchema={categorySchema}
+        onSubmit={id ? handleUpdateSubmit : handleAddSubmit}
       >
         {({
           values, errors, touched, handleChange, handleBlur, handleSubmit,
