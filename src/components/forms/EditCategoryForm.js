@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import {
@@ -8,7 +9,7 @@ import { addCategory, getCategoryById, updateCategory } from '../../services/cat
 import Alert from '../alert/Alert'
 
 const EditCategoryForm = () => {
-  const id = 1
+  const { id } = useParams
   const [alertProps, setAlertprops] = useState({
     show: false,
     title: '',
