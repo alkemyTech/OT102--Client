@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
-// import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 import {
   Flex, Box, FormControl, FormLabel, Input, Stack, Button, Heading,
 } from '@chakra-ui/react'
