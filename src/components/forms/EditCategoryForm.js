@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import {
@@ -9,7 +9,8 @@ import { addCategory, getCategoryById, updateCategory } from '../../services/cat
 import Alert from '../alert/Alert'
 
 const EditCategoryForm = () => {
-  const { id } = useParams
+  const { id } = useParams()
+  const navigate = useNavigate();
   const [alertProps, setAlertprops] = useState({
     show: false,
     title: '',
@@ -55,6 +56,7 @@ const EditCategoryForm = () => {
     if (id) {
       loadData()
     }
+  // eslint-disable-next-line
   }, [])
 
   const handleUpdateSubmit = async (values, onSubmitProps) => {
@@ -74,6 +76,7 @@ const EditCategoryForm = () => {
         }
         setAlertprops(successAlertProps)
         onSubmitProps.resetForm()
+        navigate('/')
       }
     } catch (error) {
       const errorAlertProps = {
@@ -104,6 +107,7 @@ const EditCategoryForm = () => {
         }
         setAlertprops(successAlertProps)
         onSubmitProps.resetForm()
+        navigate('/')
       }
     } catch (error) {
       const errorAlertProps = {
