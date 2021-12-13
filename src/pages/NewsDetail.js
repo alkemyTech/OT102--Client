@@ -1,33 +1,70 @@
-import React from 'react'
-// import { useParams } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import {
   Container,
   Text,
   VStack,
   Image,
-} from '@chakra-ui/react';
+} from '@chakra-ui/react'
+import { getEntryById } from '../services/entriesService'
+import Alert from '../components/alert/Alert'
 
-const NewsDetail = () =>
-// const { id } = useParams()
-  (
+export default function NewsDetail() {
+  const { id } = useParams()
+  const [alertProps, setAlertprops] = useState({
+    show: false,
+    title: '',
+    message: '',
+    icon: '',
+    onConfirm: () => {},
+  })
+
+  const [newsData, setNewsData] = useState({
+    image: '',
+    name: '',
+    content: '',
+  })
+
+  const loadData = async () => {
+    try {
+      const loadedCategory = await getEntryById(id)
+      setNewsData(loadedCategory.data.body)
+    } catch (error) {
+      const errorAlertProps = {
+        show: true,
+        title: 'Ooops, algo ha fallado!',
+        message: error.message,
+        icon: 'error',
+        onConfirm: () => {},
+      }
+      setAlertprops(errorAlertProps)
+    }
+  }
+
+  useEffect(() => {
+    if (id) {
+      loadData()
+    }
+  // eslint-disable-next-line
+  }, [])
+
+  return (
     <>
+      <Alert {...alertProps} />
       <Container maxW="container.lg" mt="5">
         <VStack paddingTop="40px" spacing="2" alignItems="flex-start">
           <Image
             w="full"
             h="250px"
-            src="https://www.unicef.org/argentina/sites/unicef.org.argentina/files/styles/press_release_feature/public/DeclaracioHenrietta.jpg?itok=j4DT4DR_"
+            src={newsData.image}
             objectFit="cover"
             objectPosition="center -100px"
           />
 
-          <Text textStyle="title">Titulo de la Novedad</Text>
-          <Text as="p" fontSize="lg">
-            Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos deesde el año
-          </Text>
+          <Text textStyle="title">{newsData.name}</Text>
+          <Text as="p" fontSize="lg">{newsData.content}</Text>
         </VStack>
       </Container>
     </>
   )
-
-export default NewsDetail;
+}
