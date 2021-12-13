@@ -19,6 +19,7 @@ const Alert = ({
   onConfirm,
   onCancel,
 }) => {
+  // eslint-disable-next-line
   const showAlert = async () =>
     swal.fire({
       position: 'center',
