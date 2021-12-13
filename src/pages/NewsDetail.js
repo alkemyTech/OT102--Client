@@ -30,8 +30,8 @@ export default function NewsDetail() {
 
   const loadData = async () => {
     try {
-      const loadedCategory = await getEntryById(id)
-      setNewsData(loadedCategory.data.body)
+      const loadedNews = await getEntryById(id)
+      setNewsData(loadedNews.data.body)
     } catch (error) {
       const errorAlertProps = {
         show: true,
