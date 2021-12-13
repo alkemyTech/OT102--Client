@@ -5,6 +5,7 @@ import AdminRoute from '../hoc/AdminRoute'
 
 import Activities from '../pages/Activities'
 import Categories from '../pages/Categories'
+import ListContacts from '../pages/ListContacts'
 import News from '../pages/News'
 import Testimonials from '../pages/Testimonials'
 import Users from '../pages/Users'
@@ -38,6 +39,9 @@ const AdminRoutes = () => (
       <Route path="categories">
         <Route index element={<Categories />} />
         <Route path=":id" element={<EditCategoryForm />} />
+      </Route>
+      <Route path="contacts">
+        <Route index element={<ListContacts />} />
       </Route>
       <Route path="testimonials">
         <Route index element={<Testimonials />} />

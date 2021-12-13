@@ -6,7 +6,7 @@ import AuthRoutes from './authRoutes'
 import About from '../pages/About'
 import Activities from '../pages/Activities'
 import ActivityDetail from '../pages/ActivityDetail'
-import Contact from '../pages/Contact'
+import ContactComponent from '../pages/contact/ContactComponent'
 import Donate from '../pages/Donate'
 import Home from '../pages/Home'
 import Layout from '../pages/Layout'
@@ -35,7 +35,7 @@ const AppRoutes = () => (
         <Route index element={<Testimonials />} />
         <Route path=":id" element={<TestimonialsDetail />} />
       </Route>
-      <Route path="contacto" element={<Contact />} />
+      <Route path="contacto" element={<ContactComponent />} />
       <Route path="donar" element={<Donate />} />
 
       <Route path="login" element={<LoginForm />} />
