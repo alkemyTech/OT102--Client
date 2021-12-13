@@ -7,33 +7,59 @@ import {
   Image,
 } from '@chakra-ui/react'
 import { getEntryById } from '../services/entriesService'
+import Alert from '../components/alert/Alert'
 import Spinner from '../components/Spinner'
 
-const NewsDetail = () => {
+export default function NewsDetail() {
   const { id } = useParams()
+  const [alertProps, setAlertprops] = useState({
+    show: false,
+    title: '',
+    message: '',
+    icon: '',
+    onConfirm: () => {},
+  })
+
   const [newsData, setNewsData] = useState({
     image: '',
     name: '',
     content: '',
   })
-  const [error, setError] = useState(null)
+
+  const [loading] = useState(false)
 
   const loadData = async () => {
-    getEntryById(id).then((entry) => {
-      setNewsData(entry.data.body)
-      setError(null)
-    }).catch((err) =>
-      setError(err))
+    try {
+      const loadedCategory = await getEntryById(id)
+      setNewsData(loadedCategory.data.body)
+    } catch (error) {
+      const errorAlertProps = {
+        show: true,
+        title: 'Ooops, algo ha fallado!',
+        message: error.message,
+        icon: 'error',
+        onConfirm: () => {},
+      }
+      setAlertprops(errorAlertProps)
+    }
   }
 
-  // run on load
   useEffect(() => {
-    loadData()
-    // eslint-disable-next-line
+    if (id) {
+      loadData()
+    }
+  // eslint-disable-next-line
   }, [])
 
-  const getNews = () =>
-    (
+  if (loading) {
+    return (
+      <Spinner />
+    )
+  }
+
+  return (
+    <>
+      <Alert {...alertProps} />
       <Container maxW="container.lg" mt="5">
         <VStack paddingTop="40px" spacing="2" alignItems="flex-start">
           <Image
@@ -48,24 +74,6 @@ const NewsDetail = () => {
           <Text as="p" fontSize="lg">{newsData.content}</Text>
         </VStack>
       </Container>
-    )
-
-  const getErrorView = () =>
-    (
-      <div>
-        Error al cargar la novedad!
-        { error.message }
-        <Spinner />
-      </div>
-    )
-
-  return (
-    <div>
-      <ul>
-        { error ? getErrorView() : getNews() }
-      </ul>
-    </div>
-  )
+    </>
+  );
 }
-
-export default NewsDetail;
