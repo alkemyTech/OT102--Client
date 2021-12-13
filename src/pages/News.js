@@ -29,7 +29,7 @@ const ListNews = () => {
   const getListItems = () =>
     (
       <Container maxW="container.lg" mt="5">
-        <Text textStyle="title">Novedades</Text>
+        <Text textStyle="title">Novedades Somos Mas</Text>
         <Box p={0}>
           <SimpleGrid columns={{ base: 1, md: 4 }} spacing={6}>
 
