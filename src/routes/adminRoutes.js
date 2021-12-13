@@ -17,6 +17,7 @@ import EditNewsForm from '../components/forms/EditNewsForm'
 import EditActivityForm from '../components/forms/EditActivityForm'
 import EditCategoryForm from '../components/forms/EditCategoryForm'
 import EditTestimonialsForm from '../components/forms/EditTestimonialsForm'
+import ListContacts from '../pages/backoficce/ListContacts'
 
 const AdminRoutes = () => (
   <>
@@ -46,6 +47,9 @@ const AdminRoutes = () => (
       <Route path="testimonials">
         <Route index element={<Testimonials />} />
         <Route path=":id" element={<EditTestimonialsForm />} />
+      </Route>
+      <Route path="contacts">
+        <Route index element={<ListContacts />} />
       </Route>
     </Route>
   </>
