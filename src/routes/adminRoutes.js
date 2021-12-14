@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom'
 import AdminRoute from '../hoc/AdminRoute'
 
 import Activities from '../pages/Activities'
-import Categories from '../pages/Categories'
+import ListCategories from '../pages/backoffice/ListCategories'
 import ListContacts from '../pages/backoffice/ListContacts'
 import News from '../pages/News'
 import Testimonials from '../pages/Testimonials'
@@ -37,7 +37,7 @@ const AdminRoutes = () => (
         <Route path=":id" element={<EditActivityForm />} />
       </Route>
       <Route path="categories">
-        <Route index element={<Categories />} />
+        <Route index element={<ListCategories />} />
         <Route path=":id" element={<EditCategoryForm />} />
       </Route>
       <Route path="contacts">
