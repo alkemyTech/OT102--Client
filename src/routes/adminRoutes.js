@@ -5,6 +5,7 @@ import AdminRoute from '../hoc/AdminRoute'
 
 import Activities from '../pages/Activities'
 import Categories from '../pages/Categories'
+import ListContacts from '../pages/backoffice/ListContacts'
 import News from '../pages/News'
 import Testimonials from '../pages/Testimonials'
 import Users from '../pages/Users'
@@ -16,7 +17,6 @@ import EditNewsForm from '../components/forms/EditNewsForm'
 import EditActivityForm from '../components/forms/EditActivityForm'
 import EditCategoryForm from '../components/forms/EditCategoryForm'
 import EditTestimonialsForm from '../components/forms/EditTestimonialsForm'
-import ListContacts from '../pages/backoficce/ListContacts'
 
 const AdminRoutes = () => (
   <>
@@ -39,6 +39,9 @@ const AdminRoutes = () => (
       <Route path="categories">
         <Route index element={<Categories />} />
         <Route path=":id" element={<EditCategoryForm />} />
+      </Route>
+      <Route path="contacts">
+        <Route index element={<ListContacts />} />
       </Route>
       <Route path="testimonials">
         <Route index element={<Testimonials />} />
