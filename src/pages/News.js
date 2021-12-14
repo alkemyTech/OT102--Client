@@ -12,7 +12,7 @@ import Spinner from '../components/Slider'
 
 export default function ListNews() {
   const [allNews, setNews] = useState([])
-  const [loading] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [alertProps, setAlertprops] = useState({
     show: false,
     title: '',
@@ -23,9 +23,12 @@ export default function ListNews() {
 
   const loadData = async () => {
     try {
+      setLoading(true)
       const loadedNews = await getAllEntries()
       setNews(loadedNews.data.body)
+      setLoading(false)
     } catch (error) {
+      setLoading(false)
       const errorAlertProps = {
         show: true,
         title: 'Ooops, algo ha fallado!',

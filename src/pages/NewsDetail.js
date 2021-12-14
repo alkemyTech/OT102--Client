@@ -26,13 +26,16 @@ export default function NewsDetail() {
     content: '',
   })
 
-  const [loading] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const loadData = async () => {
     try {
+      setLoading(true)
       const loadedNews = await getEntryById(id)
       setNewsData(loadedNews.data.body)
+      setLoading(false)
     } catch (error) {
+      setLoading(false)
       const errorAlertProps = {
         show: true,
         title: 'Ooops, algo ha fallado!',
