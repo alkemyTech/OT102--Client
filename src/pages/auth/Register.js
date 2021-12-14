@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
@@ -17,9 +18,12 @@ import {
   Text,
 } from '@chakra-ui/react'
 
+import useUser from '../../hooks/useUser'
+
 const Register = () => {
+  const navigate = useNavigate()
+  const { newUser } = useUser
   const [showPassword, setShowPassword] = useState(false)
-  const formValues = []
 
   const registerSchema = Yup.object().shape({
     firstName: Yup.string().required('Nombre es Obligatorio'),
@@ -43,15 +47,15 @@ const Register = () => {
           password: '',
         }}
         validationSchema={registerSchema}
-        onSubmit={(values, { setSubmitting }) => {
-          formValues.push({
-            firstName: values.firstName,
-            lastName: values.lastName,
-            email: values.email,
-            password: values.password,
-          })
-
-          setSubmitting(false)
+        onSubmit={async (values, { setSubmitting }) => {
+          newUser(values)
+            .then(() => {
+              setSubmitting(false)
+              navigate('/', { replace: true })
+            })
+            .catch((error) =>
+            // eslint-disable-next-line no-console
+              console.log(error))
         }}
       >
         {({
