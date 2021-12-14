@@ -8,6 +8,7 @@ import {
 } from '@chakra-ui/react'
 import { getEntryById } from '../services/entriesService'
 import Alert from '../components/alert/Alert'
+import Spinner from '../components/Spinner'
 
 export default function NewsDetail() {
   const { id } = useParams()
@@ -25,11 +26,16 @@ export default function NewsDetail() {
     content: '',
   })
 
+  const [loading, setLoading] = useState(false)
+
   const loadData = async () => {
     try {
+      setLoading(true)
       const loadedNews = await getEntryById(id)
       setNewsData(loadedNews.data.body)
+      setLoading(false)
     } catch (error) {
+      setLoading(false)
       const errorAlertProps = {
         show: true,
         title: 'Ooops, algo ha fallado!',
@@ -47,6 +53,12 @@ export default function NewsDetail() {
     }
   // eslint-disable-next-line
   }, [])
+
+  if (loading) {
+    return (
+      <Spinner />
+    )
+  }
 
   return (
     <>
@@ -66,5 +78,5 @@ export default function NewsDetail() {
         </VStack>
       </Container>
     </>
-  )
+  );
 }
