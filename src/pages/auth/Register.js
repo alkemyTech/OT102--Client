@@ -21,7 +21,7 @@ import {
 
 import useUser from '../../hooks/useUser'
 import extractErrorMsg from '../../utils/extractErrorMsg'
-import Alert from '../../components/alert/Alert'
+import AlertFunction from '../../components/alert/AlertFunction'
 
 const passwordChars = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$/
 
@@ -69,13 +69,6 @@ InputPassword.propTypes = {
 const Register = () => {
   const navigate = useNavigate()
   const { newUser } = useUser()
-  const defaultAlertProps = {
-    show: false,
-    title: '',
-    message: '',
-    icon: 'error',
-  }
-  const [alertProps, setAlertProps] = useState(defaultAlertProps)
 
   const onSubmit = (values, { setSubmitting }) => {
     newUser(values)
@@ -84,19 +77,17 @@ const Register = () => {
         navigate('/', { replace: true })
       })
       .catch((error) => {
-        setAlertProps({
-          ...alertProps,
-          show: true,
+        AlertFunction({
           title: 'Error de registro',
           message: extractErrorMsg(error),
-          onConfirm: setAlertProps(defaultAlertProps),
+          icon: 'error',
+          onConfirm: () => AlertFunction({ title: 'Bienvenido' }),
         })
       })
   }
 
   return (
     <>
-      <Alert {...alertProps} />
       <Formik
         initialValues={{
           firstName: '',
