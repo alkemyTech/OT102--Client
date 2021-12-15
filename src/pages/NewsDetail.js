@@ -8,7 +8,7 @@ import {
 } from '@chakra-ui/react'
 import { getEntryById } from '../services/entriesService'
 import Alert from '../components/alert/Alert'
-import Spinner from '../components/Slider'
+import Spinner from '../components/Spinner'
 
 export default function NewsDetail() {
   const { id } = useParams()
@@ -78,5 +78,5 @@ export default function NewsDetail() {
         </VStack>
       </Container>
     </>
-  )
+  );
 }
