@@ -49,6 +49,7 @@ export default function WithSubnavigation() {
   const navigate = useNavigate()
   const { isLogged } = useUser()
   const { isOpen, onToggle } = useDisclosure()
+  const { handleLogout } = useUser()
 
   return (
     <Box>
@@ -109,6 +110,18 @@ export default function WithSubnavigation() {
             }}
           >
             Dona!
+          </Button>
+          <Button
+            display={{ base: '1', md: 'inline-flex' }}
+            px={{ base: '15px', md: '25px' }}
+            fontWeight={400}
+            bg="brand.gray1"
+            onClick={() => handleLogout}
+            _hover={{
+              bg: 'brand.cyan',
+            }}
+          >
+            Logout
           </Button>
           <Button
             display={{ base: '1', md: 'inline-flex' }}
