@@ -203,7 +203,11 @@ const Register = () => {
                       </Button>
                     </Stack>
                     <Stack pt={6}>
-                      <Text align="center">Ya estas registrado? <Link to='/login'>LOGIN</Link></Text>
+                      <Text align="center">
+                        Ya estas registrado?
+                        {' '}
+                        <Link to="/login">LOGIN</Link>
+                      </Text>
                     </Stack>
                   </Stack>
                 </Box>
