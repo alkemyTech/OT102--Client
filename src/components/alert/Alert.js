@@ -43,7 +43,7 @@ const Alert = ({
         onCancel()
       }
     }
-  }, [show, showAlert, onConfirm, onCancel])
+  }, [show])
   return <></>
 }
 

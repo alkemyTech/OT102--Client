@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
@@ -19,26 +20,83 @@ import {
 } from '@chakra-ui/react'
 
 import useUser from '../../hooks/useUser'
+import extractErrorMsg from '../../utils/extractErrorMsg'
+import Alert from '../../components/alert/Alert'
+
+const passwordChars = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$/
+
+const registerSchema = Yup.object().shape({
+  firstName: Yup.string().required('Nombre es Obligatorio'),
+  lastName: Yup.string().required('Apellido es Obligatorio'),
+  email: Yup.string().email('Formato del email inválido').required('Required'),
+  password: Yup.string()
+    .required('Required')
+    .min(6, 'Contraseña debe tener al menos 6 caracteres')
+    .max(255, 'Demasiado largo!')
+    .matches(
+      passwordChars,
+      'The password must have one uppercase, one lowercasse, one number and one special caracter',
+    ),
+})
+
+const InputPassword = ({ onChange, onBlur, password }) => {
+  const [showPassword, setShowPassword] = useState(false)
+
+  return (
+    <InputGroup>
+      <Input
+        type={showPassword ? 'text' : 'password'}
+        name="password"
+        onChange={onChange}
+        onBlur={onBlur}
+        value={password}
+      />
+      <InputRightElement h="full">
+        <Button variant="ghost" onClick={() => setShowPassword(!showPassword)}>
+          {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+        </Button>
+      </InputRightElement>
+    </InputGroup>
+  )
+}
+
+InputPassword.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  onBlur: PropTypes.func.isRequired,
+  password: PropTypes.string.isRequired,
+}
 
 const Register = () => {
   const navigate = useNavigate()
-  const { newUser } = useUser
-  const [showPassword, setShowPassword] = useState(false)
+  const { newUser } = useUser()
+  const defaultAlertProps = {
+    show: false,
+    title: '',
+    message: '',
+    icon: 'error',
+  }
+  const [alertProps, setAlertProps] = useState(defaultAlertProps)
 
-  const registerSchema = Yup.object().shape({
-    firstName: Yup.string().required('Nombre es Obligatorio'),
-    lastName: Yup.string().required('Apellido es Obligatorio'),
-    email: Yup.string()
-      .email('Formato del email inválido')
-      .required('Required'),
-    password: Yup.string()
-      .required('Required')
-      .min(6, 'Contraseña debe tener al menos 6 caracteres')
-      .max(255, 'Demasiado largo!'),
-  })
+  const onSubmit = (values, { setSubmitting }) => {
+    newUser(values)
+      .then(() => {
+        setSubmitting(false)
+        navigate('/', { replace: true })
+      })
+      .catch((error) => {
+        setAlertProps({
+          ...alertProps,
+          show: true,
+          title: 'Error de registro',
+          message: extractErrorMsg(error),
+          onConfirm: setAlertProps(defaultAlertProps),
+        })
+      })
+  }
 
   return (
-    <div>
+    <>
+      <Alert {...alertProps} />
       <Formik
         initialValues={{
           firstName: '',
@@ -47,16 +105,7 @@ const Register = () => {
           password: '',
         }}
         validationSchema={registerSchema}
-        onSubmit={async (values, { setSubmitting }) => {
-          newUser(values)
-            .then(() => {
-              setSubmitting(false)
-              navigate('/', { replace: true })
-            })
-            .catch((error) =>
-            // eslint-disable-next-line no-console
-              console.log(error))
-        }}
+        onSubmit={onSubmit}
       >
         {({
           values,
@@ -129,25 +178,12 @@ const Register = () => {
                     </FormControl>
                     <FormControl id="password" isRequired>
                       <FormLabel>Password</FormLabel>
-                      <InputGroup>
-                        <Input
-                          type={showPassword ? 'text' : 'password'}
-                          name="password"
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          value={values.password}
-                        />
-                        <InputRightElement h="full">
-                          <Button
-                            variant="ghost"
-                            onClick={() =>
-                              // eslint-disable-next-line no-shadow
-                              setShowPassword((showPassword) => !showPassword)}
-                          >
-                            {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                          </Button>
-                        </InputRightElement>
-                      </InputGroup>
+                      {/* extract input password because showpassword re-renders all form */}
+                      <InputPassword
+                        onBlur={handleBlur}
+                        onChange={handleChange}
+                        password={values.password}
+                      />
                       <small>
                         {errors.password && touched.password && errors.password}
                       </small>
@@ -177,7 +213,7 @@ const Register = () => {
           </form>
         )}
       </Formik>
-    </div>
+    </>
   )
 }
 
