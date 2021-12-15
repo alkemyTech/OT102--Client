@@ -38,8 +38,8 @@ export default function UserProfile() {
   })
 
   const validationSchema = Yup.object({
-    firstName: Yup.string().required('⚠ Este dato es obligatorio'),
-    lastName: Yup.string().required('⚠ Este dato es obligatorio'),
+    firstName: Yup.string().required('⚠ Este dato es obligatorio').max(255, '⚠ Demasiado largo!'),
+    lastName: Yup.string().required('⚠ Este dato es obligatorio').max(255, '⚠ Demasiado largo!'),
     email: Yup.string().email('❌ El email no es válido').required('⚠ Este dato es obligatorio'),
     image: Yup.string().required('⚠ Este dato es obligatorio'),
   })
