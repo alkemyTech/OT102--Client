@@ -31,7 +31,7 @@ const registerSchema = Yup.object().shape({
   email: Yup.string().email('Formato del email inválido').required('Required'),
   password: Yup.string()
     .required('Required')
-    .min(6, 'Contraseña debe tener al menos 6 caracteres')
+    .min(8, 'Contraseña debe tener al menos 6 caracteres')
     .max(255, 'Demasiado largo!')
     .matches(
       passwordChars,
