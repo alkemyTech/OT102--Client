@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
@@ -203,8 +203,7 @@ const Register = () => {
                       </Button>
                     </Stack>
                     <Stack pt={6}>
-                      <Text align="center">Ya estas registrado? LOGIN</Text>
-                      {/* TODO LINK TO LOGIN */}
+                      <Text align="center">Ya estas registrado? <Link to='/login'>LOGIN</Link></Text>
                     </Stack>
                   </Stack>
                 </Box>
