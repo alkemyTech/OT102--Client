@@ -10,7 +10,7 @@ export default function useUser() {
   const newUser = (user) =>
     registerUser(user).then(({ data }) => {
       const { body } = data
-      dispatch(setUserData(user))
+      dispatch(setUserData(body.user))
       window.localStorage.setItem('x-access-token', body.token)
     })
 
