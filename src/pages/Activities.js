@@ -1,11 +1,12 @@
 import React from 'react'
-import { Outlet } from 'react-router-dom'
+// import { Outlet } from 'react-router-dom'
+import ListActivities from './backoffice/activities/ListActivities'
 
 export default function Activities() {
   return (
     <>
-      <h1>All Activities page</h1>
-      <Outlet />
+      <ListActivities />
+      {/* <Outlet /> */}
     </>
   )
 }
