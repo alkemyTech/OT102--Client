@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import {
   Container,
   Text,
@@ -6,19 +6,38 @@ import {
   SimpleGrid,
 } from '@chakra-ui/react'
 import { getAllEntries } from '../services/entriesService'
+import Alert from '../components/alert/Alert'
 import NewsHomeCard from '../components/news/NewsHomeCard'
 import Spinner from '../components/Slider'
 
-const ListNews = () => {
+export default function ListNews() {
   const [allNews, setNews] = useState([])
-  const [error, setError] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const [alertProps, setAlertprops] = useState({
+    show: false,
+    title: '',
+    message: '',
+    icon: '',
+    onConfirm: () => {},
+  })
 
   const loadData = async () => {
-    getAllEntries().then((entries) => {
-      setNews(entries.data.body)
-      setError(null)
-    }).catch((err) =>
-      setError(err))
+    try {
+      setLoading(true)
+      const loadedNews = await getAllEntries()
+      setNews(loadedNews.data.body)
+      setLoading(false)
+    } catch (error) {
+      setLoading(false)
+      const errorAlertProps = {
+        show: true,
+        title: 'Ooops, algo ha fallado!',
+        message: error.message,
+        icon: 'error',
+        onConfirm: () => {},
+      }
+      setAlertprops(errorAlertProps)
+    }
   }
 
   // run on load
@@ -26,10 +45,17 @@ const ListNews = () => {
     loadData()
   }, [])
 
-  const getListItems = () =>
-    (
+  if (loading) {
+    return (
+      <Spinner />
+    )
+  }
+
+  return (
+    <>
+      <Alert {...alertProps} />
       <Container maxW="container.lg" mt="5">
-        <Text textStyle="title">Novedades</Text>
+        <Text textStyle="title">Novedades Somos Mas</Text>
         <Box p={0}>
           <SimpleGrid columns={{ base: 1, md: 4 }} spacing={6}>
 
@@ -38,26 +64,6 @@ const ListNews = () => {
           </SimpleGrid>
         </Box>
       </Container>
-    )
-
-  const getErrorView = () =>
-    (
-      <Container maxW="container.lg" mt="5">
-        <div>
-          Error al cargar las novedades!
-          { error.message }
-          <Spinner />
-        </div>
-      </Container>
-    )
-
-  return (
-    <div>
-      <ul>
-        { error ? getErrorView() : getListItems() }
-      </ul>
-    </div>
-  )
+    </>
+  );
 }
-
-export default ListNews;
