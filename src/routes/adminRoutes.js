@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 
 import AdminRoute from '../hoc/AdminRoute'
 
@@ -19,7 +19,7 @@ import EditCategoryForm from '../components/forms/EditCategoryForm'
 import EditTestimonialsForm from '../components/forms/EditTestimonialsForm'
 
 const AdminRoutes = () => (
-  <>
+  <Routes>
     <Route path="" element={<AdminRoute />}>
       <Route path="edit-organization" element={<EditOrgForm />} />
       <Route path="home" element={<EditHomeForm />} />
@@ -51,7 +51,7 @@ const AdminRoutes = () => (
         <Route index element={<ListContacts />} />
       </Route>
     </Route>
-  </>
+  </Routes>
 )
 
 export default AdminRoutes
