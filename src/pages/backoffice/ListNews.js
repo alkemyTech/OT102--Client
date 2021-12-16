@@ -75,7 +75,7 @@ const ListNews = () => {
                 <Th textAlign="center">Nombre</Th>
                 <Th textAlign="center">Imagen</Th>
                 <Th textAlign="center">Fecha de creación</Th>
-                <Th textAlign="center" />
+                <Th textAlign="center">Acciones</Th>
               </Tr>
             </Thead>
             <Tbody>
