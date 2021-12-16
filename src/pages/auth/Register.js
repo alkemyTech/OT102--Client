@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
+import { Link, useNavigate } from 'react-router-dom'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
@@ -17,24 +19,75 @@ import {
   Text,
 } from '@chakra-ui/react'
 
-const Register = () => {
-  const [showPassword, setShowPassword] = useState(false)
-  const formValues = []
+import useUser from '../../hooks/useUser'
+import extractErrorMsg from '../../utils/extractErrorMsg'
+import AlertFunction from '../../components/alert/AlertFunction'
 
-  const registerSchema = Yup.object().shape({
-    firstName: Yup.string().required('Nombre es Obligatorio'),
-    lastName: Yup.string().required('Apellido es Obligatorio'),
-    email: Yup.string()
-      .email('Formato del email inválido')
-      .required('Required'),
-    password: Yup.string()
-      .required('Required')
-      .min(6, 'Contraseña debe tener al menos 6 caracteres')
-      .max(255, 'Demasiado largo!'),
-  })
+const passwordChars = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$/
+
+const registerSchema = Yup.object().shape({
+  firstName: Yup.string().required('Nombre es Obligatorio'),
+  lastName: Yup.string().required('Apellido es Obligatorio'),
+  email: Yup.string().email('Formato del email inválido').required('Required'),
+  password: Yup.string()
+    .required('Required')
+    .min(8, 'Contraseña debe tener al menos 8 caracteres')
+    .max(255, 'Demasiado largo!')
+    .matches(
+      passwordChars,
+      'The password must have one uppercase, one lowercasse, one number and one special caracter',
+    ),
+})
+
+const InputPassword = ({ onChange, onBlur, password }) => {
+  const [showPassword, setShowPassword] = useState(false)
 
   return (
-    <div>
+    <InputGroup>
+      <Input
+        type={showPassword ? 'text' : 'password'}
+        name="password"
+        onChange={onChange}
+        onBlur={onBlur}
+        value={password}
+      />
+      <InputRightElement h="full">
+        <Button variant="ghost" onClick={() => setShowPassword(!showPassword)}>
+          {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+        </Button>
+      </InputRightElement>
+    </InputGroup>
+  )
+}
+
+InputPassword.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  onBlur: PropTypes.func.isRequired,
+  password: PropTypes.string.isRequired,
+}
+
+const Register = () => {
+  const navigate = useNavigate()
+  const { newUser } = useUser()
+
+  const onSubmit = (values, { setSubmitting }) => {
+    newUser(values)
+      .then(() => {
+        setSubmitting(false)
+        navigate('/', { replace: true })
+      })
+      .catch((error) => {
+        AlertFunction({
+          title: 'Error de registro',
+          message: extractErrorMsg(error),
+          icon: 'error',
+          onConfirm: () => AlertFunction({ title: 'Bienvenido' }),
+        })
+      })
+  }
+
+  return (
+    <>
       <Formik
         initialValues={{
           firstName: '',
@@ -43,16 +96,7 @@ const Register = () => {
           password: '',
         }}
         validationSchema={registerSchema}
-        onSubmit={(values, { setSubmitting }) => {
-          formValues.push({
-            firstName: values.firstName,
-            lastName: values.lastName,
-            email: values.email,
-            password: values.password,
-          })
-
-          setSubmitting(false)
-        }}
+        onSubmit={onSubmit}
       >
         {({
           values,
@@ -125,25 +169,12 @@ const Register = () => {
                     </FormControl>
                     <FormControl id="password" isRequired>
                       <FormLabel>Password</FormLabel>
-                      <InputGroup>
-                        <Input
-                          type={showPassword ? 'text' : 'password'}
-                          name="password"
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          value={values.password}
-                        />
-                        <InputRightElement h="full">
-                          <Button
-                            variant="ghost"
-                            onClick={() =>
-                              // eslint-disable-next-line no-shadow
-                              setShowPassword((showPassword) => !showPassword)}
-                          >
-                            {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                          </Button>
-                        </InputRightElement>
-                      </InputGroup>
+                      {/* extract input password because showpassword re-renders all form */}
+                      <InputPassword
+                        onBlur={handleBlur}
+                        onChange={handleChange}
+                        password={values.password}
+                      />
                       <small>
                         {errors.password && touched.password && errors.password}
                       </small>
@@ -163,8 +194,11 @@ const Register = () => {
                       </Button>
                     </Stack>
                     <Stack pt={6}>
-                      <Text align="center">Ya estas registrado? LOGIN</Text>
-                      {/* TODO LINK TO LOGIN */}
+                      <Text align="center">
+                        Ya estas registrado?
+                        {' '}
+                        <Link to="/login">LOGIN</Link>
+                      </Text>
                     </Stack>
                   </Stack>
                 </Box>
@@ -173,7 +207,7 @@ const Register = () => {
           </form>
         )}
       </Formik>
-    </div>
+    </>
   )
 }
 
