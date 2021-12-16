@@ -49,7 +49,12 @@ export default function WithSubnavigation() {
   const navigate = useNavigate()
   const { isLogged } = useUser()
   const { isOpen, onToggle } = useDisclosure()
-  const { handleLogout } = useUser()
+  const { logoutUser } = useUser()
+
+  const handleLogout = () => {
+    logoutUser()
+    navigate('/')
+  }
 
   return (
     <Box>
@@ -111,42 +116,51 @@ export default function WithSubnavigation() {
           >
             Dona!
           </Button>
-          <Button
-            display={{ base: '1', md: 'inline-flex' }}
-            px={{ base: '15px', md: '25px' }}
-            fontWeight={400}
-            bg="brand.gray1"
-            onClick={() => handleLogout}
-            _hover={{
-              bg: 'brand.cyan',
-            }}
-          >
-            Logout
-          </Button>
-          <Button
-            display={{ base: '1', md: 'inline-flex' }}
-            px={{ base: '15px', md: '25px' }}
-            fontWeight={400}
-            bg="brand.gray1"
-            onClick={() => navigate('login')}
-            _hover={{
-              bg: 'brand.cyan',
-            }}
-          >
-            Login
-          </Button>
-          <Button
-            display={{ base: '1', md: 'inline-flex' }}
-            px={{ base: '15px', md: '25px' }}
-            fontWeight={400}
-            bg="brand.gray1"
-            onClick={() => navigate('register')}
-            _hover={{
-              bg: 'brand.yellow',
-            }}
-          >
-            Registracion
-          </Button>
+          {isLogged ? (
+            <>
+              <Button
+                display={{ base: '1', md: 'inline-flex' }}
+                px={{ base: '15px', md: '25px' }}
+                fontWeight={400}
+                bg="brand.gray1"
+                isLogged={isLogged}
+                onClick={handleLogout}
+                _hover={{
+                  bg: 'brand.cyan',
+                }}
+              >
+                Logout
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button
+                display={{ base: '1', md: 'inline-flex' }}
+                px={{ base: '15px', md: '25px' }}
+                fontWeight={400}
+                bg="brand.gray1"
+                onClick={() => navigate('login')}
+                _hover={{
+                  bg: 'brand.cyan',
+                }}
+              >
+                Login
+              </Button>
+
+              <Button
+                display={{ base: '1', md: 'inline-flex' }}
+                px={{ base: '15px', md: '25px' }}
+                fontWeight={400}
+                bg="brand.gray1"
+                onClick={() => navigate('register')}
+                _hover={{
+                  bg: 'brand.yellow',
+                }}
+              >
+                Registracion
+              </Button>
+            </>
+          )}
         </Stack>
       </Flex>
 
