@@ -9,6 +9,8 @@
   "dependencies": {
     "@chakra-ui/icons": "^1.1.1",
     "@chakra-ui/react": "^1.7.2",
+    "@ckeditor/ckeditor5-build-classic": "^31.1.0",
+    "@ckeditor/ckeditor5-react": "^3.0.3",
     "@emotion/react": "^11.7.0",
     "@emotion/styled": "^11.6.0",
     "@fontsource/atma": "^4.5.0",
