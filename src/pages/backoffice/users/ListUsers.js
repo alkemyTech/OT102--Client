@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import {
   Box,
   Table,
@@ -127,7 +128,7 @@ const ListUsers = () => {
                 <Td
                   textAlign="center"
                 >
-                  <Button bg="brand.cyan">Editar</Button>
+                  <Link to={`/users/${item.id}`}><Button bg="brand.cyan">Editar</Button></Link>
                 </Td>
                 <Td
                   textAlign="center"
