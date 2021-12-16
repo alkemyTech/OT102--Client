@@ -9,9 +9,9 @@ import {
   Td,
   Text,
 } from '@chakra-ui/react'
-import Spinner from '../../components/Spinner'
-import Alert from '../../components/alert/Alert'
-import { getAllCategories } from '../../services/categoriesService'
+import Spinner from '../../../components/Spinner'
+import Alert from '../../../components/alert/Alert'
+import { getAllCategories } from '../../../services/categoriesService'
 
 const ListCategories = () => {
   const [categories, setCategories] = useState([])
