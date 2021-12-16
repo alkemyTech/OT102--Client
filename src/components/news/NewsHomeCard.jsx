@@ -9,6 +9,7 @@ import {
   Button,
   useColorModeValue,
 } from '@chakra-ui/react'
+import { Link as ReactRouterLink } from 'react-router-dom'
 
 const SocialProfileWithImage = ({
   id,
@@ -42,9 +43,10 @@ const SocialProfileWithImage = ({
           <Text textStyle="text">{content}</Text>
         </Stack>
         <Button
+          as={ReactRouterLink}
+          to={`/novedades/${id}`}
           mt={5}
           bg={useColorModeValue('brand.yellow', 'gray.900')}
-          // onClick={() => navigate('news/:id')}
           _hover={{
             transform: 'translateY(-2px)',
             boxShadow: 'md',
