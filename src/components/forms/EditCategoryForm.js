@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { Formik } from 'formik'
-import * as Yup from 'yup'
 import {
   Flex, Box, FormControl, FormLabel, Input, Stack, Button, Heading,
 } from '@chakra-ui/react'
+import { CategorySchema } from './ValidationSchemas'
 import { addCategory, getCategoryById, updateCategory } from '../../services/categoriesService'
 import Alert from '../alert/Alert'
 
@@ -23,11 +23,6 @@ const EditCategoryForm = () => {
     textButton: 'Crear',
     name: '',
     description: '',
-  })
-
-  const categorySchema = Yup.object().shape({
-    categoryName: Yup.string().required('Nombre es obligatorio').min(3, 'El nombre debe tener mas de dos caracteres').max(255, 'Demasiado largo!'),
-    description: Yup.string().required('La descripción es obligatoria').min(3, 'La descripción debe tener mas de dos caracteres'),
   })
 
   const loadData = async () => {
@@ -130,7 +125,7 @@ const EditCategoryForm = () => {
           categoryName: categoryData.name,
           description: categoryData.description,
         }}
-        validationSchema={categorySchema}
+        validationSchema={CategorySchema}
         onSubmit={id ? handleUpdateSubmit : handleAddSubmit}
       >
         {({

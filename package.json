@@ -9,6 +9,8 @@
   "dependencies": {
     "@chakra-ui/icons": "^1.1.1",
     "@chakra-ui/react": "^1.7.2",
+    "@ckeditor/ckeditor5-build-classic": "^31.1.0",
+    "@ckeditor/ckeditor5-react": "^3.0.3",
     "@emotion/react": "^11.7.0",
     "@emotion/styled": "^11.6.0",
     "@fontsource/atma": "^4.5.0",
@@ -22,6 +24,7 @@
     "framer-motion": "^4.1.17",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
+    "react-aws-s3": "^1.5.0",
     "react-dom": "^16.13.1",
     "react-icons": "^4.3.1",
     "react-redux": "^7.1.3",
