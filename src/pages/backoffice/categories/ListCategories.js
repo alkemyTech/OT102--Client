@@ -1,17 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import {
-  Box,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  Text,
+  Box, Table, Thead, Tbody, Tr, Th, Td, Text, Button,
 } from '@chakra-ui/react'
 import Spinner from '../../../components/Spinner'
 import Alert from '../../../components/alert/Alert'
-import { getAllCategories } from '../../../services/categoriesService'
+import { getAllCategories, delCategory } from '../../../services/categoriesService'
 
 const ListCategories = () => {
   const [categories, setCategories] = useState([])
@@ -42,6 +35,50 @@ const ListCategories = () => {
     getCategories()
   }, [])
 
+  const confirmDelete = async (id) => {
+    try {
+      const deletedCategory = await delCategory(id)
+      if (deletedCategory) {
+        setCategories((prevCategories) => {
+          const updatedCategories = prevCategories.filter(
+            (category) => category.id !== id,
+          )
+          return updatedCategories
+        })
+        setAlertProps({
+          show: true,
+          title: 'Actividad Eliminada!',
+          message: 'Actividad eliminada exitosamente!',
+          icon: 'success',
+          cancelbtn: false,
+          onConfirm: () => {},
+        })
+      }
+    } catch (error) {
+      setAlertProps({
+        show: true,
+        title: 'Oops! Algo ha salido mal!',
+        message: error.message,
+        icon: 'error',
+        cancelbtn: true,
+        onConfirm: () => {},
+        onCancel: () => {},
+      })
+    }
+  }
+
+  const handleDelete = async (id) => {
+    setAlertProps({
+      show: true,
+      title: 'Estas Seguro?',
+      message: 'Estas a punto de eliminar una actividad, esto es irreversible.',
+      icon: 'warning',
+      cancelbtn: true,
+      onConfirm: () => confirmDelete(id),
+      onCancel: () => {},
+    })
+  }
+
   return (
     <Box
       mt="30px"
@@ -62,6 +99,7 @@ const ListCategories = () => {
             <Tr>
               <Th textAlign="center">nombre</Th>
               <Th textAlign="center">Descripcion</Th>
+              <Th textAlign="center">Acciones</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -69,6 +107,18 @@ const ListCategories = () => {
               <Tr key={item.id}>
                 <Td textAlign="center">{item.name}</Td>
                 <Td textAlign="center">{item.description}</Td>
+                <Td textAlign="center">
+                  <Button
+                    fontWeight={600}
+                    bg="brand.rouge"
+                    onClick={() => handleDelete(item.id)}
+                    _hover={{
+                      bg: 'brand.gray1',
+                    }}
+                  >
+                    Eliminar
+                  </Button>
+                </Td>
               </Tr>
             ))}
           </Tbody>
