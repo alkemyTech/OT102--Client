@@ -78,7 +78,7 @@ const ListNews = () => {
       })
     }
   }
-  const deleteNewsHandler = async (newsId) => {
+  const deleteNewsHandler = (newsId) => {
     setAlertProps({
       show: true,
       title: '¿Estás seguro?',
