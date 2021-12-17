@@ -21,18 +21,26 @@ const Alert = ({
 }) => {
   // eslint-disable-next-line
   const showAlert = async () =>
-    swal.fire({
-      position: 'center',
-      padding: '1rem 2rem',
-      confirmButtonColor: '#8DCAFF',
-      cancelButtonColor: '#EC4C4C',
-      title: `${title}`,
-      text: `${message}`,
-      icon: `${icon}`,
-      showCancelButton: cancelbtn,
-      allowOutsideClick: !cancelbtn, // If cancel button is displayed, do not allow outside click.
-      backdrop: !cancelbtn,
-    })
+    swal
+      .fire({
+        position: 'center',
+        padding: '1rem 2rem',
+        confirmButtonColor: '#8DCAFF',
+        cancelButtonColor: '#EC4C4C',
+        title: `${title}`,
+        text: `${message}`,
+        icon: `${icon}`,
+        showCancelButton: cancelbtn,
+        allowOutsideClick: !cancelbtn, // If cancel button is displayed, do not allow outside click.
+        backdrop: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          onConfirm()
+        } else if (result.isDismissed) {
+          onCancel()
+        }
+      })
   useEffect(() => {
     if (show) {
       const result = showAlert()
@@ -42,8 +50,8 @@ const Alert = ({
       if (result.isDismissed) {
         onCancel()
       }
-    }
-  }, [show, showAlert, onConfirm, onCancel])
+    } // eslint-disable-next-line
+  }, [show, onConfirm, onCancel])
   return <></>
 }
 

@@ -21,8 +21,8 @@ httpService.interceptors.response.use(
 
     if (!expectedError) {
       // eslint-disable-next-line no-console
-      console.error('interceptor-error:', error.response.data)
-      // return Promise.reject(new Error('Unexpected Error Ocurred'))
+      console.error('interceptor-error:', error)
+      return Promise.reject(new Error('Unexpected Error Ocurred'))
     }
     return Promise.reject(error.response.data)
   },
