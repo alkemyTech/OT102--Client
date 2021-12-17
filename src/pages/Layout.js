@@ -1,7 +1,7 @@
 import { Box, Stack } from '@chakra-ui/react'
 import React from 'react'
 import { Outlet } from 'react-router-dom'
-import Footer from '../components/Footer'
+import Footer from '../components/footer/Footer'
 import WithSubnavigation from '../components/header/Header'
 
 export default function Layout() {
