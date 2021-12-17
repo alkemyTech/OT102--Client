@@ -89,7 +89,7 @@ const ListTestimonials = () => {
                   <Td textAlign="center">{item.content}</Td>
                   <Td textAlign="center">
                     {' '}
-                    <Link to={`/activities/${item.id}`}>
+                    <Link to={`/testimonials/${item.id}`}>
                       <Button
                         fontWeight={600}
                         bg="brand.yellow"
