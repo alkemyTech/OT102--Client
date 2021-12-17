@@ -60,6 +60,8 @@ export default function UserProfile() {
     })
   }
   const handleSubmit = async (values) => {
+    values.preventDefault()
+
     setLoading(true)
 
     if (edit) {
@@ -87,7 +89,8 @@ export default function UserProfile() {
     }
     setLoading(false)
   }
-  const handleCancel = async () => {
+  const handleCancel = async (e) => {
+    e.preventDefault()
     if (edit) {
       setEdit(false)
     } else {
