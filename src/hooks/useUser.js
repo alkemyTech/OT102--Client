@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { selectUserData, setUserData } from '../app/slices/auth'
-import { registerUser } from '../services/authService'
+import { selectUserData, setUserData, destroyUserData } from '../app/slices/auth'
+import { userLogin, registerUser } from '../services/authService'
 
 export default function useUser() {
   const userData = useSelector(selectUserData)
@@ -14,8 +14,21 @@ export default function useUser() {
       window.localStorage.setItem('x-access-token', body.token)
     })
 
+  const loginUser = (user) =>
+    userLogin(user).then(({ data }) => {
+      const { body } = data
+      dispatch(setUserData(body.user))
+      window.localStorage.setItem('x-access-token', body.token)
+    })
+  const logoutUser = () => {
+    window.localStorage.removeItem('x-access-token')
+    dispatch(destroyUserData())
+  }
+
   return {
+    loginUser,
     newUser,
+    logoutUser,
     isLogged: Boolean(jwt),
     userData,
   }

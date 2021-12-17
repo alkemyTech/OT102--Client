@@ -1,27 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import { Container, Text } from '@chakra-ui/react'
 import { getOrganizationById } from '../../services/organizationsService'
-import Spinner from '../Spinner'
 
 const WelcomeText = () => {
-  const [ong, setOng] = useState([])
-  const [error, setError] = useState(null)
+  const [ong, setOng] = useState({ welcomeText: 'Bienvenido' })
 
-  const loadData = async () => {
-    getOrganizationById(1).then((organization) => {
-      setOng(organization.data.body)
-      setError(null)
-    }).catch((err) =>
-      setError(err))
-  }
-
-  // run on load
   useEffect(() => {
-    loadData()
+    getOrganizationById(1)
+      .then((organization) => {
+        setOng(organization.data.body)
+      })
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.log(error)
+      })
   }, [])
 
-  const getListItems = () =>
-    (
+  return (
+    <div>
       <Container maxW="container.lg">
         <Text
           fontSize={{ base: 'lg', md: '2xl' }}
@@ -32,26 +28,8 @@ const WelcomeText = () => {
           {ong.welcomeText}
         </Text>
       </Container>
-    )
-
-  const getErrorView = () =>
-    (
-      <Container maxW="container.lg">
-        <div>
-          Error al texto bienvenida!
-          { error.message }
-          <Spinner />
-        </div>
-      </Container>
-    )
-
-  return (
-    <div>
-      <ul>
-        { error ? getErrorView() : getListItems() }
-      </ul>
     </div>
   )
 }
 
-export default WelcomeText;
+export default WelcomeText

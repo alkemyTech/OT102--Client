@@ -3,7 +3,6 @@ import { Routes, Route } from 'react-router-dom'
 
 import AuthRoutes from './authRoutes'
 
-import About from '../pages/About'
 import Activities from '../pages/Activities'
 import ActivityDetail from '../pages/ActivityDetail'
 import ContactComponent from '../pages/contact/ContactComponent'
@@ -17,12 +16,13 @@ import NotFound from '../pages/NotFound'
 import Register from '../pages/auth/Register'
 import Testimonials from '../pages/Testimonials'
 import TestimonialsDetail from '../pages/TestimonialsDetail'
+import Nosotros from '../pages/Nosotros'
 
 const AppRoutes = () => (
   <Routes>
     <Route path="/" element={<Layout />}>
       <Route index element={<Home />} />
-      <Route path="nosotros" element={<About />} />
+      <Route path="nosotros" element={<Nosotros />} />
       <Route path="actividades">
         <Route index element={<Activities />} />
         <Route path=":id" element={<ActivityDetail />} />

@@ -1,46 +1,100 @@
-import React from 'react'
+import React, { useState } from 'react'
+import PropTypes from 'prop-types'
+import { useNavigate } from 'react-router-dom'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
+import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 import {
   Flex,
   Box,
   FormControl,
   FormLabel,
   Input,
-  Checkbox,
+  InputGroup,
+  // Checkbox,
   Stack,
+  InputRightElement,
   Button,
-  Heading,
+  Text,
 } from '@chakra-ui/react'
 
-const LoginForm = () => {
-  const formValues = []
-  const loginSchema = Yup.object().shape({
-    email: Yup.string()
-      .email('Must be a valid email')
-      .max(255, 'Too long')
-      .required('Required'),
-    password: Yup.string()
-      .min(6, 'Password must have at least 6 caracters')
-      .max(255, 'Too long')
-      .required('Required'),
-  })
+import useUser from '../../hooks/useUser'
+import extractErrorMsg from '../../utils/extractErrorMsg'
+import AlertFunction from '../../components/alert/AlertFunction'
+
+const passwordChars = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$/
+
+const loginSchema = Yup.object().shape({
+  email: Yup.string()
+    .email('Formato del email inválido')
+    .max(255, 'Demasiado largo!')
+    .required('Email Obligatorio'),
+  password: Yup.string()
+    .required('Password Obligatorio')
+    .min(8, 'Credenciales Invalidas')
+    .max(255, 'Demasiado largo!')
+    .matches(
+      passwordChars,
+      'Credenciales Invalidas',
+    ),
+})
+// INPUT PASSWORD
+const InputPassword = ({ onChange, onBlur, password }) => {
+  const [showPassword, setShowPassword] = useState(false)
 
   return (
-    <div>
+    <InputGroup>
+      <Input
+        type={showPassword ? 'text' : 'password'}
+        name="password"
+        onChange={onChange}
+        onBlur={onBlur}
+        value={password}
+      />
+      <InputRightElement h="full">
+        <Button variant="ghost" onClick={() => setShowPassword(!showPassword)}>
+          {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+        </Button>
+      </InputRightElement>
+    </InputGroup>
+  )
+}
+
+InputPassword.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  onBlur: PropTypes.func.isRequired,
+  password: PropTypes.string.isRequired,
+}
+// hasta INPUT PASSWORD
+const LoginForm = () => {
+  // ver
+  const navigate = useNavigate()
+  const { loginUser } = useUser()
+
+  const onSubmit = (values, { setSubmitting }) => {
+    loginUser(values)
+      .then(() => {
+        setSubmitting(false)
+        navigate('/', { replace: true })
+      })
+      .catch((error) => {
+        AlertFunction({
+          title: 'Error de ingreso',
+          message: extractErrorMsg(error),
+          icon: 'error',
+        })
+      })
+  }
+  // hasta aca ver
+  return (
+    <>
       <Formik
         initialValues={{
           email: '',
           password: '',
         }}
         validationSchema={loginSchema}
-        onSubmit={(values, { setSubmitting }) => {
-          formValues.push({
-            email: values.email,
-            password: values.password,
-          })
-          setSubmitting(false)
-        }}
+        onSubmit={onSubmit}
       >
         {({
           values,
@@ -54,12 +108,12 @@ const LoginForm = () => {
             <Flex align="center" justify="center" bg="gray.100">
               <Stack spacing={8} mx="auto" maxW="lg" py={12} px={6}>
                 <Stack align="center">
-                  <Heading fontSize="4xl">Sign in to your account</Heading>
+                  <Text textStyle="title"> Acceso Login</Text>
                 </Stack>
                 <Box rounded="lg" bg="white" boxShadow="lg" p={8}>
                   <Stack spacing={4}>
                     <FormControl id="email">
-                      <FormLabel>Email address</FormLabel>
+                      <FormLabel>Email</FormLabel>
                       <Input
                         type="email"
                         name="email"
@@ -67,21 +121,21 @@ const LoginForm = () => {
                         onBlur={handleBlur}
                         value={values.email}
                       />
-                      <p>{errors.email && touched.email && errors.email}</p>
+                      <Text color="brand.rouge">
+                        {errors.email && touched.email && errors.email}
+                      </Text>
                     </FormControl>
 
                     <FormControl id="password">
                       <FormLabel>Password</FormLabel>
-                      <Input
-                        type="password"
-                        name="password"
+                      <InputPassword
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={values.password}
                       />
-                      <p>
+                      <Text color="brand.rouge">
                         {errors.password && touched.password && errors.password}
-                      </p>
+                      </Text>
                     </FormControl>
                     <Stack spacing={10}>
                       <Stack
@@ -89,18 +143,18 @@ const LoginForm = () => {
                         align="start"
                         justify="space-between"
                       >
-                        <Checkbox>Remember me</Checkbox>
+                        {/* <Checkbox>Recordarme</Checkbox> */}
                         {/* <Link color="blue.400">Forgot password?</Link> */}
                       </Stack>
                       <Button
                         type="submit"
-                        bg="blue.400"
-                        color="white"
+                        bg="brand.cyan"
+                        color="black"
                         _hover={{
-                          bg: 'blue.500',
+                          bg: 'brand.blue',
                         }}
                       >
-                        Sign in
+                        Iniciar Sesión
                       </Button>
                     </Stack>
                   </Stack>
@@ -110,7 +164,7 @@ const LoginForm = () => {
           </form>
         )}
       </Formik>
-    </div>
+    </>
   )
 }
 
