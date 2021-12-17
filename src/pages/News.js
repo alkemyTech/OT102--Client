@@ -8,7 +8,7 @@ import {
 import { getAllEntries } from '../services/entriesService'
 import Alert from '../components/alert/Alert'
 import NewsHomeCard from '../components/news/NewsHomeCard'
-import Spinner from '../components/Slider'
+import Spinner from '../components/Spinner'
 
 export default function ListNews() {
   const [allNews, setNews] = useState([])
