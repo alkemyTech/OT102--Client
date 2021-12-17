@@ -7,8 +7,8 @@ import Spinner from '../../components/Spinner'
 import { getAllTestimonials, delTestimonial } from '../../services/testimonialsService'
 import Alert from '../../components/alert/Alert'
 
-const TestimonialList = () => {
-  const [news, setNews] = useState([])
+const ListTestimonials = () => {
+  const [activities, setActivities] = useState([])
   const [deletedNew, setDeletedNew] = useState([])
   const [alertProps, setAlertprops] = useState({
     show: false,
@@ -22,7 +22,7 @@ const TestimonialList = () => {
     const getTestimonials = async () => {
       try {
         const response = await getAllTestimonials()
-        setNews(response.data.body)
+        setActivities(response.data.body)
       } catch (error) {
         const errorAlertProps = {
           show: true,
@@ -68,7 +68,7 @@ const TestimonialList = () => {
         <Text fontSize="2xl" mb="30px">
           Contactos
         </Text>
-        {news.length > 0 ? (
+        {activities.length > 0 ? (
           <Table size="sm" textAlign="center">
             <Thead bg="brand.cyan">
               <Tr>
@@ -79,7 +79,7 @@ const TestimonialList = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {news.map((item) => (
+              {activities.map((item) => (
                 <Tr key={item.id}>
                   <Td textAlign="center">{item.name}</Td>
                   <Td align="center">
@@ -124,4 +124,4 @@ const TestimonialList = () => {
   )
 }
 
-export default TestimonialList
+export default ListTestimonials
