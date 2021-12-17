@@ -67,7 +67,7 @@ const ListCategories = () => {
     }
   }
 
-  const handleDelete = async (id) => {
+  const handleDelete = (id) => {
     setAlertProps({
       show: true,
       title: 'Estas Seguro?',
