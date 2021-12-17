@@ -6,7 +6,7 @@ import AdminRoute from '../hoc/AdminRoute'
 import Activities from '../pages/Activities'
 import Categories from '../pages/Categories'
 import ListContacts from '../pages/backoffice/ListContacts'
-import News from '../pages/News'
+import News from '../pages/backoffice/news/ListNews'
 import Testimonials from '../pages/Testimonials'
 import Users from '../pages/Users'
 
