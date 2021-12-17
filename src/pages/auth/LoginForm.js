@@ -11,7 +11,7 @@ import {
   FormLabel,
   Input,
   InputGroup,
-  Checkbox,
+  // Checkbox,
   Stack,
   InputRightElement,
   Button,
@@ -143,7 +143,7 @@ const LoginForm = () => {
                         align="start"
                         justify="space-between"
                       >
-                        <Checkbox>Recordarme</Checkbox>
+                        {/* <Checkbox>Recordarme</Checkbox> */}
                         {/* <Link color="blue.400">Forgot password?</Link> */}
                       </Stack>
                       <Button
