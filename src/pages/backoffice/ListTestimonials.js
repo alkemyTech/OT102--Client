@@ -52,7 +52,6 @@ const ListTestimonials = () => {
       setAlertprops(errorAlertProps)
     }
   }
-
   return (
     <>
       <Alert {...alertProps} />
