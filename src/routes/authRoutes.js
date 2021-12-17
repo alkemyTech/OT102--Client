@@ -9,7 +9,6 @@ import Dashboard from '../pages/Dashboard'
 
 import EditUserForm from '../components/forms/EditUserForm'
 
-
 /* El dentro del dashboard va mi perfil de usuario.
  * En el caso de ser admin debera' tener las opciones para ir a editar news, activities, etc
  * EditUserForm debera' aceptar props con los datos del user
