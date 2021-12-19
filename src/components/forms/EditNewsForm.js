@@ -25,10 +25,12 @@ import imgUploadService from '../../services/imgUploadService'
 
 const EditNewsForm = () => {
   const { id } = useParams()
+
   const navigate = useNavigate()
-  const [selectedFile, setSelectedFile] = useState()
+
   const [newsData, setNewsData] = useState({
     textButton: 'Crear',
+    inputText: 'Imagen',
     id: null,
     name: '',
     image: null,
@@ -41,15 +43,17 @@ const EditNewsForm = () => {
     icon: '',
     onConfirm: () => {},
   })
+
   const loadData = async () => {
     if (id) {
       try {
         const loadedData = await getEntryById(id)
         setNewsData({
           textButton: 'Editar',
+          inputText: 'Actualizar Imagen',
           id: loadedData.data.body.id,
           name: loadedData.data.body.name,
-          image: loadedData.data.body.image,
+          currentImage: loadedData.data.body.image,
           content: loadedData.data.body.content,
         })
       } catch (error) {
@@ -77,34 +81,28 @@ const EditNewsForm = () => {
     setData({ ...newsData, content: dataEdited })
   }
 
-  const imageUploadChangeHandler = (e) => {
-    const fileData = e.target.files[0]
-    setSelectedFile(fileData)
-  }
-
   const handleUpdateSubmit = async (values) => {
     try {
-      const uploadedImage = await imgUploadService(selectedFile)
-      if (uploadedImage) {
-        const updatedNews = await updateEntry(id, {
-          name: values.name,
-          content: data.content,
-          image: uploadedImage,
-          categoryId: '1',
-          type: 'News',
-        })
+      const updatedNews = await updateEntry(id, {
+        name: values.name,
+        content: data.content,
+        image: values.image
+          ? await imgUploadService(values.image)
+          : newsData.currentImage,
+        categoryId: '1',
+        type: 'News',
+      })
 
-        if (updatedNews) {
-          const successAlertProps = {
-            show: true,
-            title: 'Novedad actualizada!',
-            message: 'Novedad actualizada exitosamente!',
-            icon: 'success',
-            onConfirm: () => {},
-          }
-          setAlertprops(successAlertProps)
-          navigate('/')
+      if (updatedNews) {
+        const successAlertProps = {
+          show: true,
+          title: 'Novedad actualizada!',
+          message: 'Novedad actualizada exitosamente!',
+          icon: 'success',
+          onConfirm: () => {},
         }
+        setAlertprops(successAlertProps)
+        navigate('/')
       }
     } catch (error) {
       const errorAlertProps = {
@@ -120,26 +118,23 @@ const EditNewsForm = () => {
 
   const handleAddSubmit = async (values) => {
     try {
-      const uploadedImage = await imgUploadService(selectedFile)
-      if (uploadedImage) {
-        const addedNews = await addEntry({
-          name: values.name,
-          content: data.content,
-          image: uploadedImage,
-          categoryId: '1',
-          type: 'News',
-        })
-        if (addedNews) {
-          const successAlertProps = {
-            show: true,
-            title: 'Novedad agregada!',
-            message: 'Novedad agregada exitosamente!',
-            icon: 'success',
-            onConfirm: () => {},
-          }
-          setAlertprops(successAlertProps)
-          navigate('/')
+      const addedNews = await addEntry({
+        name: values.name,
+        content: data.content,
+        image: await imgUploadService(values.image),
+        categoryId: '1',
+        type: 'News',
+      })
+      if (addedNews) {
+        const successAlertProps = {
+          show: true,
+          title: 'Novedad agregada!',
+          message: 'Novedad agregada exitosamente!',
+          icon: 'success',
+          onConfirm: () => {},
         }
+        setAlertprops(successAlertProps)
+        navigate('/')
       }
     } catch (error) {
       const errorAlertProps = {
@@ -170,6 +165,7 @@ const EditNewsForm = () => {
           values,
           errors,
           touched,
+          setFieldValue,
           handleChange,
           handleBlur,
           handleSubmit,
@@ -214,31 +210,35 @@ const EditNewsForm = () => {
                         </small>
                       </FormControl>
                     </Box>
+                    {id && (
+                      <Box>
+                        <FormLabel>Imagen Actual</FormLabel>
+                        <Image
+                          alt={newsData.name}
+                          objectFit="cover"
+                          src={newsData.currentImage}
+                        />
+                      </Box>
+                    )}
                     <Box>
                       <FormControl id="image">
-                        <FormLabel>Imagen</FormLabel>
+                        <FormLabel>{newsData.inputText}</FormLabel>
 
-                        <Input
+                        <input
                           type="file"
                           name="image"
                           id="image"
-                          onChange={imageUploadChangeHandler}
-                          onBlur={handleBlur}
-                          value={values.image}
+                          onChange={(event) => {
+                            setFieldValue('image', event.currentTarget.files[0])
+                          }}
+                          value={values.file}
+                          required={!id}
                         />
                         <small>
                           {errors.image && touched.image && errors.image}
                         </small>
                       </FormControl>
                     </Box>
-                    <Flex flex={1}>
-                      <Image
-                        alt="News Image"
-                        objectFit="cover"
-                        src={newsData.image}
-                        hidden={!id}
-                      />
-                    </Flex>
 
                     <Stack spacing={10} pt={2}>
                       <Button
