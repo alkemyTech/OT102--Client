@@ -21,7 +21,7 @@ import {
 } from '../../services/testimonialsService'
 import { TestimonialSchema } from './ValidationSchemas'
 import Alert from '../alert/Alert'
-import imgUploadService from '../../services/imgUploadService'
+import { uploadImage } from '../../services/imgUploadService'
 
 const EditTestimonialForm = () => {
   const { id } = useParams()
@@ -76,11 +76,6 @@ const EditTestimonialForm = () => {
   const handlerchange = (event, editor) => {
     const dataEdited = editor.getData()
     setData({ ...testimonialData, content: dataEdited })
-  }
-
-  const uploadImage = async (values) => {
-    const uploadedImage = await imgUploadService(values)
-    return uploadedImage
   }
 
   const handleUpdateSubmit = async (values) => {
