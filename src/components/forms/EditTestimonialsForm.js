@@ -24,9 +24,8 @@ import Alert from '../alert/Alert'
 import imgUploadService from '../../services/imgUploadService'
 
 const EditTestimonialForm = () => {
-  const { id } = useParams
+  const { id } = useParams()
   const navigate = useNavigate()
-  const [selectedFile, setSelectedFile] = useState()
   const [data, setData] = useState()
   const [testimonialData, setTestimonialData] = useState({
     textButton: 'Crear',
@@ -53,7 +52,7 @@ const EditTestimonialForm = () => {
           inputText: 'Actualizar imagen',
           id: loadedData.data.body.id,
           name: loadedData.data.body.name,
-          image: loadedData.data.body.image,
+          oldImage: loadedData.data.body.image,
           content: loadedData.data.body.content,
         })
       } catch (error) {
@@ -79,13 +78,8 @@ const EditTestimonialForm = () => {
     setData({ ...testimonialData, content: dataEdited })
   }
 
-  const imageUploadChangeHandler = (e) => {
-    const fileData = e.target.files[0]
-    setSelectedFile(fileData)
-  }
-
-  const uploadImage = async () => {
-    const uploadedImage = await imgUploadService(selectedFile)
+  const uploadImage = async (values) => {
+    const uploadedImage = await imgUploadService(values)
     return uploadedImage
   }
 
@@ -94,7 +88,7 @@ const EditTestimonialForm = () => {
       const updatedTestimonial = await updateTestimonial(id, {
         name: values.name,
         content: data.content,
-        image: selectedFile ? await uploadImage() : testimonialData.image,
+        image: values.image ? await uploadImage(values.image) : testimonialData.oldImage,
       })
       if (updatedTestimonial) {
         const successAlertProps = {
@@ -121,24 +115,21 @@ const EditTestimonialForm = () => {
 
   const handleAddSubmit = async (values) => {
     try {
-      const uploadedImage = await imgUploadService(selectedFile)
-      if (uploadedImage) {
-        const addedTestimonial = await addTestimonial({
-          name: values.name,
-          content: data.content,
-          image: uploadedImage,
-        })
-        if (addedTestimonial) {
-          const successAlertProps = {
-            show: true,
-            title: 'Novedad agregada!',
-            message: 'Novedad agregada exitosamente!',
-            icon: 'success',
-            onConfirm: () => {},
-          }
-          setAlertprops(successAlertProps)
-          navigate('/')
+      const addedTestimonial = await addTestimonial({
+        name: values.name,
+        content: data.content,
+        image: values.image ? await uploadImage(values.image) : null,
+      })
+      if (addedTestimonial) {
+        const successAlertProps = {
+          show: true,
+          title: 'Novedad agregada!',
+          message: 'Novedad agregada exitosamente!',
+          icon: 'success',
+          onConfirm: () => {},
         }
+        setAlertprops(successAlertProps)
+        navigate('/')
       }
     } catch (error) {
       const errorAlertProps = {
@@ -160,12 +151,13 @@ const EditTestimonialForm = () => {
         initialValues={{
           name: testimonialData.name,
           content: testimonialData.content,
+          image: '',
         }}
         validationSchema={TestimonialSchema}
         onSubmit={(values) => (id ? handleUpdateSubmit(values) : handleAddSubmit(values))}
       >
         {({
-          values, errors, touched, handleChange, handleBlur, handleSubmit,
+          values, errors, touched, setFieldValue, handleChange, handleBlur, handleSubmit,
         }) => (
           <form onSubmit={handleSubmit}>
             <Flex align="center" justify="center" bg="gray.100">
@@ -206,19 +198,18 @@ const EditTestimonialForm = () => {
                     {id && (
                     <Box>
                       <FormLabel>Imagen actual</FormLabel>
-                      <Image alt="News Image" objectFit="cover" src={testimonialData.image} />
+                      <Image alt={testimonialData.name} objectFit="cover" src={testimonialData.oldImage} />
                     </Box>
                     )}
                     <Box>
-                      <FormControl id="image">
+                      <FormControl>
                         <FormLabel>{testimonialData.inputText}</FormLabel>
                         <input
                           type="file"
-                          name="image"
-                          id="image"
-                          onChange={imageUploadChangeHandler}
-                          onBlur={handleBlur}
-                          value={values.image}
+                          onChange={(event) => {
+                            setFieldValue('image', event.currentTarget.files[0])
+                          }}
+                          value={values.file}
                         />
                         <small>{errors.image && touched.image && errors.image}</small>
                       </FormControl>
