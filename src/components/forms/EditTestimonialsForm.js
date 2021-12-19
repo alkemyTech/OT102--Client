@@ -2,17 +2,40 @@ import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { Formik } from 'formik'
 import {
-  Flex, Box, FormControl, FormLabel, Input, Stack, Button, Heading,
+  Flex,
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  Stack,
+  Button,
+  Heading,
+  Image,
 } from '@chakra-ui/react'
-import { CategorySchema } from './ValidationSchemas'
-import { addCategory, getCategoryById, updateCategory } from '../../services/categoriesService'
+import { CKEditor } from '@ckeditor/ckeditor5-react'
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+import {
+  addTestimonial,
+  getTestimonialById,
+  updateTestimonial,
+} from '../../services/testimonialsService'
+import { TestimonialSchema } from './ValidationSchemas'
 import Alert from '../alert/Alert'
-import { addTestimonial, getTestimonialById, updateTestimonial } from '../../services/testimonialsService'
 import imgUploadService from '../../services/imgUploadService'
 
 const EditTestimonialForm = () => {
-  const { id } = useParams()
-  const navigate = useNavigate();
+  const { id } = useParams
+  const navigate = useNavigate()
+  const [selectedFile, setSelectedFile] = useState()
+  const [data, setData] = useState()
+  const [testimonialData, setTestimonialData] = useState({
+    textButton: 'Crear',
+    inputText: 'Imagen',
+    id: null,
+    name: '',
+    image: null,
+    content: '',
+  })
   const [alertProps, setAlertprops] = useState({
     show: false,
     title: '',
@@ -21,58 +44,67 @@ const EditTestimonialForm = () => {
     onConfirm: () => {},
   })
 
-  const [categoryData, setCategoryData] = useState({
-    textButton: 'Crear',
-    name: '',
-    description: '',
-  })
-
   const loadData = async () => {
-    try {
-      const loadedCategory = await getCategoryById(id)
-      setCategoryData({
-        textButton: 'Editar',
-        name: loadedCategory.data.body.name,
-        description: loadedCategory.data.body.description,
-      })
-    } catch (error) {
-      // no me acuerdo cual era el errorhandler que estabamos utiizando para esto,
-      // asi que le deje el alert como para que muestre algo
-      const errorAlertProps = {
-        show: true,
-        title: 'Ooops, algo ha fallado!',
-        message: error.message,
-        icon: 'error',
-        onConfirm: () => {},
+    if (id) {
+      try {
+        const loadedData = await getTestimonialById(id)
+        setTestimonialData({
+          textButton: 'Editar',
+          inputText: 'Actualizar imagen',
+          id: loadedData.data.body.id,
+          name: loadedData.data.body.name,
+          image: loadedData.data.body.image,
+          content: loadedData.data.body.content,
+        })
+      } catch (error) {
+        const errorAlertProps = {
+          show: true,
+          title: 'Ooops, algo ha fallado!',
+          message: error.message,
+          icon: 'error',
+          onConfirm: () => {},
+        }
+        setAlertprops(errorAlertProps)
       }
-      setAlertprops(errorAlertProps)
     }
   }
 
   useEffect(() => {
-    if (id) {
-      loadData()
-    }
-  // eslint-disable-next-line
+    loadData()
+    // eslint-disable-next-line
   }, [])
 
-  const handleUpdateSubmit = async (values, onSubmitProps) => {
-    try {
-      const updatedCategory = await updateCategory(id, {
-        name: values.categoryName,
-        description: values.description,
-      })
+  const handlerchange = (event, editor) => {
+    const dataEdited = editor.getData()
+    setData({ ...testimonialData, content: dataEdited })
+  }
 
-      if (updatedCategory) {
+  const imageUploadChangeHandler = (e) => {
+    const fileData = e.target.files[0]
+    setSelectedFile(fileData)
+  }
+
+  const uploadImage = async () => {
+    const uploadedImage = await imgUploadService(selectedFile)
+    return uploadedImage
+  }
+
+  const handleUpdateSubmit = async (values) => {
+    try {
+      const updatedTestimonial = await updateTestimonial(id, {
+        name: values.name,
+        content: data.content,
+        image: selectedFile ? await uploadImage() : testimonialData.image,
+      })
+      if (updatedTestimonial) {
         const successAlertProps = {
           show: true,
-          title: 'Categoria actualizada con éxito',
-          message: '',
+          title: 'Novedad actualizada!',
+          message: 'Novedad actualizada exitosamente!',
           icon: 'success',
           onConfirm: () => {},
         }
         setAlertprops(successAlertProps)
-        onSubmitProps.resetForm()
         navigate('/')
       }
     } catch (error) {
@@ -87,24 +119,26 @@ const EditTestimonialForm = () => {
     }
   }
 
-  const handleAddSubmit = async (values, onSubmitProps) => {
+  const handleAddSubmit = async (values) => {
     try {
-      const addedCategory = await addCategory({
-        name: values.categoryName,
-        description: values.description,
-      })
-
-      if (addedCategory) {
-        const successAlertProps = {
-          show: true,
-          title: 'Categoria registrada éxito',
-          message: '',
-          icon: 'success',
-          onConfirm: () => {},
+      const uploadedImage = await imgUploadService(selectedFile)
+      if (uploadedImage) {
+        const addedTestimonial = await addTestimonial({
+          name: values.name,
+          content: data.content,
+          image: uploadedImage,
+        })
+        if (addedTestimonial) {
+          const successAlertProps = {
+            show: true,
+            title: 'Novedad agregada!',
+            message: 'Novedad agregada exitosamente!',
+            icon: 'success',
+            onConfirm: () => {},
+          }
+          setAlertprops(successAlertProps)
+          navigate('/')
         }
-        setAlertprops(successAlertProps)
-        onSubmitProps.resetForm()
-        navigate('/')
       }
     } catch (error) {
       const errorAlertProps = {
@@ -124,11 +158,11 @@ const EditTestimonialForm = () => {
       <Formik
         enableReinitialize
         initialValues={{
-          categoryName: categoryData.name,
-          description: categoryData.description,
+          name: testimonialData.name,
+          content: testimonialData.content,
         }}
-        validationSchema={CategorySchema}
-        onSubmit={id ? handleUpdateSubmit : handleAddSubmit}
+        validationSchema={TestimonialSchema}
+        onSubmit={(values) => (id ? handleUpdateSubmit(values) : handleAddSubmit(values))}
       >
         {({
           values, errors, touched, handleChange, handleBlur, handleSubmit,
@@ -138,44 +172,57 @@ const EditTestimonialForm = () => {
               <Stack spacing={8} mx="auto" maxW="lg" py={12} px={6}>
                 <Stack align="center">
                   <Heading fontSize="4xl" textAlign="center">
-                    Categoria
+                    Novedad
                   </Heading>
                 </Stack>
                 <Box rounded="lg" bg="white" boxShadow="lg" p={8}>
                   <Stack spacing={4}>
                     <Box>
-                      <FormControl id="categoryName">
-                        <FormLabel>Nombre de la categoria</FormLabel>
+                      <FormControl id="name">
+                        <FormLabel>Titulo</FormLabel>
                         <Input
                           type="text"
-                          name="categoryName"
-                          id="categoryName"
+                          name="name"
+                          id="name"
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          value={values.categoryName}
+                          value={values.name}
                         />
-                        <small>
-                          {errors.categoryName && touched.categoryName && errors.categoryName}
-                        </small>
+                        <small>{errors.name && touched.name && errors.name}</small>
                       </FormControl>
                     </Box>
                     <Box>
-                      <FormControl id="description">
-                        <FormLabel>Descripción</FormLabel>
-                        <Input
-                          type="text"
-                          name="description"
-                          id="description"
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          value={values.description}
+                      <FormControl id="content">
+                        <FormLabel>Contenido</FormLabel>
+                        <CKEditor
+                          name="content"
+                          editor={ClassicEditor}
+                          data={values.content}
+                          onChange={handlerchange}
                         />
-                        <small>
-                          {errors.description && touched.description && errors.description}
-                        </small>
+                        <small>{errors.content && touched.content && errors.content}</small>
                       </FormControl>
                     </Box>
-
+                    {id && (
+                    <Box>
+                      <FormLabel>Imagen actual</FormLabel>
+                      <Image alt="News Image" objectFit="cover" src={testimonialData.image} />
+                    </Box>
+                    )}
+                    <Box>
+                      <FormControl id="image">
+                        <FormLabel>{testimonialData.inputText}</FormLabel>
+                        <input
+                          type="file"
+                          name="image"
+                          id="image"
+                          onChange={imageUploadChangeHandler}
+                          onBlur={handleBlur}
+                          value={values.image}
+                        />
+                        <small>{errors.image && touched.image && errors.image}</small>
+                      </FormControl>
+                    </Box>
                     <Stack spacing={10} pt={2}>
                       <Button
                         type="submit"
@@ -187,7 +234,7 @@ const EditTestimonialForm = () => {
                           bg: 'blue.500',
                         }}
                       >
-                        {categoryData.textButton}
+                        {testimonialData.textButton}
                       </Button>
                     </Stack>
                   </Stack>
@@ -200,5 +247,4 @@ const EditTestimonialForm = () => {
     </>
   )
 }
-
 export default EditTestimonialForm
