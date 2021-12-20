@@ -89,8 +89,8 @@ const EditNewsForm = () => {
         image: values.image
           ? await imgUploadService(values.image)
           : newsData.currentImage,
-        categoryId: '1',
-        type: 'News',
+        categoryId: '1', // Category should be hardcoded.
+        type: 'News', // Category and type should be News (novedades)
       })
 
       if (updatedNews) {
