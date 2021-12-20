@@ -2,11 +2,8 @@ import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 
 import PrivateRoute from '../hoc/PrivateRoute'
-
 import AdminRoutes from './adminRoutes'
-
 import Dashboard from '../pages/Dashboard'
-
 import EditUserForm from '../components/forms/EditUserForm'
 
 /* El dentro del dashboard va mi perfil de usuario.
