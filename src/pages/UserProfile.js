@@ -18,7 +18,7 @@ import Alert from '../components/alert/Alert'
 import useUser from '../hooks/useUser'
 
 export default function UserProfile() {
-  const { userData: data } = useUser()
+  const { userData: data, logoutUser } = useUser()
   const [alertProps, setAlertprops] = React.useState({
     show: false,
     title: '',
@@ -41,6 +41,7 @@ export default function UserProfile() {
       onConfirm: () => {
         delUser(data.id)
           .then(() => {
+            logoutUser()
             navigate('/')
           })
           .catch(() => {
