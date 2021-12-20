@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import {
   IconButton,
   Avatar,
@@ -40,12 +41,14 @@ export default function MobileNav({ onOpen, ...rest }) {
           icon={<HamburgerIcon w={5} h={5} />}
         />
       </Flex>
-      <Image
-        display={{ base: 'flex', md: 'none' }}
-        h="45px"
-        src="../../images/logo-somos-mas.png"
-        objectFit="cover"
-      />
+      <Link to="/backoffice">
+        <Image
+          display={{ base: 'flex', md: 'none' }}
+          h="45px"
+          src="../../images/logo-somos-mas.png"
+          objectFit="cover"
+        />
+      </Link>
       <HStack spacing={{ base: '0', md: '6' }}>
         <Flex alignItems="center">
           <Avatar size="sm" src={userData && userData.image} />
