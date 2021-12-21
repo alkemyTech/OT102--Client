@@ -21,7 +21,7 @@ import {
 } from '../../services/testimonialsService'
 import { TestimonialSchema } from './ValidationSchemas'
 import Alert from '../alert/Alert'
-import { uploadImage } from '../../services/imgUploadService'
+import imageUploadService from '../../services/imgUploadService'
 
 const EditTestimonialForm = () => {
   const { id } = useParams()
@@ -83,7 +83,7 @@ const EditTestimonialForm = () => {
       const updatedTestimonial = await updateTestimonial(id, {
         name: values.name,
         content: data.content,
-        image: values.image ? await uploadImage(values.image) : testimonialData.oldImage,
+        image: values.image ? await imageUploadService(values.image) : testimonialData.oldImage,
       })
       if (updatedTestimonial) {
         const successAlertProps = {
@@ -113,7 +113,7 @@ const EditTestimonialForm = () => {
       const addedTestimonial = await addTestimonial({
         name: values.name,
         content: data.content,
-        image: values.image ? await uploadImage(values.image) : null,
+        image: values.image ? await imageUploadService(values.image) : null,
       })
       if (addedTestimonial) {
         const successAlertProps = {

@@ -32,10 +32,4 @@ const imgUploadService = async (file) => {
     throw new Error(error.message)
   }
 }
-
-const uploadImage = async (values) => {
-  const uploadedImage = await imgUploadService(values)
-  return uploadedImage
-}
-
-export { imgUploadService, uploadImage }
+export default imgUploadService
