@@ -23,6 +23,7 @@ export default function useUser() {
 
   useEffect(() => {
     checkUserData()
+    // eslint-disable-next-line
   }, [])
 
   const newUser = (user) =>
