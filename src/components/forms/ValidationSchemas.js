@@ -17,4 +17,11 @@ const CategorySchema = Yup.object().shape({
     .min(3, 'La descripción debe tener mas de dos caracteres'),
 })
 
-export { ActivitySchema, CategorySchema }
+const NewsSchema = Yup.object().shape({
+  name: Yup.string()
+    .required('Nombre es obligatorio')
+    .min(3, 'El nombre debe tener mas de dos caracteres')
+    .max(255, 'Demasiado largo!'),
+})
+
+export { ActivitySchema, CategorySchema, NewsSchema }
