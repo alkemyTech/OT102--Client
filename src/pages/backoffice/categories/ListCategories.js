@@ -1,12 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import {
-  Box, Table, Thead, Tbody, Tr, Th, Td, Text, Button,
+  Box,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  Text,
+  Button,
 } from '@chakra-ui/react'
 import Spinner from '../../../components/Spinner'
 import Alert from '../../../components/alert/Alert'
-import { getAllCategories, delCategory } from '../../../services/categoriesService'
+import {
+  getAllCategories,
+  delCategory,
+} from '../../../services/categoriesService'
 
 const ListCategories = () => {
+  const [isLoading, setIsloading] = useState(false)
   const [categories, setCategories] = useState([])
   const [alertProps, setAlertProps] = useState({
     show: false,
@@ -17,11 +29,13 @@ const ListCategories = () => {
   })
 
   useEffect(() => {
-    const getCategories = async () => {
-      try {
-        const response = await getAllCategories()
-        setCategories(response.data.body)
-      } catch (error) {
+    setIsloading(true)
+    getAllCategories()
+      .then(({ data }) => {
+        setCategories(data.body)
+        setIsloading(false)
+      })
+      .catch((error) => {
         const errorAlertProps = {
           show: true,
           title: 'Ooops, algo ha fallado!',
@@ -29,10 +43,9 @@ const ListCategories = () => {
           icon: 'error',
           onConfirm: () => {},
         }
+        setIsloading(false)
         setAlertProps(errorAlertProps)
-      }
-    }
-    getCategories()
+      })
   }, [])
 
   const confirmDelete = async (id) => {
@@ -93,7 +106,9 @@ const ListCategories = () => {
         Categorias
       </Text>
       <Alert {...alertProps} />
-      {categories.length > 0 ? (
+      {isLoading ? (
+        <Spinner />
+      ) : (
         <Table size="sm" textAlign="center">
           <Thead bg="brand.cyan">
             <Tr>
@@ -123,8 +138,6 @@ const ListCategories = () => {
             ))}
           </Tbody>
         </Table>
-      ) : (
-        <Spinner />
       )}
     </Box>
   )

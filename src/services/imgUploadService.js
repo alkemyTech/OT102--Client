@@ -32,5 +32,4 @@ const imgUploadService = async (file) => {
     throw new Error(error.message)
   }
 }
-
 export default imgUploadService

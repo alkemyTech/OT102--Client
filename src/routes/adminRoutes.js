@@ -3,7 +3,6 @@ import { Route, Routes } from 'react-router-dom'
 
 import AdminRoute from '../hoc/AdminRoute'
 
-import Activities from '../pages/Activities'
 import Categories from '../pages/Categories'
 import ListContacts from '../pages/backoffice/ListContacts'
 import News from '../pages/backoffice/news/ListNews'
@@ -17,6 +16,7 @@ import EditNewsForm from '../components/forms/EditNewsForm'
 import EditActivityForm from '../components/forms/EditActivityForm'
 import EditCategoryForm from '../components/forms/EditCategoryForm'
 import EditTestimonialsForm from '../components/forms/EditTestimonialsForm'
+import ListActivities from '../pages/backoffice/activities/ListActivities'
 
 const AdminRoutes = () => (
   <Routes>
@@ -33,7 +33,7 @@ const AdminRoutes = () => (
         <Route path=":id" element={<EditNewsForm />} />
       </Route>
       <Route path="activities">
-        <Route index element={<Activities />} />
+        <Route index element={<ListActivities />} />
         <Route path=":id" element={<EditActivityForm />} />
       </Route>
       <Route path="categories">

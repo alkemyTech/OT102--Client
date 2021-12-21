@@ -24,4 +24,13 @@ const NewsSchema = Yup.object().shape({
     .max(255, 'Demasiado largo!'),
 })
 
-export { ActivitySchema, CategorySchema, NewsSchema }
+const TestimonialSchema = Yup.object().shape({
+  name: Yup.string()
+    .required('Nombre es obligatorio')
+    .min(3, 'El nombre debe tener mas de dos caracteres')
+    .max(255, 'Demasiado largo!'),
+})
+
+export {
+  ActivitySchema, CategorySchema, NewsSchema, TestimonialSchema,
+}
