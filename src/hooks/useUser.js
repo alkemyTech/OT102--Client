@@ -12,13 +12,17 @@ export default function useUser() {
   const jwt = window.localStorage.getItem('x-access-token')
   const dispatch = useDispatch()
 
-  useEffect(() => {
+  const checkUserData = () => {
     if (!userData && jwt) {
       getUserData().then(({ data }) => {
         const { body } = data
         dispatch(setUserData(body))
       })
     }
+  }
+
+  useEffect(() => {
+    checkUserData()
   }, [])
 
   const newUser = (user) =>
