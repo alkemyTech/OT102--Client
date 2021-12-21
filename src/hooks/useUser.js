@@ -1,11 +1,30 @@
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectUserData, setUserData, destroyUserData } from '../app/slices/auth'
-import { userLogin, registerUser } from '../services/authService'
+import {
+  selectUserData,
+  setUserData,
+  destroyUserData,
+} from '../app/slices/auth'
+import { userLogin, registerUser, getUserData } from '../services/authService'
 
 export default function useUser() {
   const userData = useSelector(selectUserData)
   const jwt = window.localStorage.getItem('x-access-token')
   const dispatch = useDispatch()
+
+  const checkUserData = () => {
+    if (!userData && jwt) {
+      getUserData().then(({ data }) => {
+        const { body } = data
+        dispatch(setUserData(body))
+      })
+    }
+  }
+
+  useEffect(() => {
+    checkUserData()
+    // eslint-disable-next-line
+  }, [])
 
   const newUser = (user) =>
     registerUser(user).then(({ data }) => {
