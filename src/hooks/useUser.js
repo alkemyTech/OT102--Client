@@ -13,13 +13,13 @@ export default function useUser() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (!userData) {
+    if (!userData && jwt) {
       getUserData().then(({ data }) => {
         const { body } = data
         dispatch(setUserData(body))
       })
     }
-  })
+  }, [])
 
   const newUser = (user) =>
     registerUser(user).then(({ data }) => {
