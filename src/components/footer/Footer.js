@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Box,
   Container,
@@ -10,8 +10,22 @@ import {
 
 import { FaFacebook, FaLinkedin, FaInstagram } from 'react-icons/fa'
 import SocialButton from './SocialButton'
+import { getOrganizationById } from '../../services/organizationsService'
 
 export default function SmallWithLogoLeft() {
+  const [ong, setOng] = useState()
+
+  useEffect(() => {
+    getOrganizationById(1)
+      .then((organization) => {
+        setOng(organization.data.body)
+      })
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.log(error)
+      })
+  }, [])
+
   return (
     <Box
       bg={useColorModeValue('gray.50', 'gray.900')}
@@ -39,13 +53,13 @@ export default function SmallWithLogoLeft() {
           <Link href="contacto">Contacto</Link>
         </Stack>
         <Stack direction="row" spacing={6}>
-          <SocialButton label="Facebook" href="#">
+          <SocialButton label="Facebook" href={ong ? ong.facebook : '#'}>
             <FaFacebook />
           </SocialButton>
-          <SocialButton label="Linkedin" href="#">
+          <SocialButton label="Linkedin" href={ong ? ong.linkedin : '#'}>
             <FaLinkedin />
           </SocialButton>
-          <SocialButton label="Instagram" href="#">
+          <SocialButton label="Instagram" href={ong ? ong.instagram : '#'}>
             <FaInstagram />
           </SocialButton>
         </Stack>
