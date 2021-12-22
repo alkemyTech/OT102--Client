@@ -30,7 +30,18 @@ const ListNews = () => {
             <Spinner />
           ) : (
             allNews
-              .map((news) => <NewsHomeCard {...news} key={news.id} />)
+              .map((news) => {
+                const { id, image, name, content } = news
+                return (
+                  <NewsHomeCard
+                    id={id}
+                    image={image}
+                    name={name}
+                    content={content}
+                    key={news.id}
+                  />
+                )
+              })
               .reverse()
               .slice(0, 4)
           )}
