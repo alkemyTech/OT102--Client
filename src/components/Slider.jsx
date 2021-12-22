@@ -13,9 +13,9 @@ const Slider = ({ slides, ...rest }) => (
     showArrows={false}
     {...rest}
   >
-    {slides.map(({ imgUrl, text }) => (
-      <div key={imgUrl}>
-        <img src={imgUrl} alt={text} />
+    {slides.map(({ imageUrl, text }) => (
+      <div key={imageUrl}>
+        <img src={imageUrl} alt={text} />
       </div>
     ))}
   </Carousel>
@@ -24,7 +24,7 @@ const Slider = ({ slides, ...rest }) => (
 Slider.propTypes = {
   slides: PropTypes.arrayOf(
     PropTypes.shape({
-      imgUrl: PropTypes.string,
+      imageUrl: PropTypes.string,
       text: PropTypes.string,
     }),
   ).isRequired,

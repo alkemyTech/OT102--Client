@@ -8,9 +8,9 @@ import Slider from '../components/Slider'
 export default function Home() {
   // there is not slides endpoint.  it should return slides orderBy 'order' column.
   const [slides, setSlides] = useState([
-    { imgUrl: '/images/slide-1.jpg', text: 'Somos mas' },
-    { imgUrl: '/images/slide-2.jpg', text: 'Dona' },
-    { imgUrl: '/images/slide-3.jpg', text: 'Escuela' },
+    { imageUrl: '/images/slide-1.jpg', text: 'Somos mas' },
+    { imageUrl: '/images/slide-2.jpg', text: 'Dona' },
+    { imageUrl: '/images/slide-3.jpg', text: 'Escuela' },
   ])
 
   useEffect(() => {
