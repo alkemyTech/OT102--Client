@@ -11,6 +11,7 @@ import {
   Button,
   Heading,
   Image,
+  HStack,
 } from '@chakra-ui/react'
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
@@ -21,6 +22,7 @@ import {
 } from '../../services/entriesService'
 import { NewsSchema } from './ValidationSchemas'
 import Alert from '../alert/Alert'
+import ReturnLink from '../ReturnLink'
 import imgUploadService from '../../services/imgUploadService'
 
 const EditNewsForm = () => {
@@ -150,6 +152,9 @@ const EditNewsForm = () => {
 
   return (
     <>
+      <HStack justifyContent="flex-end">
+        <ReturnLink />
+      </HStack>
       <Alert {...alertProps} />
       <Formik
         enableReinitialize

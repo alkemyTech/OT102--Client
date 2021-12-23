@@ -5,10 +5,12 @@ import {
   Text,
   VStack,
   Image,
+  HStack,
 } from '@chakra-ui/react'
 import { getEntryById } from '../services/entriesService'
 import Alert from '../components/alert/Alert'
 import Spinner from '../components/Spinner'
+import ReturnLink from '../components/ReturnLink'
 
 export default function NewsDetail() {
   const { id } = useParams()
@@ -62,6 +64,9 @@ export default function NewsDetail() {
 
   return (
     <>
+      <HStack justifyContent="flex-end">
+        <ReturnLink />
+      </HStack>
       <Alert {...alertProps} />
       <Container maxW="container.lg" mt="5">
         <VStack paddingTop="40px" spacing="2" alignItems="flex-start">

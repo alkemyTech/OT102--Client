@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate, Link as ReactRouterLink } from 'react-router-dom'
 import {
   Box,
   Container,
@@ -7,12 +8,13 @@ import {
   Image,
   useColorModeValue,
 } from '@chakra-ui/react'
-
 import { FaFacebook, FaLinkedin, FaInstagram } from 'react-icons/fa'
+
 import SocialButton from './SocialButton'
 import { getOrganizationById } from '../../services/organizationsService'
 
 export default function SmallWithLogoLeft() {
+  const navigate = useNavigate()
   const [ong, setOng] = useState()
 
   useEffect(() => {
@@ -44,13 +46,14 @@ export default function SmallWithLogoLeft() {
           h="45px"
           src="../../images/logo-somos-mas.png"
           objectFit="cover"
+          onClick={() => navigate('/')}
         />
         <Stack direction="row" spacing={6} flexWrap="wrap">
-          <Link href="nosotros">Nosotros</Link>
-          <Link href="actividades">Actividades</Link>
-          <Link href="novedades">Novedades</Link>
-          <Link href="testimonios">Testimonios</Link>
-          <Link href="contacto">Contacto</Link>
+          <Link as={ReactRouterLink} to="/nosotros">Nosotros</Link>
+          <Link as={ReactRouterLink} to="/actividades">Actividades</Link>
+          <Link as={ReactRouterLink} to="/novedades">Novedades</Link>
+          <Link as={ReactRouterLink} to="/testimonios">Testimonios</Link>
+          <Link as={ReactRouterLink} to="/contacto">Contacto</Link>
         </Stack>
         <Stack direction="row" spacing={6}>
           <SocialButton label="Facebook" href={ong ? ong.facebook : '#'}>

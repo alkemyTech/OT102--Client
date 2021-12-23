@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { Formik } from 'formik'
 import {
-  Flex, Box, FormControl, FormLabel, Input, Stack, Button, Heading,
+  Flex, Box, FormControl, FormLabel, Input, Stack, Button, Heading, HStack,
 } from '@chakra-ui/react'
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { getActivityById, addActivity, updateActivity } from '../../services/activitiesService'
 import { ActivitySchema } from './ValidationSchemas'
 import Alert from '../alert/Alert'
+import ReturnLink from '../ReturnLink'
 
 const EditActivitiesForm = () => {
   const { id } = useParams()
@@ -125,6 +126,9 @@ const EditActivitiesForm = () => {
 
   return (
     <>
+      <HStack justifyContent="flex-end">
+        <ReturnLink />
+      </HStack>
       <Alert {...alertProps} />
       <Formik
         enableReinitialize

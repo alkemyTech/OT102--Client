@@ -1,11 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
-import {
-  Link as ReactRouterLink,
-  useNavigate,
-  useParams,
-} from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Form, Formik } from 'formik'
-import { FiChevronLeft } from 'react-icons/fi'
 import {
   FormControl,
   FormLabel,
@@ -14,7 +9,6 @@ import {
   Heading,
   HStack,
   Box,
-  Link,
   Input,
   Image,
 } from '@chakra-ui/react'
@@ -26,6 +20,7 @@ import { slideSchema } from '../ValidationSchemas'
 import { getslideById, updateSlide } from '../../../services/slidesService'
 import imgUploadService from '../../../services/imgUploadService'
 import PreviewImage from '../../PreviewImage'
+import ReturnLink from '../../ReturnLink'
 
 export default function EditSlideForm() {
   const imageRef = useRef(null)
@@ -72,11 +67,9 @@ export default function EditSlideForm() {
   return (
     <>
       <HStack justifyContent="flex-end">
-        <Link as={ReactRouterLink} to="/backoffice/edit-home" display="flex">
-          <FiChevronLeft size={30} />
-          <Box>Regresar</Box>
-        </Link>
+        <ReturnLink />
       </HStack>
+
       <Formik
         enableReinitialize
         initialValues={{ ...slide, image: null }}

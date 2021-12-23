@@ -11,6 +11,7 @@ import {
   Button,
   Heading,
   Image,
+  HStack,
 } from '@chakra-ui/react'
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
@@ -21,6 +22,7 @@ import {
 } from '../../services/testimonialsService'
 import { TestimonialSchema } from './ValidationSchemas'
 import Alert from '../alert/Alert'
+import ReturnLink from '../ReturnLink'
 import imageUploadService from '../../services/imgUploadService'
 
 const EditTestimonialForm = () => {
@@ -88,8 +90,8 @@ const EditTestimonialForm = () => {
       if (updatedTestimonial) {
         const successAlertProps = {
           show: true,
-          title: 'Novedad actualizada!',
-          message: 'Novedad actualizada exitosamente!',
+          title: 'Testimonio actualizado!',
+          message: 'Testimonio actualizado exitosamente!',
           icon: 'success',
           onConfirm: () => {},
         }
@@ -140,6 +142,9 @@ const EditTestimonialForm = () => {
 
   return (
     <>
+      <HStack justifyContent="flex-end">
+        <ReturnLink />
+      </HStack>
       <Alert {...alertProps} />
       <Formik
         enableReinitialize
@@ -154,12 +159,13 @@ const EditTestimonialForm = () => {
         {({
           values, errors, touched, setFieldValue, handleChange, handleBlur, handleSubmit,
         }) => (
+
           <form onSubmit={handleSubmit}>
             <Flex align="center" justify="center" bg="gray.100">
               <Stack spacing={8} mx="auto" maxW="lg" py={12} px={6}>
                 <Stack align="center">
                   <Heading fontSize="4xl" textAlign="center">
-                    Novedad
+                    Testimonio
                   </Heading>
                 </Stack>
                 <Box rounded="lg" bg="white" boxShadow="lg" p={8}>
