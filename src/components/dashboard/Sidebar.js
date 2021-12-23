@@ -18,6 +18,7 @@ import {
   FiMessageSquare,
   FiCalendar,
   FiUser,
+  FiLayout,
 } from 'react-icons/fi'
 import NavItem from './NavItem'
 
@@ -27,6 +28,7 @@ const LINKS_ITEMS = [
   { name: 'Actividades', href: 'activities', icon: FiCalendar },
   { name: 'Categorias', href: 'categories', icon: FiList },
   { name: 'Contactos', href: 'contacts', icon: FiBookOpen },
+  { name: 'Editar Home', href: 'edit-home', icon: FiLayout },
   { name: 'Organizacion', href: 'edit-organization', icon: FiTool },
   { name: 'Novedades', href: 'news', icon: FiRss },
   { name: 'Usuarios', href: 'users', icon: FiUsers },
