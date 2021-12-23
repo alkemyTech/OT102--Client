@@ -24,14 +24,19 @@ const ListNews = () => {
 
   return (
     <div>
-      <HStack p={4} wrap="wrap">
+      <HStack p={4} wrap="wrap" justifyContent="center">
         <SimpleGrid columns={{ base: 1, md: 4 }} spacing={6}>
           {isLoading ? (
             <Spinner />
           ) : (
             allNews
               .map((news) => {
-                const { id, image, name, content } = news
+                const {
+                  id,
+                  image,
+                  name,
+                  content,
+                } = news
                 return (
                   <NewsHomeCard
                     id={id}

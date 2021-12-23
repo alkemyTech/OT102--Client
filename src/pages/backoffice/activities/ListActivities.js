@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
   Box,
   Table,
@@ -19,6 +20,7 @@ import Alert from '../../../components/alert/Alert'
 import DeleteActivityButton from './deleteActivityButton/DeleteActivityButton'
 
 const ListActivities = () => {
+  const navigate = useNavigate()
   const [loading, setLoading] = useState(true)
   const [activities, setActivities] = useState([])
   const [alertProps, setAlertProps] = useState({
@@ -125,7 +127,12 @@ const ListActivities = () => {
                 <Tr key={item.id} _hover={{ background: 'brand.gray1' }}>
                   <Td textAlign="center">{item.name}</Td>
                   <Td textAlign="center">
-                    <Button bg="brand.cyan">Editar</Button>
+                    <Button
+                      onClick={() => navigate(`${item.id}`)}
+                      bg="brand.cyan"
+                    >
+                      Editar
+                    </Button>
                   </Td>
                   <Td textAlign="center">
                     <DeleteActivityButton

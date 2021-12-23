@@ -132,7 +132,7 @@ const ListNews = () => {
                   <Td textAlign="center">{item.createdAt}</Td>
                   <Td textAlign="center">
                     {' '}
-                    <Link to={`/news/${item.id}`}>
+                    <Link to={`${item.id}`}>
                       <Button
                         fontWeight={600}
                         marginRight="15px"

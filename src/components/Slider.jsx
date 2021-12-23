@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import { Carousel } from 'react-responsive-carousel'
+import { HStack, Image } from '@chakra-ui/react'
 
 const Slider = ({ slides, ...rest }) => (
   <Carousel
@@ -14,9 +15,9 @@ const Slider = ({ slides, ...rest }) => (
     {...rest}
   >
     {slides.map(({ imageUrl, text }) => (
-      <div key={imageUrl}>
-        <img src={imageUrl} alt={text} />
-      </div>
+      <HStack key={imageUrl}>
+        <Image src={imageUrl} alt={text} maxH={{ base: 120, md: 420 }} objectFit="scale-down" />
+      </HStack>
     ))}
   </Carousel>
 )

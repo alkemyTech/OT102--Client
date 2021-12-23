@@ -10,7 +10,7 @@ const DeleteActivityButton = (props) => {
   }
   return (
     <Button bg="brand.rouge" colorScheme="brand.rouge" onClick={deleteHandler}>
-      Eliminar Actividad
+      Eliminar
     </Button>
   )
 }
