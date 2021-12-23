@@ -51,7 +51,10 @@ const MobileNavItem = ({
 MobileNavItem.propTypes = {
   label: PropTypes.string.isRequired,
   href: PropTypes.string.isRequired,
-  onToggle: PropTypes.func.isRequired,
+  onToggle: PropTypes.func,
 }
 
+MobileNavItem.defaultProps = {
+  onToggle: () => {},
+}
 export default MobileNavItem

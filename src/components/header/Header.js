@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   Box,
   Flex,
@@ -88,11 +88,13 @@ export default function WithSubnavigation() {
           flex={{ base: 1 }}
           justify={{ base: 'center', md: 'start' }}
         >
-          <Image
-            h="45px"
-            src="../../images/logo-somos-mas.png"
-            objectFit="cover"
-          />
+          <Link to="/">
+            <Image
+              h="45px"
+              src="/images/logo-somos-mas.png"
+              objectFit="cover"
+            />
+          </Link>
 
           <Flex display={{ base: 'none', md: 'flex' }}>
             <DesktopNav isLogged={isLogged} navItems={NAV_ITEMS} />
@@ -123,7 +125,6 @@ export default function WithSubnavigation() {
                 px={{ base: '15px', md: '25px' }}
                 fontWeight={400}
                 bg="brand.gray1"
-                isLogged={isLogged}
                 onClick={handleLogout}
                 _hover={{
                   bg: 'brand.cyan',

@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import {
-  Container,
-  Text,
-  Box,
-  SimpleGrid,
+  Container, Text, Box, SimpleGrid,
 } from '@chakra-ui/react'
-import { getAllTestimonials } from '../services/testimonialsService'
-import Alert from '../components/alert/Alert'
-import TestimonialCard from '../components/testimonials/CardTestimonials'
-import Spinner from '../components/Spinner'
+import { getAllActivities } from '../../services/activitiesService'
+import Alert from '../alert/Alert'
+import ActivityCard from './ActivityCard'
+import Spinner from '../Spinner'
 
-export default function ListTestimonials() {
-  const [allTestimonials, setTestimonials] = useState([])
+const ListActivities = () => {
+  const [allActivities, setActivities] = useState([])
   const [loading, setLoading] = useState(false)
   const [alertProps, setAlertprops] = useState({
     show: false,
@@ -24,8 +21,8 @@ export default function ListTestimonials() {
   const loadData = async () => {
     try {
       setLoading(true)
-      const loadedTestimonials = await getAllTestimonials()
-      setTestimonials(loadedTestimonials.data.body)
+      const loadedActivities = await getAllActivities()
+      setActivities(loadedActivities.data.body)
       setLoading(false)
     } catch (error) {
       setLoading(false)
@@ -46,28 +43,30 @@ export default function ListTestimonials() {
   }, [])
 
   if (loading) {
-    return (
-      <Spinner />
-    )
+    return <Spinner />
   }
 
   return (
     <>
       <Alert {...alertProps} />
       <Container maxW="container.lg" mt="5">
-        <Text textStyle="title">Testimonios Somos Mas</Text>
+        <Text textStyle="title">Novedades Somos Mas</Text>
         <Box p={0}>
-          <SimpleGrid
-            columns={{ base: 1, xl: 2 }}
-            spacing="20"
-            mt={16}
-            mx="auto"
-          >
-            { !allTestimonials ? <Spinner /> : allTestimonials.map((testimonial) =>
-              <TestimonialCard {...testimonial} key={testimonial.id} />).reverse()}
+          <SimpleGrid columns={{ base: 1, md: 4 }} spacing={6}>
+            {!allActivities ? (
+              <Spinner />
+            ) : (
+              allActivities
+                .map((activity) => (
+                  <ActivityCard {...activity} key={activity.id} />
+                ))
+                .reverse()
+            )}
           </SimpleGrid>
         </Box>
       </Container>
     </>
-  );
+  )
 }
+
+export default ListActivities

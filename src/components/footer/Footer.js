@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { useNavigate, Link as ReactRouterLink } from 'react-router-dom'
 import {
   Box,
   Container,
@@ -7,11 +8,26 @@ import {
   Image,
   useColorModeValue,
 } from '@chakra-ui/react'
-
 import { FaFacebook, FaLinkedin, FaInstagram } from 'react-icons/fa'
+
 import SocialButton from './SocialButton'
+import { getOrganizationById } from '../../services/organizationsService'
 
 export default function SmallWithLogoLeft() {
+  const navigate = useNavigate()
+  const [ong, setOng] = useState()
+
+  useEffect(() => {
+    getOrganizationById(1)
+      .then((organization) => {
+        setOng(organization.data.body)
+      })
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.log(error)
+      })
+  }, [])
+
   return (
     <Box
       bg={useColorModeValue('gray.50', 'gray.900')}
@@ -30,22 +46,23 @@ export default function SmallWithLogoLeft() {
           h="45px"
           src="../../images/logo-somos-mas.png"
           objectFit="cover"
+          onClick={() => navigate('/')}
         />
         <Stack direction="row" spacing={6} flexWrap="wrap">
-          <Link href="nosotros">Nosotros</Link>
-          <Link href="actividades">Actividades</Link>
-          <Link href="novedades">Novedades</Link>
-          <Link href="testimonios">Testimonios</Link>
-          <Link href="contacto">Contacto</Link>
+          <Link as={ReactRouterLink} to="/nosotros">Nosotros</Link>
+          <Link as={ReactRouterLink} to="/actividades">Actividades</Link>
+          <Link as={ReactRouterLink} to="/novedades">Novedades</Link>
+          <Link as={ReactRouterLink} to="/testimonios">Testimonios</Link>
+          <Link as={ReactRouterLink} to="/contacto">Contacto</Link>
         </Stack>
         <Stack direction="row" spacing={6}>
-          <SocialButton label="Facebook" href="#">
+          <SocialButton label="Facebook" href={ong ? ong.facebook : '#'}>
             <FaFacebook />
           </SocialButton>
-          <SocialButton label="Linkedin" href="#">
+          <SocialButton label="Linkedin" href={ong ? ong.linkedin : '#'}>
             <FaLinkedin />
           </SocialButton>
-          <SocialButton label="Instagram" href="#">
+          <SocialButton label="Instagram" href={ong ? ong.instagram : '#'}>
             <FaInstagram />
           </SocialButton>
         </Stack>

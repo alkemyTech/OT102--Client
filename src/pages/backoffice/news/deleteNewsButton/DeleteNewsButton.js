@@ -2,7 +2,7 @@ import React from 'react'
 import { Button } from '@chakra-ui/react'
 import PropTypes from 'prop-types'
 
-const DeleteActivityButton = (props) => {
+const DeleteNewsButton = (props) => {
   const { onDelete, id } = props
 
   const deleteHandler = () => {
@@ -15,9 +15,9 @@ const DeleteActivityButton = (props) => {
   )
 }
 
-DeleteActivityButton.propTypes = {
+DeleteNewsButton.propTypes = {
   id: PropTypes.string.isRequired,
   onDelete: PropTypes.func.isRequired,
 }
 
-export default DeleteActivityButton
+export default DeleteNewsButton

@@ -8,6 +8,7 @@ import { getAllTestimonials, delTestimonial } from '../../services/testimonialsS
 import Alert from '../../components/alert/Alert'
 
 const ListTestimonials = () => {
+  const [isLoading, setIsloading] = useState(false)
   const [activities, setActivities] = useState([])
   const [deletedNew, setDeletedNew] = useState([])
   const [alertProps, setAlertprops] = useState({
@@ -19,10 +20,12 @@ const ListTestimonials = () => {
   })
 
   useEffect(() => {
+    setIsloading(true)
     const getTestimonials = async () => {
       try {
         const response = await getAllTestimonials()
         setActivities(response.data.body)
+        setIsloading(false)
       } catch (error) {
         const errorAlertProps = {
           show: true,
@@ -32,6 +35,7 @@ const ListTestimonials = () => {
           onConfirm: () => {},
         }
         setAlertprops(errorAlertProps)
+        setIsloading(false)
       }
     }
     getTestimonials()
@@ -65,9 +69,11 @@ const ListTestimonials = () => {
         textAlign="center"
       >
         <Text fontSize="2xl" mb="30px">
-          Contactos
+          Testimonios
         </Text>
-        {activities.length > 0 ? (
+        {isLoading ? (
+          <Spinner />
+        ) : (
           <Table size="sm" textAlign="center">
             <Thead bg="brand.cyan">
               <Tr>
@@ -88,7 +94,7 @@ const ListTestimonials = () => {
                   <Td textAlign="center">{item.content}</Td>
                   <Td textAlign="center">
                     {' '}
-                    <Link to={`/testimonials/${item.id}`}>
+                    <Link to={`${item.id}`}>
                       <Button
                         fontWeight={600}
                         bg="brand.yellow"
@@ -115,9 +121,7 @@ const ListTestimonials = () => {
               ))}
             </Tbody>
           </Table>
-        ) : (
-          <Spinner />
-        )}
+        ) }
       </Box>
     </>
   )

@@ -115,26 +115,26 @@ const ListUsers = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {users.map((item) => (
-              <Tr key={item.id} _hover={{ bg: 'brand.gray1' }}>
+            {users.map((user) => (
+              <Tr key={user.userId} _hover={{ bg: 'brand.gray1' }}>
                 <Td
                   textAlign="center"
                 >
-                  {`${item.firstName} / ${item.lastName}`}
+                  {`${user.firstName} / ${user.lastName}`}
                 </Td>
                 <Td textAlign="center">
-                  {item.email}
+                  {user.email}
                 </Td>
                 <Td
                   textAlign="center"
                 >
-                  <Link to={`/users/${item.id}`}><Button bg="brand.cyan">Editar</Button></Link>
+                  <Link to={`${user.userId}`}><Button bg="brand.cyan">Editar</Button></Link>
                 </Td>
                 <Td
                   textAlign="center"
                 >
                   <DeleteUserButton
-                    id={item.id}
+                    id={user.userId}
                     onDelete={deleteUserHandler}
                   />
                 </Td>
