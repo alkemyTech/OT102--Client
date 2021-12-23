@@ -10,7 +10,7 @@ const DeleteNewsButton = (props) => {
   }
   return (
     <Button bg="brand.rouge" colorScheme="brand.rouge" onClick={deleteHandler}>
-      Eliminar Novedad
+      Eliminar
     </Button>
   )
 }

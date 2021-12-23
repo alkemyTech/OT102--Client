@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {
-  Link as ReactRouterLink,
-  useNavigate,
-  useParams,
-} from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Form, Formik } from 'formik'
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
@@ -15,11 +11,7 @@ import {
   Heading,
   Spinner,
   HStack,
-  Box,
-  Link,
 } from '@chakra-ui/react'
-
-import { FiChevronLeft } from 'react-icons/fi'
 
 import {
   getOrganizationById,
@@ -29,6 +21,7 @@ import {
 import AlertFunction from '../../alert/AlertFunction'
 import extractErrorMsg from '../../../utils/extractErrorMsg'
 import { welcomeTextSchema } from '../ValidationSchemas'
+import ReturnLink from '../../ReturnLink'
 
 export default function EditHomeForm() {
   const { id: orgId } = useParams()
@@ -61,10 +54,7 @@ export default function EditHomeForm() {
   return (
     <>
       <HStack justifyContent="flex-end">
-        <Link as={ReactRouterLink} to="/backoffice/edit-home" display="flex">
-          <FiChevronLeft size={30} />
-          <Box>Regresar</Box>
-        </Link>
+        <ReturnLink />
       </HStack>
       <Formik
         enableReinitialize

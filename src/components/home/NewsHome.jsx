@@ -1,6 +1,12 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Button, Container, Heading, HStack, Text } from '@chakra-ui/react'
+import {
+  Button,
+  Container,
+  Heading,
+  HStack,
+  Text,
+} from '@chakra-ui/react'
 import NewsHomeList from './NewsHomeList'
 
 const NewsHome = () => {

@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { userLogin } from '../../services/authService'
 
 export const authSlice = createSlice({
   name: 'auth',
@@ -26,10 +25,6 @@ export const { setUserData, destroyUserData } = authSlice.actions
  * @param {string} user.password
  * @return Promise {object} the logged user and set the new state with only body data.
  */
-export const setUserDataAsync = (userData) => async (dispatch) => {
-  const response = await userLogin(userData)
-  dispatch(setUserData(response.data.body.user))
-}
 
 /**
  * Function to get the user logged data in the state
