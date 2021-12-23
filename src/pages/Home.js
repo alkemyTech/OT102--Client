@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import { getAllslides } from '../services/slidesService'
-// import WelcomeText from '../components/home/WelcomeText'
+import WelcomeText from '../components/home/WelcomeText'
 import NewsHome from '../components/home/NewsHome'
 import Slider from '../components/Slider'
 
@@ -23,7 +23,7 @@ export default function Home() {
   return (
     <>
       <Slider slides={slides} />
-      {/* <WelcomeText /> */}
+      <WelcomeText />
       <NewsHome />
     </>
   )
