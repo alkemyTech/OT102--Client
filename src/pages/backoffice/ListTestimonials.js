@@ -9,7 +9,7 @@ import Alert from '../../components/alert/Alert'
 
 const ListTestimonials = () => {
   const [isLoading, setIsloading] = useState(false)
-  const [activities, setActivities] = useState([])
+  const [testimonials, setTestimonials] = useState([])
   const [deletedNew, setDeletedNew] = useState([])
   const [alertProps, setAlertprops] = useState({
     show: false,
@@ -24,7 +24,7 @@ const ListTestimonials = () => {
     const getTestimonials = async () => {
       try {
         const response = await getAllTestimonials()
-        setActivities(response.data.body)
+        setTestimonials(response.data.body)
         setIsloading(false)
       } catch (error) {
         const errorAlertProps = {
@@ -40,6 +40,10 @@ const ListTestimonials = () => {
     }
     getTestimonials()
   }, [deletedNew])
+
+  function createMarkup(content) {
+    return { __html: `${content}` };
+  }
 
   const handleDelete = (id) => {
     try {
@@ -84,20 +88,20 @@ const ListTestimonials = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {activities.map((item) => (
+              {testimonials.map((item) => (
                 <Tr key={item.id}>
                   <Td textAlign="center">{item.name}</Td>
                   <Td align="center">
                     {' '}
                     <Image boxSize="100px" objectFit="cover" src={item.image} alt={item.name} />
                   </Td>
-                  <Td textAlign="center">{item.content}</Td>
+                  <Td textAlign="center" dangerouslySetInnerHTML={createMarkup(item.content)} />
                   <Td textAlign="center">
                     {' '}
                     <Link to={`${item.id}`}>
                       <Button
                         fontWeight={600}
-                        bg="brand.yellow"
+                        bg="brand.cyan"
                         _hover={{
                           bg: 'brand.gray1',
                         }}
