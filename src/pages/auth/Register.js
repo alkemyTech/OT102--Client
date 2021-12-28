@@ -15,7 +15,6 @@ import {
   InputRightElement,
   Stack,
   Button,
-  Heading,
   Text,
 } from '@chakra-ui/react'
 
@@ -110,9 +109,7 @@ const Register = () => {
             <Flex align="center" justify="center" bg="gray.100">
               <Stack spacing={8} mx="auto" maxW="lg" py={12} px={6}>
                 <Stack align="center">
-                  <Heading fontSize="4xl" textAlign="center">
-                    Registrate!
-                  </Heading>
+                  <Text textStyle="title">Registrate!</Text>
                 </Stack>
                 <Box rounded="lg" bg="white" boxShadow="lg" p={8}>
                   <Stack spacing={4}>
@@ -184,8 +181,9 @@ const Register = () => {
                         type="submit"
                         loadingText="Submitting"
                         size="lg"
-                        bg="blue.400"
-                        color="white"
+                        bg="brand.cyan"
+                        color="black"
+                        fontFamily="atma"
                         _hover={{
                           bg: 'blue.500',
                         }}

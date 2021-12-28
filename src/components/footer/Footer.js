@@ -48,7 +48,7 @@ export default function SmallWithLogoLeft() {
           objectFit="cover"
           onClick={() => navigate('/')}
         />
-        <Stack direction="row" spacing={6} flexWrap="wrap">
+        <Stack direction="row" spacing={{ base: '4', md: '6' }} flexWrap="wrap" fontSize={{ base: '10', md: '14' }}>
           <Link as={ReactRouterLink} to="/nosotros">Nosotros</Link>
           <Link as={ReactRouterLink} to="/actividades">Actividades</Link>
           <Link as={ReactRouterLink} to="/novedades">Novedades</Link>

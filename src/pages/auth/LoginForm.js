@@ -112,7 +112,7 @@ const LoginForm = () => {
                 </Stack>
                 <Box rounded="lg" bg="white" boxShadow="lg" p={8}>
                   <Stack spacing={4}>
-                    <FormControl id="email">
+                    <FormControl id="email" isRequired>
                       <FormLabel>Email</FormLabel>
                       <Input
                         type="email"
@@ -126,7 +126,7 @@ const LoginForm = () => {
                       </Text>
                     </FormControl>
 
-                    <FormControl id="password">
+                    <FormControl id="password" isRequired>
                       <FormLabel>Password</FormLabel>
                       <InputPassword
                         onChange={handleChange}
@@ -150,6 +150,8 @@ const LoginForm = () => {
                         type="submit"
                         bg="brand.cyan"
                         color="black"
+                        fontFamily="atma"
+                        size="lg"
                         _hover={{
                           bg: 'brand.blue',
                         }}
