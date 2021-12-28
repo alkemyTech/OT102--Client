@@ -78,22 +78,30 @@ export default function EditHomePage() {
         <Table size="sm" textAlign="center">
           <Thead bg="brand.cyan">
             <Tr>
-              <Td textAlign="center">Campo</Td>
-              <Td textAlign="center">Texto</Td>
+              <Td textAlign="center">Nombre</Td>
+              <Td textAlign="center">Texto de bienvenida</Td>
               <Td textAlign="center">Imagen</Td>
-              <Td textAlign="center">Editar</Td>
+              <Td textAlign="center">Acciones</Td>
             </Tr>
           </Thead>
           <Tbody>
             <Tr>
-              <Td>Welcome Text</Td>
-              <Td><Box dangerouslySetInnerHTML={createMarkup()} /></Td>
+              <Td textAlign="center">Welcome Text</Td>
+              <Td textAlign="center"><Box dangerouslySetInnerHTML={createMarkup()} /></Td>
               <Td />
-              <Td>
-                <Button onClick={() => navigate(orgId)}>edit</Button>
+              <Td textAlign="center">
+                <Button
+                  onClick={() => navigate(orgId)}
+                  fontWeight={600}
+                  bg="brand.cyan"
+                  _hover={{
+                    bg: 'brand.gray1',
+                  }}
+                >
+                  Editar
+                </Button>
               </Td>
             </Tr>
-
             {slides
             && slides.map((slide) => (
               <Tr
@@ -103,12 +111,19 @@ export default function EditHomePage() {
               >
                 <Td>{`Slide ${slide.id}`}</Td>
                 <Td flexGrow="1">{slide.text}</Td>
-                <Td>
+                <Td textAlign="center">
                   <Image maxW="300px" src={slide.imageUrl} />
                 </Td>
-                <Td>
-                  <Button onClick={() => navigate(`slide/${slide.id}`)}>
-                    edit
+                <Td textAlign="center">
+                  <Button
+                    onClick={() => navigate(`slide/${slide.id}`)}
+                    fontWeight={600}
+                    bg="brand.cyan"
+                    _hover={{
+                      bg: 'brand.gray1',
+                    }}
+                  >
+                    Editar
                   </Button>
                 </Td>
               </Tr>
