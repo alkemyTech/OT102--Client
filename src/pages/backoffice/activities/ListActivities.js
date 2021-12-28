@@ -118,8 +118,7 @@ const ListActivities = () => {
             <Thead bg="brand.cyan">
               <Tr>
                 <Th textAlign="center">Actividad</Th>
-                <Th textAlign="center">Editar</Th>
-                <Th textAlign="center">Eliminar</Th>
+                <Th textAlign="center">Acciones</Th>
               </Tr>
             </Thead>
             <Tbody>
@@ -133,8 +132,7 @@ const ListActivities = () => {
                     >
                       Editar
                     </Button>
-                  </Td>
-                  <Td textAlign="center">
+                    {' '}
                     <DeleteActivityButton
                       id={item.id}
                       onDelete={deleteActivityHandler}
