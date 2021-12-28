@@ -10,7 +10,6 @@ import Users from '../pages/Users'
 
 import EditHomeForm from '../components/forms/home/EditHomeForm'
 import EditSlideForm from '../components/forms/home/EditSlideForm'
-import EditOrgForm from '../components/forms/EditOrgForm'
 import EditUserForm from '../components/forms/EditUserForm'
 import EditNewsForm from '../components/forms/EditNewsForm'
 import EditActivityForm from '../components/forms/EditActivityForm'
@@ -28,7 +27,6 @@ const AdminRoutes = () => (
         <Route path=":id" element={<EditHomeForm />} />
         <Route path="slide/:id" element={<EditSlideForm />} />
       </Route>
-      <Route path="edit-organization" element={<EditOrgForm />} />
       <Route path="home" element={<EditHomeForm />} />
       <Route path="users">
         <Route index element={<Users />} />
