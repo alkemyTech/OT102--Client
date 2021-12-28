@@ -5,7 +5,6 @@ import ListUsers from './backoffice/users/ListUsers'
 export default function Users() {
   return (
     <>
-      <h1>List of users</h1>
       <ListUsers />
       {/* <Outlet /> */}
     </>
