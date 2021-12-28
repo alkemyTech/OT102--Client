@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import {
-  Container, Text, VStack, Image,
+  Container, Text, VStack, Image, Flex, HStack,
 } from '@chakra-ui/react'
 import { getActivityById } from '../services/activitiesService'
 import Alert from '../components/alert/Alert'
 import Spinner from '../components/Spinner'
+import ReturnLink from '../components/ReturnLink'
 
 export default function ActivityDetail() {
   const { id } = useParams()
@@ -57,9 +58,12 @@ export default function ActivityDetail() {
 
   return (
     <>
+      <HStack justifyContent="flex-end">
+        <ReturnLink />
+      </HStack>
       <Alert {...alertProps} />
       <Container maxW="container.lg" mt="5">
-        <VStack paddingTop="40px" spacing="2" alignItems="flex-start">
+        <VStack paddingTop="40px" spacing="2" alignItems="flex-start" w="full" justifyContent="space-around">
           <Image
             w="full"
             h="250px"
@@ -67,8 +71,9 @@ export default function ActivityDetail() {
             objectFit="cover"
             objectPosition="center -100px"
           />
-
-          <Text textStyle="title">{activityData.name}</Text>
+          <Flex w="full">
+            <Text textStyle="title" maxW="100%" flexGrow="1" borderBottom="1px" borderColor="#E6E6E6" pt="15px">{activityData.name}</Text>
+          </Flex>
           <Text as="p" fontSize="lg">
             {activityData.content}
           </Text>

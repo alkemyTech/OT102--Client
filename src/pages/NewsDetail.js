@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+
 import {
   Container,
   Text,
   VStack,
   Image,
+  Flex,
   HStack,
 } from '@chakra-ui/react'
 import { getEntryById } from '../services/entriesService'
@@ -69,7 +71,7 @@ export default function NewsDetail() {
       </HStack>
       <Alert {...alertProps} />
       <Container maxW="container.lg" mt="5">
-        <VStack paddingTop="40px" spacing="2" alignItems="flex-start">
+        <VStack paddingTop="40px" spacing="2" alignItems="flex-start" w="full" justifyContent="space-around">
           <Image
             w="full"
             h="250px"
@@ -77,9 +79,11 @@ export default function NewsDetail() {
             objectFit="cover"
             objectPosition="center -100px"
           />
-
-          <Text textStyle="title">{newsData.name}</Text>
+          <Flex w="full">
+            <Text textStyle="title" maxW="100%" flexGrow="1" borderBottom="1px" borderColor="#E6E6E6" pt="15px">{newsData.name}</Text>
+          </Flex>
           <Text as="p" fontSize="lg">{newsData.content}</Text>
+
         </VStack>
       </Container>
     </>

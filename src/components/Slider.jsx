@@ -16,7 +16,7 @@ const Slider = ({ slides, ...rest }) => (
   >
     {slides.map(({ imageUrl, text }) => (
       <HStack key={imageUrl}>
-        <Image src={imageUrl} alt={text} maxH={{ base: 120, md: 420 }} objectFit="scale-down" />
+        <Image src={imageUrl} alt={text} maxH={{ base: 120, md: 240, lg: 350 }} objectFit="cover" />
       </HStack>
     ))}
   </Carousel>

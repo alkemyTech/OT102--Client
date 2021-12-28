@@ -36,8 +36,8 @@ export default function MemberCard({ member }) {
       </Box>
       <Box p="2">
         <Box
-          fontSize="2xl"
-          fontWeight="semibold"
+          fontSize="xl"
+          fontWeight="400"
           as="h4"
           lineHeight="tight"
           isTruncated

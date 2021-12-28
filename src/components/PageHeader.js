@@ -33,6 +33,9 @@ export default function PageHeader({ title, ...rest }) {
         pb="6"
         px="4"
         borderRadius={10}
+        _hover={{
+          bg: 'blue.500',
+        }}
         onClick={() => navigate('/donar')}
       >
         <Text

@@ -5,7 +5,6 @@ import {
   Container,
   Flex,
   Box,
-  Heading,
   Text,
   Button,
   VStack,
@@ -17,6 +16,8 @@ import { MdPhone, MdEmail, MdLocationOn } from 'react-icons/md'
 import { addContact } from '../../services/contactsService'
 import FormikControl from './FormikControl'
 import Alert from '../../components/alert/Alert'
+import Banner from '../../components/Banner'
+import PageHeader from '../../components/PageHeader'
 
 const ContactComponent = () => {
   const [alertProps, setAlertprops] = useState({
@@ -76,6 +77,8 @@ const ContactComponent = () => {
   return (
     <>
       <Alert {...alertProps} />
+      <Banner img="/images/banner-top5.jpg" display={{ base: 'none', md: 'flex' }} />
+      <PageHeader title="CONTACTANOS" display={{ base: 'none', md: 'flex' }} />
       <Container
         bg="#efefef"
         maxW="full"
@@ -85,52 +88,70 @@ const ContactComponent = () => {
       >
         <Flex>
           <Box
-            bg="#8DCAFF"
+            bg="brand.blue"
             color="black"
             borderRadius="lg"
-            m={{ sm: 4, md: 16, lg: 10 }}
-            p={{ sm: 5, md: 5, lg: 16 }}
+            m={{
+              base: 4,
+              sm: 4,
+              md: 10,
+              lg: 6,
+            }}
+            p={{
+              base: 5,
+              sm: 5,
+              md: 5,
+              lg: 6,
+            }}
           >
-            <Box p={4}>
+            <Box p={2}>
               <Wrap>
-                <WrapItem>
+                <WrapItem w="50%">
                   <Box>
-                    <Heading>Contáctanos</Heading>
-                    <Text mt={{ sm: 3, md: 3, lg: 5 }} color="gray.500" w="80%">
-                      Completa el formulario y nuestro equipo se pondrá en
+                    <Text textStyle="title" color="white" fontWeight="400">Dejanos tu mensaje</Text>
+                    <Text mt={{ sm: 3, md: 3, lg: 5 }} color="white" w="98%">
+                      Completa el formulario y nuestro equipo
+                      se pondrá en
                       contacto a la brevedad!
                     </Text>
-                    <Box py={{ base: 5, sm: 5, md: 8, lg: 20 }}>
-                      <VStack pl={10} spacing={4} alignItems="flex-start">
+                    <Box
+                      py={{
+                        base: 5,
+                        sm: 5,
+                        md: 8,
+                        lg: 10,
+                      }}
+                    >
+                      <VStack pl={0} spacing={6} alignItems="flex-start">
                         <Button
-                          size="lg"
-                          height="48px"
-                          width="250px"
-                          variant="ghost"
-                          color="#DCE2FF"
-                          _hover={{ border: '2px solid #f8fc74' }}
+                          size="md"
+                          variant="link"
+                          color="white"
+                          fontWeight="400"
+                          _hover={{ border: 'none' }}
+                          _active={{ border: 'none' }}
                           leftIcon={<MdPhone color="#EC4C4C" size="20px" />}
                         >
                           +54-91155555
                         </Button>
                         <Button
-                          size="lg"
-                          height="48px"
-                          width="250px"
-                          variant="ghost"
-                          color="#DCE2FF"
-                          _hover={{ border: '2px solid #1C6FEB' }}
+                          size="md"
+                          variant="link"
+                          color="white"
+                          fontWeight="400"
+                          _hover={{ border: 'none' }}
+                          _active={{ border: 'none' }}
                           leftIcon={<MdEmail color="#f8fc74" size="20px" />}
                         >
                           contacto@somosmas.com
                         </Button>
                         <Button
-                          size="lg"
-                          height="48px"
-                          width="250px"
-                          variant="ghost"
-                          color="#DCE2FF"
-                          _hover={{ border: '2px solid #EC4C4C' }}
+                          size="md"
+                          variant="link"
+                          color="white"
+                          fontWeight="400"
+                          _hover={{ border: 'none' }}
+                          _active={{ border: 'none' }}
                           leftIcon={
                             <MdLocationOn color="#1970F1" size="20px" />
                           }
@@ -141,7 +162,7 @@ const ContactComponent = () => {
                     </Box>
                   </Box>
                 </WrapItem>
-                <WrapItem>
+                <WrapItem justifyContent="center" alignItems="center">
                   <Formik
                     initialValues={initialValues}
                     validationSchema={validationSchema}
@@ -151,10 +172,11 @@ const ContactComponent = () => {
                       <Box
                         bg="white"
                         borderRadius="lg"
-                        p={{ sm: 16, md: 20, lg: 30 }}
+                        w="full"
+                        p={{ base: 10, md: 5, lg: 30 }}
                       >
-                        <Box m={8} color="#0B0E3F">
-                          <VStack m={10} spacing={5}>
+                        <Box m={5} color="#0B0E3F">
+                          <VStack spacing={5}>
                             <InputGroup borderColor="#E0E1E7">
                               <FormikControl
                                 control="chakraInput"
@@ -185,8 +207,8 @@ const ContactComponent = () => {
                             <Button
                               type="submit"
                               variant="solid"
-                              bg="#0D74FF"
-                              color="white"
+                              bg="brand.yellow"
+                              fontFamily="atma"
                               _hover={{}}
                               w="100%"
                             >

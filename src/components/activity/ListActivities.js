@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import {
-  Container, Text, Box, SimpleGrid,
+  Container, Box, SimpleGrid, Flex,
 } from '@chakra-ui/react'
 import { getAllActivities } from '../../services/activitiesService'
 import Alert from '../alert/Alert'
@@ -43,16 +43,15 @@ const ListActivities = () => {
   }, [])
 
   if (loading) {
-    return <Spinner />
+    return <Flex wrap="wrap" justifyContent="center" alignItems="center"><Spinner /></Flex>
   }
 
   return (
     <>
       <Alert {...alertProps} />
       <Container maxW="container.lg" mt="5">
-        <Text textStyle="title">Novedades Somos Mas</Text>
         <Box p={0}>
-          <SimpleGrid columns={{ base: 1, md: 4 }} spacing={6}>
+          <SimpleGrid columns={{ base: 1, md: 4 }} spacing={6} alignItems="flex-start">
             {!allActivities ? (
               <Spinner />
             ) : (
