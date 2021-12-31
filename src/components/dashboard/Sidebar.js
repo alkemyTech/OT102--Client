@@ -63,7 +63,7 @@ export default function Sidebar({ onClose, ...rest }) {
         <Box pt={4}>
           <NavItem
             icon={FiUser}
-            href={`users/${userData.userId}`}
+            href="users/me"
             onClick={onClose}
           >
             Editar perfil

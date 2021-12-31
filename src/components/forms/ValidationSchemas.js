@@ -58,6 +58,12 @@ const slideSchema = Yup.object().shape({
     ),
 })
 
+const EditUserSchema = Yup.object({
+  firstName: Yup.string().required('El nombre es obligatorio'),
+  lastName: Yup.string().required('El apellido es obligatorio'),
+  roleId: Yup.string().required('Debes seleccionar un rol'),
+})
+
 export {
   ActivitySchema,
   CategorySchema,
@@ -65,4 +71,5 @@ export {
   TestimonialSchema,
   welcomeTextSchema,
   slideSchema,
+  EditUserSchema,
 }
