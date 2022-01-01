@@ -1,6 +1,7 @@
 import httpService from './httpService'
 
 const usersEndpoint = '/users'
+const rolesEndpoint = '/users/roles'
 
 /**
  * Accepts an object to send it to users endpoint
@@ -45,6 +46,15 @@ export function getUserById(id) {
  */
 export function getAllUsers() {
   return httpService.get(usersEndpoint)
+}
+
+/**
+ * Retrieves an array with all roles from users endpoint
+ * @async
+ * @return Promise {object} all the requested users
+ */
+export function getAllRoles() {
+  return httpService.get(rolesEndpoint)
 }
 
 /**
