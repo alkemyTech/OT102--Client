@@ -108,10 +108,9 @@ const ListUsers = () => {
         <Table size="sm" textAlign="center">
           <Thead bg="brand.cyan">
             <Tr>
-              <Th textAlign="center">nombre / apellido</Th>
-              <Th textAlign="center">email</Th>
-              <Th textAlign="center">editar</Th>
-              <Th textAlign="center">eliminar</Th>
+              <Th textAlign="center">Nombre completo</Th>
+              <Th textAlign="center">Email</Th>
+              <Th textAlign="center">Acciones</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -120,7 +119,7 @@ const ListUsers = () => {
                 <Td
                   textAlign="center"
                 >
-                  {`${user.firstName} / ${user.lastName}`}
+                  {`${user.firstName}  ${user.lastName}`}
                 </Td>
                 <Td textAlign="center">
                   {user.email}
@@ -129,10 +128,7 @@ const ListUsers = () => {
                   textAlign="center"
                 >
                   <Link to={`${user.userId}`}><Button bg="brand.cyan">Editar</Button></Link>
-                </Td>
-                <Td
-                  textAlign="center"
-                >
+                  {' '}
                   <DeleteUserButton
                     id={user.userId}
                     onDelete={deleteUserHandler}

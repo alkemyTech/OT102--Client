@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import {
   Container,
-  Text,
   Box,
   SimpleGrid,
+  Flex,
 } from '@chakra-ui/react'
 import { getAllEntries } from '../services/entriesService'
 import Alert from '../components/alert/Alert'
 import NewsHomeCard from '../components/news/NewsHomeCard'
 import Spinner from '../components/Spinner'
+import Banner from '../components/Banner'
+import PageHeader from '../components/PageHeader'
 
 export default function ListNews() {
   const [allNews, setNews] = useState([])
@@ -46,18 +48,17 @@ export default function ListNews() {
   }, [])
 
   if (loading) {
-    return (
-      <Spinner />
-    )
+    return <Flex wrap="wrap" justifyContent="center" alignItems="center"><Spinner /></Flex>
   }
 
   return (
     <>
       <Alert {...alertProps} />
+      <Banner img="/images/banner-top2.jpg" display={{ base: 'none', md: 'flex' }} />
+      <PageHeader title="NOVEDADES" display={{ base: 'none', md: 'flex' }} />
       <Container maxW="container.lg" mt="5">
-        <Text textStyle="title">Novedades Somos Mas</Text>
         <Box p={0}>
-          <SimpleGrid columns={{ base: 1, md: 4 }} spacing={6}>
+          <SimpleGrid columns={{ base: 1, md: 4 }} spacing={6} alignItems="flex-start">
 
             { !allNews ? <Spinner /> : allNews.map((news) =>
               <NewsHomeCard {...news} key={news.id} />).reverse()}

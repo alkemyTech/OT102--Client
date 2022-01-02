@@ -24,8 +24,8 @@ const ListNews = () => {
 
   return (
     <div>
-      <HStack p={4} wrap="wrap" justifyContent="center">
-        <SimpleGrid columns={{ base: 1, md: 4 }} spacing={6}>
+      <HStack p={4} wrap="wrap" justifyContent="center" alignItems="center">
+        <SimpleGrid columns={{ base: 1, md: 4 }} spacing={6} alignItems="flex-start">
           {isLoading ? (
             <Spinner />
           ) : (

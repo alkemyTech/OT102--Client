@@ -12,7 +12,6 @@ import {
   FiUsers,
   FiList,
   FiHome,
-  FiTool,
   FiBookOpen,
   FiRss,
   FiMessageSquare,
@@ -29,7 +28,6 @@ const LINKS_ITEMS = [
   { name: 'Categorias', href: 'categories', icon: FiList },
   { name: 'Contactos', href: 'contacts', icon: FiBookOpen },
   { name: 'Editar Home', href: 'edit-home', icon: FiLayout },
-  { name: 'Organizacion', href: 'edit-organization', icon: FiTool },
   { name: 'Novedades', href: 'news', icon: FiRss },
   { name: 'Usuarios', href: 'users', icon: FiUsers },
   { name: 'Testimonios', href: 'testimonials', icon: FiMessageSquare },
@@ -65,7 +63,7 @@ export default function Sidebar({ onClose, ...rest }) {
         <Box pt={4}>
           <NavItem
             icon={FiUser}
-            href={`users/${userData.userId}`}
+            href="users/me"
             onClick={onClose}
           >
             Editar perfil
