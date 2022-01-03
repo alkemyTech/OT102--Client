@@ -24,7 +24,7 @@ const ListNews = () => {
 
   return (
     <Container maxW="container.lg" mt="5">
-    <Box p={0}>
+      <Box p={0}>
         <SimpleGrid columns={{ base: 1, md: 4 }} spacing={6} alignItems="flex-start">
           {isLoading ? (
             <Spinner />
@@ -51,8 +51,8 @@ const ListNews = () => {
               .slice(0, 4)
           )}
         </SimpleGrid>
-        </Box>
-      </Container>
+      </Box>
+    </Container>
   )
 }
 
