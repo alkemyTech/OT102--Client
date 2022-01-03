@@ -15,7 +15,7 @@ const TestimonialCard = ({
   id,
   ...props
 }) => (
-  <Center {...props} key={id}>
+  <Center {...props} key={id} marginBottom={20}>
     <Flex
       boxShadow="lg"
       maxW="640px"
@@ -52,10 +52,10 @@ const TestimonialCard = ({
         left: 0,
       }}
     >
-      <Flex direction="column" textAlign="left" justifyContent="space-between">
+      <Flex direction="column" textAlign="left" justifyContent="space-between" minH={{ base: 120, md: 180, lg: 220 }}>
         <chakra.p
           fontWeight="400"
-          fontSize="15px"
+          fontSize={{ base: 13, md: 15 }}
           pb={4}
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: `${content}` }}
