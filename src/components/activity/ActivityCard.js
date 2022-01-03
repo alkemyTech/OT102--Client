@@ -27,10 +27,10 @@ const ActivityCard = ({
     >
       <Image h="120px" w="full" src={image} objectFit="cover" />
 
-      <Box p={6}>
+      <Box p={5}>
         <Stack spacing={1} align="left" mb={5}>
           <Text textStyle="subtitle">{name}</Text>
-          <Text textStyle="text">{content}</Text>
+          <Text textStyle="text">{content.length > 170 ? `${content.substring(0, 167)}...` : content}</Text>
         </Stack>
         <Button
           as={ReactRouterLink}
