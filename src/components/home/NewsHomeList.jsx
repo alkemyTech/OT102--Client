@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { HStack, SimpleGrid } from '@chakra-ui/react'
+import { Container, Box, SimpleGrid } from '@chakra-ui/react'
 import { getAllEntries } from '../../services/entriesService'
 import NewsHomeCard from '../news/NewsHomeCard'
 import Spinner from '../Spinner'
@@ -23,8 +23,8 @@ const ListNews = () => {
   }, [])
 
   return (
-    <div>
-      <HStack p={4} wrap="wrap" justifyContent="center" alignItems="center">
+    <Container maxW="container.lg" mt="5">
+      <Box p={0}>
         <SimpleGrid columns={{ base: 1, md: 4 }} spacing={6} alignItems="flex-start">
           {isLoading ? (
             <Spinner />
@@ -51,8 +51,8 @@ const ListNews = () => {
               .slice(0, 4)
           )}
         </SimpleGrid>
-      </HStack>
-    </div>
+      </Box>
+    </Container>
   )
 }
 
