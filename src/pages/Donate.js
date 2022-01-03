@@ -6,7 +6,7 @@ import PageHeader from '../components/PageHeader'
 export default function Activities() {
   return (
     <>
-      <Banner display={{ base: 'none', md: 'flex' }} />
+      <Banner img="/images/banner-top6.jpg" display={{ base: 'none', md: 'flex' }} />
       <PageHeader title="DONA A SOMOS MAS" display={{ base: 'none', md: 'flex' }} />
       <Container maxW="container.lg" mt="5">
         {/* eslint-disable-next-line */}
