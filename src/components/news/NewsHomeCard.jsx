@@ -38,9 +38,9 @@ const SocialProfileWithImage = ({
       />
 
       <Box p={5}>
-        <Stack spacing={1} align="left" mb={5}>
+        <Stack spacing={1} align="left" mb={5} minH={{ base: 110, md: 190 }}>
           <Text textStyle="subtitle">{name}</Text>
-          <Text textStyle="text">{content.length > 115 ? `${content.substring(0, 112)}...` : content}</Text>
+          <Text textStyle="text" dangerouslySetInnerHTML={{ __html: `${content.length > 170 ? `${content.substring(0, 167)}...` : content}` }} />
         </Stack>
         <Button
           as={ReactRouterLink}
