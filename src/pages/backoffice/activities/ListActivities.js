@@ -10,7 +10,9 @@ import {
   Td,
   Text,
   Button,
+  Tooltip,
 } from '@chakra-ui/react'
+import { AddIcon } from '@chakra-ui/icons'
 import Spinner from '../../../components/Spinner'
 import {
   getAllActivities,
@@ -112,6 +114,18 @@ const ListActivities = () => {
       >
         <Text fontSize="2xl" mb="30px">
           Actividades
+          <Tooltip hasArrow label="Agregar Actividad">
+            <Button
+              onClick={() => navigate('new')}
+              bg="#33d9b2"
+              size="sm"
+              rounded="full"
+              aria-label="Agregar Actividad"
+              _hover={{ background: '#2DB897' }}
+            >
+              <AddIcon color="white" />
+            </Button>
+          </Tooltip>
         </Text>
         {!loading ? (
           <Table size="sm" textAlign="center">
@@ -132,7 +146,6 @@ const ListActivities = () => {
                     >
                       Editar
                     </Button>
-                    {' '}
                     <DeleteActivityButton
                       id={item.id}
                       onDelete={deleteActivityHandler}

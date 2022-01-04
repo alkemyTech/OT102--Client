@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   Box,
   Table,
@@ -11,13 +11,16 @@ import {
   Text,
   Image,
   Button,
+  Tooltip,
 } from '@chakra-ui/react'
+import { AddIcon } from '@chakra-ui/icons'
 import Spinner from '../../../components/Spinner'
 import { getAllEntries, delEntry } from '../../../services/entriesService'
 import Alert from '../../../components/alert/Alert'
 import DeleteNewsButton from './deleteNewsButton/DeleteNewsButton'
 
 const ListNews = () => {
+  const navigate = useNavigate()
   const [news, setNews] = useState([])
   const [alertProps, setAlertProps] = useState({
     show: false,
@@ -52,9 +55,7 @@ const ListNews = () => {
       const deleteNews = await delEntry(entryId)
       if (deleteNews) {
         setNews((prevNews) => {
-          const updateNews = prevNews.filter(
-            (entry) => entry.id !== entryId,
-          )
+          const updateNews = prevNews.filter((entry) => entry.id !== entryId)
           return updateNews
         })
         setAlertProps({
@@ -104,6 +105,18 @@ const ListNews = () => {
       >
         <Text fontSize="2xl" mb="30px">
           Novedades
+          <Tooltip hasArrow label="Agregar Novedad">
+            <Button
+              onClick={() => navigate('new')}
+              bg="#33d9b2"
+              size="sm"
+              rounded="full"
+              aria-label="Agregar Novedad"
+              _hover={{ background: '#2DB897' }}
+            >
+              <AddIcon color="white" />
+            </Button>
+          </Tooltip>
         </Text>
         {news.length > 0 ? (
           <Table size="sm" textAlign="center">
@@ -113,7 +126,6 @@ const ListNews = () => {
                 <Th textAlign="center">Imagen</Th>
                 <Th textAlign="center">Fecha de creación</Th>
                 <Th textAlign="center">Acciones</Th>
-
               </Tr>
             </Thead>
             <Tbody>
@@ -131,7 +143,6 @@ const ListNews = () => {
                   </Td>
                   <Td textAlign="center">{item.createdAt}</Td>
                   <Td textAlign="center">
-                    {' '}
                     <Link to={`${item.id}`}>
                       <Button
                         fontWeight={600}

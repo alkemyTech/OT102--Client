@@ -15,7 +15,7 @@ const TestimonialCard = ({
   id,
   ...props
 }) => (
-  <Center {...props} key={id}>
+  <Center {...props} key={id} marginBottom={20}>
     <Flex
       boxShadow="lg"
       maxW="640px"
@@ -34,7 +34,8 @@ const TestimonialCard = ({
         left: '35px',
         top: '-10px',
         backgroundSize: 'cover',
-        backgroundImage: 'https://e7.pngegg.com/pngimages/264/841/png-clipart-quotation-mark-greinarmerki-punctuation-quiromasaje-signo-comillas-blue-text.png',
+        backgroundImage:
+          'https://e7.pngegg.com/pngimages/264/841/png-clipart-quotation-mark-greinarmerki-punctuation-quiromasaje-signo-comillas-blue-text.png',
       }}
       _before={{
         content: '""',
@@ -51,10 +52,14 @@ const TestimonialCard = ({
         left: 0,
       }}
     >
-      <Flex direction="column" textAlign="left" justifyContent="space-between">
-        <chakra.p fontWeight="400" fontSize="15px" pb={4}>
-          {content}
-        </chakra.p>
+      <Flex direction="column" textAlign="left" justifyContent="space-between" minH={{ base: 120, md: 180, lg: 220 }}>
+        <chakra.p
+          fontWeight="400"
+          fontSize={{ base: 13, md: 15 }}
+          pb={4}
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: `${content}` }}
+        />
         <chakra.p fontWeight="bold" fontSize={14}>
           {name}
         </chakra.p>

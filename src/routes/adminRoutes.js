@@ -36,10 +36,12 @@ const AdminRoutes = () => (
       <Route path="news">
         <Route index element={<News />} />
         <Route path=":id" element={<EditNewsForm />} />
+        <Route path="new" element={<EditNewsForm />} />
       </Route>
       <Route path="activities">
         <Route index element={<ListActivities />} />
         <Route path=":id" element={<EditActivityForm />} />
+        <Route path="new" element={<EditActivityForm />} />
       </Route>
       <Route path="categories">
         <Route index element={<Categories />} />
