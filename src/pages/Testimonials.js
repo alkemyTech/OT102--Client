@@ -63,6 +63,7 @@ export default function ListTestimonials() {
             spacing="20"
             mt={16}
             mx="auto"
+            alignItems="flex-start"
           >
             { !allTestimonials ? <Spinner /> : allTestimonials.map((testimonial) =>
               <TestimonialCard {...testimonial} key={testimonial.id} />).reverse()}
