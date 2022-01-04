@@ -1,15 +1,24 @@
 import axios from 'axios'
 
-const token = window.localStorage.getItem('x-access-token')
-
 const httpService = axios.create({
   baseURL:
     process.env.NODE_ENV === 'development'
       ? process.env.REACT_APP_BASE_URL_LOCAL
       : process.env.REACT_APP_BASE_URL_PRODUCTION,
   timeout: 10000,
-  headers: { 'x-access-token': token },
+  // headers: { 'x-access-token': token },
 })
+
+// Do something before request is sent
+httpService.interceptors.request.use(
+  (config) => {
+    config.headers['x-access-token'] = window.localStorage.getItem('x-access-token');
+    return config;
+  },
+  (error) => {
+    Promise.reject(error);
+  },
+);
 
 httpService.interceptors.response.use(
   (response) =>
