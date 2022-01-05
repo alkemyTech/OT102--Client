@@ -18,8 +18,11 @@ import { getUserData } from '../../services/authService'
 import { getUserById, getAllRoles, updateuser } from '../../services/usersService'
 import { EditUserSchema } from './ValidationSchemas'
 import imgUploadService from '../../services/imgUploadService'
+import useUser from '../../hooks/useUser'
 
 const EditUserForm = () => {
+  const { userData: editor } = useUser()
+  const navigate = useNavigate()
   const { id } = useParams()
   const [user, setUser] = useState({})
   const [roles, setRoles] = useState([])
@@ -30,9 +33,8 @@ const EditUserForm = () => {
     icon: '',
     onConfirm: () => {},
   })
-  const navigate = useNavigate()
   const initialValues = {
-    userId: id === 'me' ? user.userId : user.id,
+    userId: !id ? user.userId : user.id,
     firstName: user.firstName,
     lastName: user.lastName,
     email: user.email,
@@ -40,10 +42,10 @@ const EditUserForm = () => {
     role: user.role,
     roleId: user.roleId,
   }
-  const updateId = id === 'me' ? user.userId : user.id
+  const updateId = !id ? user.userId : user.id
 
   const loadData = async () => {
-    if (id === 'me') {
+    if (!id) {
       try {
         const loadedData = await getUserData()
         setUser({
@@ -199,7 +201,7 @@ const EditUserForm = () => {
                       </FormControl>
                     </Box>
                     )}
-                    {id !== 'me' && (
+                    {id !== 'me' && editor.userRole === 'Admin' && (
                     <Box>
                       <FormControl id="roleId">
                         <FormLabel>Modificar rol</FormLabel>
