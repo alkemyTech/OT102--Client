@@ -82,7 +82,7 @@ export default function NewsDetail() {
           <Flex w="full">
             <Text textStyle="title" maxW="100%" flexGrow="1" borderBottom="1px" borderColor="#E6E6E6" pt="15px">{newsData.name}</Text>
           </Flex>
-          <Text as="p" fontSize="lg">{newsData.content}</Text>
+          <Text as="p" fontSize="lg" dangerouslySetInnerHTML={{ __html: `${newsData.content}` }} />
 
         </VStack>
       </Container>

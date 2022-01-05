@@ -47,29 +47,37 @@ export default function ListTestimonials() {
     loadData()
   }, [])
 
-  if (loading) {
-    return <Flex wrap="wrap" justifyContent="center" alignItems="center"><Spinner /></Flex>
-  }
-
   return (
     <>
       <Alert {...alertProps} />
-      <Banner img="/images/banner-top4.jpg" display={{ base: 'none', md: 'flex' }} />
+      <Banner
+        img="/images/banner-top4.jpg"
+        display={{ base: 'none', md: 'flex' }}
+      />
       <PageHeader title="TESTIMONIOS" display={{ base: 'none', md: 'flex' }} />
-      <Container maxW="container.lg" mt="5">
-        <Box p={0}>
-          <SimpleGrid
-            columns={{ base: 1, xl: 2 }}
-            spacing="20"
-            mt={16}
-            mx="auto"
-            alignItems="flex-start"
-          >
-            { !allTestimonials ? <Spinner /> : allTestimonials.map((testimonial) =>
-              <TestimonialCard {...testimonial} key={testimonial.id} />).reverse()}
-          </SimpleGrid>
-        </Box>
-      </Container>
+      {loading ? (
+        <Flex wrap="wrap" justifyContent="center" alignItems="center">
+          <Spinner />
+        </Flex>
+      ) : (
+        <Container maxW="container.lg" mt="5">
+          <Box p={0}>
+            <SimpleGrid
+              columns={{ base: 1, xl: 2 }}
+              spacing="20"
+              mt={16}
+              mx="auto"
+              alignItems="flex-start"
+            >
+              {allTestimonials
+                .map((testimonial) => (
+                  <TestimonialCard {...testimonial} key={testimonial.id} />
+                ))
+                .reverse()}
+            </SimpleGrid>
+          </Box>
+        </Container>
+      )}
     </>
-  );
+  )
 }

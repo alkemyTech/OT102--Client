@@ -107,6 +107,7 @@ const ListNews = () => {
           Novedades
           <Tooltip hasArrow label="Agregar Novedad">
             <Button
+              m={4}
               onClick={() => navigate('new')}
               bg="#33d9b2"
               size="sm"

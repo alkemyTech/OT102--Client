@@ -74,9 +74,7 @@ export default function ActivityDetail() {
           <Flex w="full">
             <Text textStyle="title" maxW="100%" flexGrow="1" borderBottom="1px" borderColor="#E6E6E6" pt="15px">{activityData.name}</Text>
           </Flex>
-          <Text as="p" fontSize="lg">
-            {activityData.content}
-          </Text>
+          <Text as="p" fontSize="lg" dangerouslySetInnerHTML={{ __html: `${activityData.content}` }} />
         </VStack>
       </Container>
     </>
