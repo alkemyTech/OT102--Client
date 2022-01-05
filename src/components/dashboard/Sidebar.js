@@ -31,7 +31,6 @@ const LINKS_ITEMS = [
   { name: 'Novedades', href: 'news', icon: FiRss },
   { name: 'Usuarios', href: 'users', icon: FiUsers },
   { name: 'Testimonios', href: 'testimonials', icon: FiMessageSquare },
-  { name: 'HomePage', href: '/', icon: FiHome },
 ]
 
 export default function Sidebar({ onClose, ...rest }) {
@@ -50,7 +49,7 @@ export default function Sidebar({ onClose, ...rest }) {
       {...rest}
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Link to="/backoffice">
+        <Link to="/">
           <Image
             h="45px"
             src="../../images/logo-somos-mas.png"
@@ -63,7 +62,7 @@ export default function Sidebar({ onClose, ...rest }) {
         <Box pt={4}>
           <NavItem
             icon={FiUser}
-            href="users/me"
+            href="me"
             onClick={onClose}
           >
             Editar perfil
@@ -79,6 +78,13 @@ export default function Sidebar({ onClose, ...rest }) {
               {link.name}
             </NavItem>
           ))}
+          <NavItem
+            icon={FiHome}
+            href="/"
+            onClick={onClose}
+          >
+            HomePage
+          </NavItem>
         </Box>
       )}
     </Box>

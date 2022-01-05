@@ -73,6 +73,7 @@ const Register = () => {
     newUser(values)
       .then(() => {
         setSubmitting(false)
+        AlertFunction({ title: 'Bienvenido' })
         navigate('/', { replace: true })
       })
       .catch((error) => {
@@ -80,7 +81,6 @@ const Register = () => {
           title: 'Error de registro',
           message: extractErrorMsg(error),
           icon: 'error',
-          onConfirm: () => AlertFunction({ title: 'Bienvenido' }),
         })
       })
   }
