@@ -47,24 +47,33 @@ export default function ListNews() {
     loadData()
   }, [])
 
-  if (loading) {
-    return <Flex wrap="wrap" justifyContent="center" alignItems="center"><Spinner /></Flex>
-  }
-
   return (
     <>
       <Alert {...alertProps} />
-      <Banner img="/images/banner-top2.jpg" display={{ base: 'none', md: 'flex' }} />
+      <Banner
+        img="/images/banner-top2.jpg"
+        display={{ base: 'none', md: 'flex' }}
+      />
       <PageHeader title="NOVEDADES" display={{ base: 'none', md: 'flex' }} />
-      <Container maxW="container.lg" mt="5">
-        <Box p={0}>
-          <SimpleGrid columns={{ base: 1, md: 4 }} spacing={6} alignItems="flex-start">
-
-            { !allNews ? <Spinner /> : allNews.map((news) =>
-              <NewsHomeCard {...news} key={news.id} />).reverse()}
-          </SimpleGrid>
-        </Box>
-      </Container>
+      {loading ? (
+        <Flex wrap="wrap" justifyContent="center" alignItems="center">
+          <Spinner />
+        </Flex>
+      ) : (
+        <Container maxW="container.lg" mt="5">
+          <Box p={0}>
+            <SimpleGrid
+              columns={{ base: 1, md: 4 }}
+              spacing={6}
+              alignItems="flex-start"
+            >
+              {allNews
+                .map((news) => <NewsHomeCard {...news} key={news.id} />)
+                .reverse()}
+            </SimpleGrid>
+          </Box>
+        </Container>
+      )}
     </>
-  );
+  )
 }

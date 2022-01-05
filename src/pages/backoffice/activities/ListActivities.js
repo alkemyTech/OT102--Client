@@ -116,6 +116,7 @@ const ListActivities = () => {
           Actividades
           <Tooltip hasArrow label="Agregar Actividad">
             <Button
+              m={4}
               onClick={() => navigate('new')}
               bg="#33d9b2"
               size="sm"
